@@ -66,7 +66,7 @@ export const wantsOptions: { value: ActivationType | 'any'; label: string; hint:
 export const priorityOptions: { value: Priority; label: string; hint: string }[] = [
   {
     value: 'corroborated-audience',
-    label: 'Best-corroborated audience',
+    label: 'Best-verified audience',
     hint: 'Figures we could check against public data',
   },
   {

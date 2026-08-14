@@ -64,8 +64,8 @@ export function Pricing({ onBack }: { onBack: () => void }) {
               {membershipPlan.priceAnnual}/year
             </p>
             <p className="mt-5 border-t border-white/10 pt-5 text-[15px] leading-relaxed text-ink-300">
-              Unlocks the matching engine and contacting who you match with. Browsing the public
-              list stays free for anyone.
+              Browsing and matching are free for anyone. Membership only comes up when you contact
+              someone or propose a deal.
             </p>
           </div>
         </section>

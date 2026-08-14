@@ -1,15 +1,14 @@
 import { useState } from 'react';
-import { Check } from 'lucide-react';
 import { Button } from '../common/Button';
 import { countryOptions } from '../../data/sponsorQuiz';
-import { launchPromo, membershipPlan } from '../../data/pricing';
 import type { Country, SponsorAccount } from '../../lib/types';
 
 /**
- * Account and membership in one screen, not two. Splitting them added a full
- * page for no real reason — the sponsor is going to see the price either way,
- * so showing it alongside the fields they're already filling in is one fewer
- * step, not one fewer piece of information.
+ * Three fields, nothing else. Matching is free — membership only comes up
+ * later, as a popup, at the moment a sponsor actually tries to contact
+ * someone or propose a deal. Asking for payment before they've even seen a
+ * match would be exactly the friction that keeps supply-side marketplaces
+ * from getting off the ground.
  */
 export function SponsorSignup({
   onComplete,
@@ -21,7 +20,6 @@ export function SponsorSignup({
   const [company, setCompany] = useState('');
   const [email, setEmail] = useState('');
   const [country, setCountry] = useState<Country | null>(null);
-  const [billing, setBilling] = useState<'monthly' | 'annual'>('monthly');
 
   const ready = company.trim().length > 1 && /.+@.+\..+/.test(email) && country !== null;
 
@@ -31,7 +29,7 @@ export function SponsorSignup({
       company: company.trim(),
       email: email.trim(),
       country,
-      membershipActive: true,
+      membershipActive: false,
     });
   }
 
@@ -41,10 +39,10 @@ export function SponsorSignup({
         <div className="w-full animate-rise">
           <p className="eyebrow text-flare-600">Create your sponsor account</p>
           <h1 className="display mt-3 text-4xl leading-[1.05] text-ink-950 sm:text-5xl">
-            Unlock matching.
+            Find your matches.
           </h1>
           <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-500">
-            Three fields and a membership — then straight into what you want out of a sponsorship.
+            Three fields. Then we'll ask what you want out of a sponsorship — matching is free.
           </p>
 
           <div className="mt-9 space-y-3">
@@ -92,72 +90,14 @@ export function SponsorSignup({
             </div>
           </div>
 
-          <div className="mt-8 overflow-hidden rounded-lg bg-ink-950 text-white">
-            <div className="flare-rule h-2" />
-            <div className="p-6 sm:p-5">
-              {launchPromo.active && (
-                <p className="eyebrow inline-block rounded-md bg-flare-500 px-2.5 py-1 text-white">
-                  Launch offer — first {launchPromo.sponsorFreeMonths} months free
-                </p>
-              )}
-
-              <div className="mt-4 flex items-center gap-2">
-                <button
-                  onClick={() => setBilling('monthly')}
-                  className={`rounded-md px-3 py-1.5 text-sm font-medium ${
-                    billing === 'monthly' ? 'bg-white text-ink-950' : 'text-ink-300'
-                  }`}
-                >
-                  Monthly
-                </button>
-                <button
-                  onClick={() => setBilling('annual')}
-                  className={`rounded-md px-3 py-1.5 text-sm font-medium ${
-                    billing === 'annual' ? 'bg-white text-ink-950' : 'text-ink-300'
-                  }`}
-                >
-                  Yearly
-                </button>
-              </div>
-
-              <p className="mt-3">
-                <span className="display text-5xl leading-none tabular-nums text-white">
-                  {membershipPlan.currency}
-                  {billing === 'monthly' ? membershipPlan.priceMonthly : membershipPlan.priceAnnual}
-                </span>
-                <span className="ml-2 text-base text-ink-400">
-                  / {billing === 'monthly' ? 'month' : 'year'}
-                </span>
-              </p>
-              {launchPromo.active && (
-                <p className="mt-1 text-sm text-ink-300">
-                  then {membershipPlan.currency}
-                  {billing === 'monthly' ? membershipPlan.priceMonthly : membershipPlan.priceAnnual}{' '}
-                  after your free period, plus {(launchPromo.commissionRate * 100).toFixed(0)}%
-                  commission on closed deals during launch.
-                </p>
-              )}
-
-              <ul className="mt-5 space-y-2">
-                {membershipPlan.includes.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm leading-relaxed text-ink-200">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-flare-400" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <p className="mt-4 text-[13px] leading-relaxed text-ink-500">
-            <span className="font-medium text-ink-950">Browsing the public list is free</span> for
-            anyone. This membership is what runs the matching engine and lets you contact who you
-            match with — clubs and athletes have their own membership on their side of the table.
+          <p className="mt-6 rounded-lg bg-paper-dim px-5 py-4 text-[13px] leading-relaxed text-ink-600">
+            <span className="font-medium text-ink-950">Free to browse and match.</span> Membership
+            only comes up if you want to contact someone or propose a deal.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Button size="lg" disabled={!ready} onClick={submit}>
-              Start membership →
+              Continue to matching →
             </Button>
             <Button variant="ghost" onClick={onCancel}>
               ← Back

@@ -10,16 +10,19 @@ export const membershipPlan = {
   priceMonthly: 33.33,
   priceAnnual: 249,
   currency: '€',
+  // Membership only gates the act of reaching out and closing — matching
+  // itself is free, shown as a popup only when a sponsor presses Contact or
+  // Propose a deal, never before.
   includes: [
-    'Run the matching quiz and see your ranked, scored matches',
     'Contact any club or athlete you match with',
-    'Unlimited re-ranking as your answers change',
     'Deal support through to signature',
     'Season reach reporting on live sponsorships',
   ],
-  // Only the public directory is free for a sponsor — it's a plain list, not
-  // a personalised search. The moment they want to be matched, they pay.
-  freeTier: ['Browse the full public list of clubs and athletes'],
+  freeTier: [
+    'Browse the full public list of clubs and athletes',
+    'Run the matching quiz and see your ranked, scored matches',
+    'Unlimited re-ranking as your answers change',
+  ],
 } as const;
 
 /**

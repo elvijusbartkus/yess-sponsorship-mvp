@@ -22,9 +22,11 @@ export function Badge({ tone = 'neutral', children }: { tone?: Tone; children: R
 }
 
 /**
- * "Corroborated" means the audience figure lines up with public data we could
- * check — social reach, press coverage, existing sponsors. It deliberately does
- * NOT mean attendance counted at a gate; we don't capture that.
+ * "Verified" means the audience figure lines up with public data we could
+ * check — social reach, press coverage, existing sponsors. It deliberately
+ * does NOT mean attendance counted at a gate; we don't capture that. Called
+ * "Corroborated" internally in a few places, but "Verified" is the plainer
+ * word for the badge itself.
  */
 export function CorroboratedBadge({ corroborated }: { corroborated: boolean }) {
   if (corroborated) {
@@ -37,7 +39,7 @@ export function CorroboratedBadge({ corroborated }: { corroborated: boolean }) {
             clipRule="evenodd"
           />
         </svg>
-        Corroborated
+        Verified
       </Badge>
     );
   }

@@ -9,6 +9,7 @@ import { ContractSign } from './components/Deal/ContractSign';
 import { DeliverablesTracker } from './components/Deal/DeliverablesTracker';
 import { MatchingScreen } from './components/Matches/MatchingScreen';
 import { SponsorSignup } from './components/Onboarding/SponsorSignup';
+import { MembershipDialog } from './components/Membership/MembershipDialog';
 import { Pricing } from './components/Pricing';
 import { ProfileBuilder } from './components/Club/ProfileBuilder';
 import { LiveProfile } from './components/Club/LiveProfile';
@@ -145,6 +146,22 @@ export default function App() {
   const [account, setAccount] = useState<SponsorAccount | null>(null);
   const [poolSize, setPoolSize] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [membershipDialogOpen, setMembershipDialogOpen] = useState(false);
+  const pendingAction = useRef<(() => void) | null>(null);
+
+  /**
+   * The only place membership is ever asked about — called from the two
+   * actions that actually cost something (Contact, Propose a deal). Shown as
+   * a popup, never a screen you land on proactively.
+   */
+  function requireMembership(action: () => void) {
+    if (account?.membershipActive) {
+      action();
+      return;
+    }
+    pendingAction.current = action;
+    setMembershipDialogOpen(true);
+  }
 
   // The matching screen and the request run concurrently; whichever finishes
   // last decides when results appear, so the animation is never cut short and
@@ -217,7 +234,7 @@ export default function App() {
       case 'landing':
         return (
           <Landing
-            onSponsorStart={() => setScreen(account?.membershipActive ? 'quiz' : 'sponsor-signup')}
+            onSponsorStart={() => setScreen(account ? 'quiz' : 'sponsor-signup')}
             onClubStart={() => {
               setClubDraft(null);
               setScreen('club-builder');
@@ -289,6 +306,7 @@ export default function App() {
             match={selected}
             onBack={() => setScreen('results')}
             onOpenDeal={() => setScreen('deal')}
+            requireMembership={requireMembership}
           />
         );
 
@@ -370,6 +388,17 @@ export default function App() {
           </motion.div>
         </AnimatePresence>
       </main>
+
+      <MembershipDialog
+        open={membershipDialogOpen}
+        onOpenChange={setMembershipDialogOpen}
+        onStart={() => {
+          setAccount((current) => (current ? { ...current, membershipActive: true } : current));
+          setMembershipDialogOpen(false);
+          pendingAction.current?.();
+          pendingAction.current = null;
+        }}
+      />
     </div>
   );
 }

@@ -24,10 +24,13 @@ export function MatchDetail({
   match,
   onBack,
   onOpenDeal,
+  requireMembership,
 }: {
   match: Match;
   onBack: () => void;
   onOpenDeal: () => void;
+  /** Gates an action behind the membership popup — shown only here, never before. */
+  requireMembership: (action: () => void) => void;
 }) {
   const [contacted, setContacted] = useState(false);
   const { profile, taxBenefit } = match;
@@ -140,11 +143,14 @@ export function MatchDetail({
 
       <div className="mt-9 border-t border-paper-line pt-8">
         <div className="flex flex-wrap items-center gap-3">
-          <Button size="lg" onClick={onOpenDeal}>
+          <Button size="lg" onClick={() => requireMembership(onOpenDeal)}>
             Propose a deal <ArrowRight className="h-4 w-4" />
           </Button>
           {!contacted ? (
-            <Button variant="secondary" onClick={() => setContacted(true)}>
+            <Button
+              variant="secondary"
+              onClick={() => requireMembership(() => setContacted(true))}
+            >
               Contact {profile.name} first
             </Button>
           ) : (

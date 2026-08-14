@@ -52,16 +52,15 @@ export function MatchCard({
           : 'bg-white ring-1 ring-inset ring-paper-line hover:ring-ink-950'
       }`}
     >
+      {lead && <div className="flare-rule absolute inset-x-0 top-0 h-1.5" />}
+
       {lead && (
-        <>
-          <div className="flare-rule absolute inset-x-0 top-0 h-1.5" />
-          <span className="eyebrow absolute right-6 top-6 rounded-md bg-flare-500 px-2.5 py-1 text-white">
-            Best match
-          </span>
-        </>
+        <div className="mt-4 flex justify-end">
+          <span className="eyebrow rounded-md bg-flare-500 px-2.5 py-1 text-white">Best match</span>
+        </div>
       )}
 
-      <div className={`flex items-start justify-between gap-4 ${lead ? 'mt-6' : ''}`}>
+      <div className={`flex items-start justify-between gap-4 ${lead ? 'mt-3' : ''}`}>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
             <h3 className={`display text-2xl leading-tight ${lead ? 'text-white' : 'text-ink-950'}`}>

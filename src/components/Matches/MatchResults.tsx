@@ -132,7 +132,7 @@ export function MatchResults({
       )}
 
       <p className="mt-8 text-center text-xs text-ink-400">
-        Matching is part of your membership.
+        Free to browse and match. Contacting or proposing a deal needs a membership.
       </p>
     </div>
   );
