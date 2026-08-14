@@ -1,8 +1,14 @@
+import path from 'node:path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(import.meta.dirname, './src'),
+    },
+  },
   server: {
     // Keeps the API same-origin in dev, so the frontend never needs a key or a
     // CORS config and `VITE_API_URL` stays unset until deploy.
