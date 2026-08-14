@@ -233,26 +233,30 @@ is left as roadmap rather than faked.
 
 ## Deployment
 
-**The frontend and the API are two separate deploys.** A 404 on `/api` means the
-frontend is live without the backend behind it — the most common failure.
+**No backend required.** The app is a static site — build it, upload `dist/`,
+done. On Vercel that means importing the repo and clicking deploy; `vercel.json`
+is committed with the build config and SPA rewrite. Nothing to configure.
 
-1. **Backend** (Render): Build `npm install`, Start `npm start`. Set
-   `CORS_ORIGIN` to your frontend URL. Optional: `ANTHROPIC_API_KEY`.
-2. **Frontend** (Vercel): `vercel.json` is committed with the build config and
-   SPA rewrite. **Set `VITE_API_URL` to `https://<your-render-app>/api`** and
-   redeploy — it is read at build time, so changing it needs a rebuild.
+Everything the marketplace does — matching, scoring, tax, commission,
+corroboration, campaign copy — is computation over data the app already ships,
+so it runs in the browser. The public-source corroboration lookup is a real
+network call that works client-side because Wikipedia sends
+`access-control-allow-origin: *`.
 
-Without step 2 the app loads and then fails on every request. The error screen
-now says so explicitly rather than echoing a hosting request id.
+### Optional: the backend
 
-Other notes:
+`server/` is still here and still works (`npm run dev:all`). The only thing it
+buys you is **live LLM copy** — model-written match reasons and campaign posts
+— because an API key must never reach the browser. Without it those fall back
+to the same templates the server would have used anyway.
 
-- **Frontend** → Vercel/Netlify. Build `npm run build`, output `dist/`. Set
-  `VITE_API_URL` to the deployed API's `/api` base.
-- **Backend** → Railway/Render/Fly. Start `npx tsx server/index.ts`. Set
-  `ANTHROPIC_API_KEY` (optional) and `DATABASE_PATH` to a persistent volume.
-  SQLite needs a mounted disk; on a platform without one, swap `server/db.ts`
-  for Postgres — the queries are plain SQL and the interface is four functions.
+To use it: deploy `server/` (Render: build `npm install`, start `npm start`,
+set `CORS_ORIGIN`), then set `VITE_API_URL` to `https://<host>/api` in the
+frontend and rebuild. Leave `VITE_API_URL` unset and the app is standalone.
+
+> Free-tier hosting sleeps after ~15 minutes and takes 30–50s to wake, which is
+> a bad thing to hit mid-demo. That is the main reason the standalone path is
+> the default.
 
 ## Out of scope, on purpose
 
