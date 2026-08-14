@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
-// Short on purpose: this sits inside a ~60 second demo, so a long spinner is
-// dead air. Two beats is enough to read as real computation.
-const LINE_MS = 850;
+// Slower than a bare spinner needs, on purpose — cutting straight from a
+// click to a fully-formed results screen reads as fake instant computation.
+// A few readable beats let it register as real work happening.
+const LINE_MS = 1400;
 
 export function MatchingScreen({
   poolSize,
@@ -34,16 +36,13 @@ export function MatchingScreen({
   return (
     <div className="flex flex-1 items-center justify-center px-5 py-20">
       <div className="w-full max-w-lg text-center">
-        <div className="mx-auto h-20 w-20">
-          <svg viewBox="0 0 80 80" className="h-full w-full animate-spin [animation-duration:1.1s]">
-            <circle
-              cx="40"
-              cy="40"
-              r="34"
-              fill="none"
-              strokeWidth="5"
-              className="stroke-paper-line"
-            />
+        <motion.div
+          className="mx-auto h-20 w-20"
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 1.6, ease: 'linear' }}
+        >
+          <svg viewBox="0 0 80 80" className="h-full w-full">
+            <circle cx="40" cy="40" r="34" fill="none" strokeWidth="5" className="stroke-paper-line" />
             <circle
               cx="40"
               cy="40"
@@ -55,17 +54,22 @@ export function MatchingScreen({
               className="stroke-flare-500"
             />
           </svg>
-        </div>
+        </motion.div>
 
         <p className="eyebrow mt-10 text-flare-600">Matching</p>
 
-        {/* Keyed so each line animates in rather than swapping abruptly. */}
-        <p
-          key={line}
-          className="display animate-rise mt-3 text-2xl leading-tight text-ink-950 sm:text-3xl"
-        >
-          {lines[line]}
-        </p>
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={line}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            className="display mt-3 text-2xl leading-tight text-ink-950 sm:text-3xl"
+          >
+            {lines[line]}
+          </motion.p>
+        </AnimatePresence>
       </div>
     </div>
   );

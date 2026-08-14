@@ -34,7 +34,7 @@ function FilterRow<T extends string>({
         <button
           key={opt.value}
           onClick={() => onChange(opt.value)}
-          className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
             value === opt.value
               ? 'bg-ink-950 text-white'
               : 'bg-white text-ink-600 ring-1 ring-inset ring-paper-line hover:ring-ink-950'

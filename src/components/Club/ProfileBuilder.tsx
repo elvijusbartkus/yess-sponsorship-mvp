@@ -101,6 +101,7 @@ export function ProfileBuilder({
   const [draft, setDraft] = useState<Draft>(initial ?? { activation: [] });
   const [step, setStep] = useState(0);
   const [nameInput, setNameInput] = useState(initial?.name ?? '');
+  const [customActivation, setCustomActivation] = useState('');
 
   const steps = STEPS.filter((s) => !s.when || s.when(draft));
   const current = steps[Math.min(step, steps.length - 1)];
@@ -208,6 +209,8 @@ export function ProfileBuilder({
             options={sportOptions.map((s) => ({ value: s, label: s }))}
             selected={draft.sport}
             onSelect={(sport) => advance({ sport })}
+            otherPlaceholder="e.g. Padel, Orienteering…"
+            onOther={(sport) => advance({ sport })}
           />
         );
 
@@ -331,6 +334,33 @@ export function ProfileBuilder({
                 );
               })}
             </div>
+
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <input
+                value={customActivation}
+                onChange={(e) => setCustomActivation(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && customActivation.trim()) {
+                    toggleActivation(customActivation.trim());
+                    setCustomActivation('');
+                  }
+                }}
+                placeholder="Something else you can offer…"
+                className="min-w-0 flex-1 rounded-lg border border-dashed border-paper-line bg-white px-4 py-2.5 text-sm text-ink-950 placeholder:text-ink-300 focus:outline-none focus:border-flare-500"
+              />
+              <button
+                disabled={!customActivation.trim()}
+                onClick={() => {
+                  if (!customActivation.trim()) return;
+                  toggleActivation(customActivation.trim());
+                  setCustomActivation('');
+                }}
+                className="rounded-md bg-ink-950 px-4 py-2.5 text-sm font-medium text-white disabled:opacity-40"
+              >
+                Add
+              </button>
+            </div>
+
             <Button
               className="mt-7"
               size="lg"
