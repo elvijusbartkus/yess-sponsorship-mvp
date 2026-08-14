@@ -7,6 +7,7 @@ import { MatchDetail } from './components/Matches/MatchDetail';
 import { DealRoom } from './components/Deal/DealRoom';
 import { ContractSign } from './components/Deal/ContractSign';
 import { DeliverablesTracker } from './components/Deal/DeliverablesTracker';
+import { CampaignPage } from './components/Campaign/CampaignPage';
 import { MatchingScreen } from './components/Matches/MatchingScreen';
 import { SponsorSignup } from './components/Onboarding/SponsorSignup';
 import { MembershipDialog } from './components/Membership/MembershipDialog';
@@ -35,6 +36,7 @@ type Screen =
   | 'deal'
   | 'contract'
   | 'deliverables'
+  | 'campaign'
   | 'club-builder'
   | 'club-live'
   | 'browse';
@@ -55,6 +57,7 @@ const ROLE_BY_SCREEN: Record<Screen, Role> = {
   deal: 'sponsor',
   contract: 'sponsor',
   deliverables: 'sponsor',
+  campaign: 'sponsor',
   'club-builder': 'club',
   'club-live': 'club',
 };
@@ -333,6 +336,18 @@ export default function App() {
             contract={contract}
             onBack={() => setScreen('contract')}
             onHome={() => setScreen('results')}
+            onLaunchCampaign={() => setScreen('campaign')}
+          />
+        );
+
+      case 'campaign':
+        if (!selected) return null;
+        return (
+          <CampaignPage
+            match={selected}
+            sponsorName={account?.company ?? 'Your company'}
+            onBack={() => setScreen('deliverables')}
+            onContinue={() => setScreen('deliverables')}
           />
         );
 

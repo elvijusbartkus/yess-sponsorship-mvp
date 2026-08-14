@@ -3,12 +3,12 @@ import {
   Search,
   Handshake,
   FileCheck2,
-  AlertTriangle,
   Megaphone,
   BarChart3,
   Rocket,
   Building2,
   Trophy,
+  Landmark,
 } from 'lucide-react';
 import { clubPlan, commission, launchPromo, membershipPlan } from '../data/pricing';
 
@@ -105,7 +105,10 @@ export function Landing({
   onBrowse: () => void;
 }) {
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 py-10 sm:py-10">
+    <div
+      className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 py-10 sm:py-10"
+      style={{ zoom: 1.25 }}
+    >
       <div className="animate-rise max-w-3xl">
         <div className="flare-rule h-1.5 w-20" />
         <h1 className="display mt-5 text-[clamp(2.25rem,5vw,3.75rem)] leading-[0.95] text-ink-950">
@@ -140,18 +143,22 @@ export function Landing({
       {/* PROBLEM */}
       <section className="mt-9 border-t border-paper-line pt-8">
         <SectionEyebrow>The problem</SectionEyebrow>
-        <h2 className="display mt-3 max-w-2xl text-2xl leading-[1.1] text-ink-950 sm:text-3xl">
-          Sport has an audience. It has no market.
+        <h2 className="display mt-3 max-w-2xl text-3xl leading-[1.1] text-ink-950 sm:text-4xl">
+          Private sport money never reaches the clubs and athletes that need it.
         </h2>
-        <ul className="mt-5 grid gap-3 sm:grid-cols-3">
+        <ul className="mt-6 space-y-3">
           {[
-            'Clubs and athletes reach real audiences but can\'t package or price that reach.',
-            'Sponsors can\'t find them, can\'t evaluate the numbers, can\'t trust a claim over coffee.',
-            'A deal that happens is a handshake and a WhatsApp thread — no contract, no proof.',
+            '€500M in Estonian sport. Business gives €50M. Grassroots sees almost none.',
+            'SPLISS: 50-65% of sporting success comes straight from money invested.',
+            "A business wants to back sport but doesn't know which club.",
+            "A club needs €5,000 but doesn't know who'd pay.",
           ].map((text) => (
-            <li key={text} className="flex items-start gap-2.5 rounded-lg bg-white p-3.5 ring-1 ring-inset ring-paper-line">
-              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-flare-500" />
-              <span className="text-[13px] leading-relaxed text-ink-700">{text}</span>
+            <li
+              key={text}
+              className="flex items-center gap-4 rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line"
+            >
+              <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-flare-500" />
+              <span className="text-xl leading-snug text-ink-800 sm:text-2xl">{text}</span>
             </li>
           ))}
         </ul>
@@ -249,25 +256,36 @@ export function Landing({
       {/* WHO ARE OUR USERS */}
       <section className="mt-9 border-t border-paper-line pt-8">
         <SectionEyebrow>Who we're building for</SectionEyebrow>
-        <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          <div className="rounded-lg bg-white p-4 ring-1 ring-inset ring-paper-line">
-            <div className="flex items-center gap-2.5">
-              <Building2 className="h-5 w-5 text-flare-500" />
-              <p className="font-display text-lg font-medium text-ink-950">Sponsors</p>
-            </div>
-            <p className="mt-2.5 text-[13px] leading-relaxed text-ink-700">
-              Local and regional businesses — gyms, retailers, banks, breweries — with €500–€50,000
-              budgets and no marketing team to go hunting for grassroots partners themselves.
-            </p>
-          </div>
+        <h2 className="display mt-3 max-w-2xl text-2xl leading-[1.1] text-ink-950 sm:text-3xl">
+          Three sides. One broken market.
+        </h2>
+        <div className="mt-5 grid gap-4 sm:grid-cols-3">
           <div className="rounded-lg bg-white p-4 ring-1 ring-inset ring-paper-line">
             <div className="flex items-center gap-2.5">
               <Trophy className="h-5 w-5 text-flare-500" />
               <p className="font-display text-lg font-medium text-ink-950">Clubs & athletes</p>
             </div>
             <p className="mt-2.5 text-[13px] leading-relaxed text-ink-700">
-              Amateur and semi-pro clubs, academies, and individual athletes with a real local
-              following but no sales function — a coach or the athlete fielding sponsorship asks.
+              2,900+ registered clubs, 240,000+ participants. Need money.
+            </p>
+          </div>
+          <div className="rounded-lg bg-white p-4 ring-1 ring-inset ring-paper-line">
+            <div className="flex items-center gap-2.5">
+              <Building2 className="h-5 w-5 text-flare-500" />
+              <p className="font-display text-lg font-medium text-ink-950">Businesses</p>
+            </div>
+            <p className="mt-2.5 text-[13px] leading-relaxed text-ink-700">
+              Thousands of local firms, €500–50k to spend, no one to spend it on.
+            </p>
+          </div>
+          <div className="rounded-lg bg-white p-4 ring-1 ring-inset ring-paper-line">
+            <div className="flex items-center gap-2.5">
+              <Landmark className="h-5 w-5 text-flare-500" />
+              <p className="font-display text-lg font-medium text-ink-950">The Committee</p>
+            </div>
+            <p className="mt-2.5 text-[13px] leading-relaxed text-ink-700">
+              Already centralizes every club via the Sports Register. One lever to onboard all of
+              them.
             </p>
           </div>
         </div>
@@ -277,11 +295,14 @@ export function Landing({
       <section className="mt-9 grid gap-8 border-t border-paper-line pt-8 sm:grid-cols-2">
         <div>
           <SectionEyebrow>Market size</SectionEyebrow>
-          <p className="mt-2 text-xs text-ink-400">Placeholders — replace with sourced figures.</p>
           <div className="mt-4 grid grid-cols-3 gap-2.5">
-            <MarketStat label="TAM" value="€[__]M" note="Baltic sports sponsorship spend." />
-            <MarketStat label="SAM" value="€[__]M" note="Addressable by small/mid clubs & athletes." />
-            <MarketStat label="SOM" value="€[__]M" note="3-year capture target." />
+            <MarketStat label="TAM" value="€25M" note="Private money into Estonian sport a year." />
+            <MarketStat
+              label="SAM"
+              value="€8M"
+              note="The middle of the pyramid, where matching is broken."
+            />
+            <MarketStat label="SOM" value="€47k/yr" note="Realistic Year 1 revenue." />
           </div>
         </div>
         <div>

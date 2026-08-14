@@ -19,3 +19,13 @@ export function templateCampaign(sponsor: string, profile: Profile): Campaign {
     fromModel: false,
   };
 }
+
+/** Same deal, written in the sponsor's voice instead of the club's — the second variant. */
+export function templateCampaignSponsorVoice(sponsor: string, profile: Profile): Campaign {
+  const who = profile.type === 'club' ? profile.name : profile.name.split(' ')[0];
+  return {
+    post: `${sponsor} is backing ${who} this season. Real support for ${profile.sport.toLowerCase()} in ${profile.region} — proud to be part of what they're building.`,
+    story: `We're backing ${who}. ${sponsor} × ${profile.name}.`,
+    fromModel: false,
+  };
+}

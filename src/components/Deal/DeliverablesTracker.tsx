@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckCircle2, Circle } from 'lucide-react';
+import { CheckCircle2, Circle, Megaphone } from 'lucide-react';
 import { Button } from '../common/Button';
 import { formatEur } from '../../lib/taxRules';
 import type { ContractRecord, Deliverable, Match } from '../../lib/types';
@@ -17,11 +17,13 @@ export function DeliverablesTracker({
   contract,
   onBack,
   onHome,
+  onLaunchCampaign,
 }: {
   match: Match;
   contract: ContractRecord;
   onBack: () => void;
   onHome: () => void;
+  onLaunchCampaign: () => void;
 }) {
   const { profile } = match;
   const [items, setItems] = useState<Deliverable[]>(() =>
@@ -57,7 +59,27 @@ export function DeliverablesTracker({
         </p>
       </div>
 
-      <section className="mt-8 rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-5">
+      <button
+        onClick={onLaunchCampaign}
+        className="group mt-6 flex w-full items-center justify-between gap-4 overflow-hidden rounded-lg bg-ink-950 p-5 text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift"
+      >
+        <div className="flex items-center gap-3.5">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-white/10 text-flare-400">
+            <Megaphone className="h-4.5 w-4.5" />
+          </div>
+          <div>
+            <p className="font-display text-[15px] font-medium text-white">Launch the campaign</p>
+            <p className="mt-0.5 text-[13px] leading-snug text-ink-300">
+              We draft the post and story for this deal — see it generated.
+            </p>
+          </div>
+        </div>
+        <span className="shrink-0 font-display text-sm font-medium text-flare-400 transition-transform duration-200 group-hover:translate-x-1">
+          →
+        </span>
+      </button>
+
+      <section className="mt-6 rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-5">
         <div className="flex flex-wrap items-baseline justify-between gap-3">
           <p className="eyebrow text-ink-400">Deliverables</p>
           <p className="text-sm font-medium text-ink-950">
