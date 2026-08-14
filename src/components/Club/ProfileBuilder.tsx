@@ -15,7 +15,11 @@ import { countryOptions } from '../../data/sponsorQuiz';
 import type { Country, ProfileDraft, Region } from '../../lib/types';
 
 const STEPS = [
-  { id: 'identity', title: 'Who are you?', subtitle: 'This is the name sponsors will see.' },
+  {
+    id: 'identity',
+    title: 'Who are you?',
+    subtitle: 'This is the name sponsors will see. Listing is free, and always will be.',
+  },
   { id: 'sport', title: 'What sport?', subtitle: 'So we match you to the right brands.' },
   { id: 'country', title: 'Which country?', subtitle: 'Sponsors search inside their own market.' },
   { id: 'region', title: 'Where are you based?', subtitle: 'Local sponsors search by city.' },

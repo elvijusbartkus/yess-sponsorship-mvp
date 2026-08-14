@@ -30,7 +30,9 @@ export function LiveProfile({
         </div>
         <p className="mt-1.5 text-sm leading-relaxed text-gain-600">
           You are in the pool now — sponsors searching {COUNTRY_LABEL[draft.country]} will see this
-          profile in their matches. Listing is free, and you are never charged to be contacted.
+          profile in their matches. Free to list, free to be matched, free to be contacted. When a
+          deal closes you receive the full agreed amount; our commission is charged to the sponsor
+          on top.
         </p>
       </div>
 

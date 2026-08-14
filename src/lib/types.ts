@@ -148,6 +148,15 @@ export interface Match {
   reasonsFromModel?: boolean;
 }
 
+/** Onboarding flavour, not auth. Three fields, held in memory for the session. */
+export interface SponsorAccount {
+  company: string;
+  email: string;
+  country: Country;
+  /** Set once the sponsor starts a membership — gates contacting clubs. */
+  membershipActive: boolean;
+}
+
 export interface Persona {
   id: string;
   label: string;

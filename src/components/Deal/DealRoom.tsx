@@ -66,7 +66,7 @@ export function DealRoom({
   const steps: { title: string; body: string; state: StepState }[] = [
     {
       title: 'Connected',
-      body: `Intro sent to ${profile.name}. Free — we never charge for contact.`,
+      body: `Intro sent to ${profile.name}. Covered by your membership; ${profile.name} pays nothing.`,
       state: 'done',
     },
     {
@@ -191,6 +191,16 @@ export function DealRoom({
             </div>
 
             <div className="flex items-baseline justify-between gap-4 border-t border-white/10 pt-3.5">
+              <span className="text-[15px] text-ink-300">
+                {profile.name} receives
+                <span className="ml-2 text-[13px] text-ink-500">the full agreed value</span>
+              </span>
+              <span className="display text-3xl tabular-nums text-gain-500">
+                {formatEur(dealValue)}
+              </span>
+            </div>
+
+            <div className="flex items-baseline justify-between gap-4 border-t border-white/10 pt-3.5">
               <span className="text-[15px] text-ink-300">Total you pay</span>
               <span className="display text-2xl tabular-nums text-white">
                 {formatEur(totalPaid)}
@@ -221,11 +231,9 @@ export function DealRoom({
           </div>
 
           <p className="mt-6 rounded-2xl bg-white/5 px-5 py-4 text-[15px] leading-relaxed text-ink-200">
-            You pay us nothing until this point.{' '}
-            <span className="text-white">
-              Free to discover, free to connect, free to negotiate.
-            </span>{' '}
-            We take a commission only on the agreed value of a closed deal — never on contact.
+            Your membership covers contacting and negotiating.{' '}
+            <span className="text-white">The commission lands only here, at close</span> — on the
+            agreed value, never on a conversation that goes nowhere.
           </p>
 
           {tax.applies && (

@@ -30,17 +30,30 @@ interface Draft {
   priority?: Priority;
 }
 
-export function QuizFunnel({ onComplete }: { onComplete: (answers: SponsorAnswers) => void }) {
-  const [step, setStep] = useState(0);
-  const [draft, setDraft] = useState<Draft>({});
+export function QuizFunnel({
+  onComplete,
+  presetCountry,
+  onCancel,
+}: {
+  onComplete: (answers: SponsorAnswers) => void;
+  /** Taken from the sponsor's account, so we never ask for it twice. */
+  presetCountry?: Country;
+  onCancel?: () => void;
+}) {
+  // The account already told us the country; drop that question rather than
+  // asking the same thing on two consecutive screens.
+  const steps = presetCountry ? quizSteps.filter((q) => q.id !== 'country') : quizSteps;
 
-  const current = quizSteps[step];
+  const [step, setStep] = useState(0);
+  const [draft, setDraft] = useState<Draft>(presetCountry ? { country: presetCountry } : {});
+
+  const current = steps[step];
 
   function advance(patch: Draft) {
     const next = { ...draft, ...patch };
     setDraft(next);
 
-    if (step < quizSteps.length - 1) {
+    if (step < steps.length - 1) {
       setStep(step + 1);
       return;
     }
@@ -142,12 +155,12 @@ export function QuizFunnel({ onComplete }: { onComplete: (answers: SponsorAnswer
 
       <div className="flex flex-1 items-center justify-center px-5 py-14">
         <div className="w-full max-w-xl">
-          <ProgressBar current={step} total={quizSteps.length} />
+          <ProgressBar current={step} total={steps.length} />
           <div className="mt-12">{renderStep()}</div>
 
-          {step > 0 && (
+          {(step > 0 || onCancel) && (
             <div className="mt-10">
-              <Button variant="ghost" onClick={() => setStep(step - 1)}>
+              <Button variant="ghost" onClick={() => (step > 0 ? setStep(step - 1) : onCancel?.())}>
                 ← Back
               </Button>
             </div>

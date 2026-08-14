@@ -50,15 +50,32 @@ sponsors will see them, plus an illustrative view of who is searching right now.
 Quick-start presets for both sides sit at the bottom of the landing page so
 neither flow needs typing during a demo.
 
-## Suggested demo order
+## The demo journey
 
-1. **Local gym, Tartu** — small budget, youth, one city. Shows the core promise.
-2. Hit the **Rank by** chips on the results screen — the ranking visibly
-   reorders, which is the most convincing thing in the demo.
-3. **Lithuanian beverage brand** — the Vilnius club with support-recipient
-   status, where enhanced relief actually applies.
-4. **Small football club** (club side) — profile live in two minutes, with real
-   sponsor demand visible underneath.
+```
+Landing (two doors)
+├─ SPONSOR  sign up → quiz → matching → matches → detail
+│            → MEMBERSHIP GATE (charge point A)
+│            → connect → deal room (charge point B)
+└─ CLUB     profile builder → "you're live" preview (discoverable, free)
+```
+
+Sample sponsor / sample club shortcut buttons have been removed — every run goes
+through the real onboarding, so the demo shows the actual journey.
+
+**Both revenue lines are screens you can land on:**
+
+- **Charge point A — membership.** Browsing and matching are free; contacting a
+  club is not. The Connect button reads "Contact this club · Membership" until a
+  membership is started. Recurring revenue, made visible.
+- **Charge point B — commission.** The deal room shows agreed value, the tier
+  applied, what the club receives, and what the sponsor pays. Transactional
+  revenue, made visible.
+- **Pricing screen** in the header answers "how do you make money" by clicking
+  rather than hand-waving.
+
+Suggested order: run the sponsor path end to end (signup → gate → deal room),
+hit the **Rank by** chips on the results screen, then show the club side.
 
 ## Architecture
 
@@ -156,11 +173,29 @@ and statutory caps.
 taxable profit) and requires formal recipient status; the EE allowance thresholds
 and the LV position also need confirming against current law with an adviser.
 
-## Commission
+## The money model
 
-Free to join, free to browse, free to connect. The platform earns only when a
-deal closes — 2% on large deals, 10% on small. This copy appears on the landing,
-the results screen and the connect action. The product never charges for contact.
+Two revenue lines, both on the sponsor's side of the table. `src/data/pricing.ts`
+is the single source of truth; the signup note, membership gate, deal room and
+pricing screen all read from it, and tests assert they cannot diverge.
+
+| Who | What | When |
+|---|---|---|
+| Clubs & athletes | **Free, always** — to list, to be matched, to be contacted | never |
+| Sponsors | **€49/month** membership | to contact a club and close |
+| Sponsors | **10%** up to €10,000, **2%** above | only on a closed deal |
+
+Commission is charged **on top** of the sponsorship, so the club receives the
+full agreed amount — the deal room shows this as its own line.
+
+**Known tension with the pitch.** `marketplace_master_v2.md` §0 and §6.2 say
+"nobody pays to join" and treat zero joining friction as the reason the model
+beats subscription competitors (it explicitly cites OpenSponsorship's
+subscription as a cautionary example). A membership gate reintroduces that
+friction for the small local sponsor the pitch targets. If a judge raises it,
+the honest answer is that the first connection could be free, or membership
+waived below a deal-size threshold — the gate is a product decision, not a
+constraint of the build.
 
 ## Docs
 

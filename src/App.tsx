@@ -5,22 +5,34 @@ import { MatchResults } from './components/Matches/MatchResults';
 import { MatchDetail } from './components/Matches/MatchDetail';
 import { DealRoom } from './components/Deal/DealRoom';
 import { MatchingScreen } from './components/Matches/MatchingScreen';
+import { SponsorSignup } from './components/Onboarding/SponsorSignup';
+import { MembershipGate } from './components/Membership/MembershipGate';
+import { Pricing } from './components/Pricing';
 import { ProfileBuilder } from './components/Club/ProfileBuilder';
 import { LiveProfile } from './components/Club/LiveProfile';
 import { createProfile, fetchMatches, fetchProfiles } from './lib/api';
-import type { Match, Priority, ProfileDraft, SponsorAnswers } from './lib/types';
+import type {
+  Match,
+  Priority,
+  ProfileDraft,
+  SponsorAccount,
+  SponsorAnswers,
+} from './lib/types';
 
 type Screen =
   | 'landing'
+  | 'pricing'
+  | 'sponsor-signup'
   | 'quiz'
   | 'matching'
   | 'results'
   | 'detail'
+  | 'membership'
   | 'deal'
   | 'club-builder'
   | 'club-live';
 
-function Header({ onHome }: { onHome: () => void }) {
+function Header({ onHome, onPricing }: { onHome: () => void; onPricing: () => void }) {
   return (
     <header className="sticky top-0 z-20 border-b border-paper-line bg-paper/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
@@ -32,7 +44,15 @@ function Header({ onHome }: { onHome: () => void }) {
             Sponsorship Marketplace
           </span>
         </button>
-        <span className="eyebrow hidden text-ink-400 sm:block">EOK × YESS · Tallinn 2026</span>
+        <div className="flex items-center gap-5">
+          <button
+            onClick={onPricing}
+            className="font-display text-sm font-medium text-ink-500 transition-colors hover:text-flare-500"
+          >
+            Pricing
+          </button>
+          <span className="eyebrow hidden text-ink-400 sm:block">EOK × YESS · Tallinn 2026</span>
+        </div>
       </div>
     </header>
   );
@@ -61,6 +81,7 @@ export default function App() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [selected, setSelected] = useState<Match | null>(null);
   const [clubDraft, setClubDraft] = useState<ProfileDraft | null>(null);
+  const [account, setAccount] = useState<SponsorAccount | null>(null);
   const [poolSize, setPoolSize] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
@@ -130,22 +151,39 @@ export default function App() {
 
   return (
     <div className="flex min-h-dvh flex-col">
-      <Header onHome={goHome} />
+      <Header onHome={goHome} onPricing={() => setScreen('pricing')} />
 
       <main className="flex flex-1 flex-col">
         {screen === 'landing' && (
           <Landing
-            onSponsorStart={() => setScreen('quiz')}
+            onSponsorStart={() => setScreen(account ? 'quiz' : 'sponsor-signup')}
             onClubStart={() => {
               setClubDraft(null);
               setScreen('club-builder');
             }}
-            onPersona={runSponsor}
-            onClubSeed={publishProfile}
+            onPricing={() => setScreen('pricing')}
           />
         )}
 
-        {screen === 'quiz' && <QuizFunnel onComplete={runSponsor} />}
+        {screen === 'pricing' && <Pricing onBack={() => setScreen('landing')} />}
+
+        {screen === 'sponsor-signup' && (
+          <SponsorSignup
+            onComplete={(next) => {
+              setAccount(next);
+              setScreen('quiz');
+            }}
+            onCancel={() => setScreen('landing')}
+          />
+        )}
+
+        {screen === 'quiz' && (
+          <QuizFunnel
+            onComplete={runSponsor}
+            presetCountry={account?.country}
+            onCancel={() => setScreen(account ? 'sponsor-signup' : 'landing')}
+          />
+        )}
 
         {screen === 'matching' && (
           <MatchingScreen
@@ -180,6 +218,21 @@ export default function App() {
             answers={answers}
             onBack={() => setScreen('results')}
             onOpenDeal={() => setScreen('deal')}
+            membershipActive={account?.membershipActive ?? false}
+            onRequireMembership={() => setScreen('membership')}
+          />
+        )}
+
+        {screen === 'membership' && selected && (
+          <MembershipGate
+            profile={selected.profile}
+            onBack={() => setScreen('detail')}
+            onStart={() => {
+              setAccount((current) =>
+                current ? { ...current, membershipActive: true } : current,
+              );
+              setScreen('detail');
+            }}
           />
         )}
 

@@ -96,7 +96,7 @@ export function MatchResults({
       )}
 
       <p className="mt-10 text-center text-xs text-ink-400">
-        Free to connect. We only earn when a deal closes — 2% on large deals, 10% on small.
+        Free to browse and match. Contacting a club needs a sponsor membership; clubs never pay.
       </p>
     </div>
   );

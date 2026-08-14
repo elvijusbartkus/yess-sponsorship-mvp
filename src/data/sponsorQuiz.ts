@@ -90,7 +90,7 @@ export const quizSteps = [
   {
     id: 'budget',
     title: "What's your budget for this sponsorship?",
-    subtitle: 'A range is fine. Free to browse, free to connect.',
+    subtitle: 'A range is fine. Browsing and matching are free.',
   },
   {
     id: 'demographic',

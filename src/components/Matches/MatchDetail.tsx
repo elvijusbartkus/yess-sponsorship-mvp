@@ -19,11 +19,16 @@ export function MatchDetail({
   answers,
   onBack,
   onOpenDeal,
+  membershipActive,
+  onRequireMembership,
 }: {
   match: Match;
   answers: SponsorAnswers;
   onBack: () => void;
   onOpenDeal: () => void;
+  /** Contacting a club is the gated action — see the membership screen. */
+  membershipActive: boolean;
+  onRequireMembership: () => void;
 }) {
   const [connected, setConnected] = useState(false);
   const { profile, taxBenefit } = match;
@@ -242,11 +247,19 @@ export function MatchDetail({
           </div>
         ) : (
           <div className="flex flex-wrap items-center gap-3">
-            <Button size="lg" onClick={() => setConnected(true)}>
-              Connect with {profile.name}
+            <Button
+              size="lg"
+              onClick={() => (membershipActive ? setConnected(true) : onRequireMembership())}
+            >
+              {membershipActive ? `Connect with ${profile.name}` : 'Contact this club'}
+              {!membershipActive && (
+                <span className="ml-1 rounded-full bg-white/15 px-2 py-0.5 text-[11px] font-semibold">
+                  Membership
+                </span>
+              )}
             </Button>
             <span className="text-xs text-ink-400">
-              Free to connect. We only earn when a deal closes — 2% on large deals, 10% on small.
+              Contacting needs a sponsor membership. {profile.name} is never charged.
             </span>
           </div>
         )}

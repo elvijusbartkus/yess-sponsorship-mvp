@@ -1,6 +1,4 @@
-import { personas } from '../data/personas';
-import { clubSeeds } from '../data/clubFlow';
-import type { ProfileDraft, SponsorAnswers } from '../lib/types';
+
 
 function DoorCard({
   eyebrow,
@@ -58,37 +56,14 @@ function DoorCard({
   );
 }
 
-function QuickStart({
-  title,
-  body,
-  onClick,
-}: {
-  title: string;
-  body: string;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="group relative w-full overflow-hidden rounded-2xl bg-white p-4 text-left ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card hover:ring-ink-950"
-    >
-      <span className="absolute inset-y-0 left-0 w-1 origin-top scale-y-0 bg-flare-500 transition-transform duration-200 group-hover:scale-y-100" />
-      <p className="font-display text-[15px] font-medium text-ink-950">{title}</p>
-      <p className="mt-0.5 text-[13px] text-ink-400">{body}</p>
-    </button>
-  );
-}
-
 export function Landing({
   onSponsorStart,
   onClubStart,
-  onPersona,
-  onClubSeed,
+  onPricing,
 }: {
   onSponsorStart: () => void;
   onClubStart: () => void;
-  onPersona: (answers: SponsorAnswers) => void;
-  onClubSeed: (draft: ProfileDraft) => void;
+  onPricing: () => void;
 }) {
   return (
     <div className="mx-auto w-full max-w-5xl px-5 py-16 sm:py-24">
@@ -113,7 +88,7 @@ export function Landing({
           primary
           eyebrow="For businesses"
           title="I want to back sport"
-          body="Answer six quick questions and see the clubs and athletes that actually reach your customers, with what you get and what it costs."
+          body="Create an account, answer five quick questions, and see the clubs and athletes that actually reach your customers — with what you get and what it costs."
           cta="Find my matches"
           onClick={onSponsorStart}
         />
@@ -126,41 +101,20 @@ export function Landing({
         />
       </div>
 
-      <p className="mt-7 text-sm text-ink-500">
-        Free to join, free to browse, free to connect.{' '}
-        <span className="text-ink-950">We only earn when a deal closes</span> — 2% on large deals,
-        10% on small.
+      <p className="mt-7 max-w-2xl text-sm leading-relaxed text-ink-500">
+        <span className="text-ink-950">Clubs and athletes never pay.</span> Sponsors browse and
+        match for free; a membership unlocks contacting clubs, and we take a commission only when a
+        deal actually closes.
       </p>
 
-      <div className="mt-20 grid gap-10 border-t border-paper-line pt-10 sm:grid-cols-2">
-        <div>
-          <p className="eyebrow text-ink-400">Jump in as a sample sponsor</p>
-          <div className="mt-5 space-y-2.5">
-            {personas.map((persona) => (
-              <QuickStart
-                key={persona.id}
-                title={persona.label}
-                body={persona.blurb}
-                onClick={() => onPersona(persona.answers)}
-              />
-            ))}
-          </div>
-        </div>
+      <button
+        onClick={onPricing}
+        className="mt-16 inline-flex items-center gap-2 border-t border-paper-line pt-8 font-display text-base font-medium text-ink-950 transition-colors hover:text-flare-500"
+      >
+        See exactly how we make money
+        <span aria-hidden>→</span>
+      </button>
 
-        <div>
-          <p className="eyebrow text-ink-400">Or as a sample club</p>
-          <div className="mt-5 space-y-2.5">
-            {clubSeeds.map((seed) => (
-              <QuickStart
-                key={seed.id}
-                title={seed.label}
-                body={seed.blurb}
-                onClick={() => onClubSeed(seed.draft)}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
