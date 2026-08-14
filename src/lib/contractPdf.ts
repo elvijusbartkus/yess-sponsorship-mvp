@@ -68,7 +68,7 @@ export function generateContractPdf(
 
   heading('2. Object');
   body(
-    `This agreement covers a sponsorship of ${profile.name} for the current season, arranged through the Sponsorship Marketplace platform.`,
+    `This agreement covers a sponsorship of ${profile.name} for the current season, arranged through the Matspo platform.`,
   );
 
   heading('3. Funding');
@@ -106,7 +106,7 @@ export function generateContractPdf(
   doc.setFontSize(9);
   doc.setTextColor(140, 140, 150);
   const disclaimer = doc.splitTextToSize(
-    'This is a demo document generated for the Sponsorship Marketplace platform. It is not legally binding. A production deployment would route signature through a licensed e-signature provider and legal review.',
+    'This is a demo document generated for the Matspo platform. It is not legally binding. A production deployment would route signature through a licensed e-signature provider and legal review.',
     width,
   );
   doc.text(disclaimer, margin, y);

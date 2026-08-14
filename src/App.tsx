@@ -14,6 +14,7 @@ import { Pricing } from './components/Pricing';
 import { ProfileBuilder } from './components/Club/ProfileBuilder';
 import { LiveProfile } from './components/Club/LiveProfile';
 import { BrowseList } from './components/Browse/BrowseList';
+import { Logo } from './components/common/Logo';
 import { createProfile, fetchMatches, fetchProfiles } from './lib/api';
 import type {
   ContractRecord,
@@ -87,13 +88,8 @@ function Header({
     <header className="sticky top-0 z-20 border-b border-paper-line bg-paper/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4">
         <div className="flex items-center gap-3">
-          <button onClick={onHome} className="group flex items-center gap-2.5">
-            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-ink-950 font-display text-sm font-bold text-flare-500 transition-colors group-hover:bg-flare-500 group-hover:text-white">
-              S
-            </span>
-            <span className="font-display text-[15px] font-bold tracking-tight text-ink-950">
-              Sponsorship Marketplace
-            </span>
+          <button onClick={onHome} className="group flex items-center">
+            <Logo size="sm" />
           </button>
           <RoleBadge role={role} />
         </div>
