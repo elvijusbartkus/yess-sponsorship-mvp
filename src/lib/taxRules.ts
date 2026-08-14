@@ -24,8 +24,8 @@ export function computeTaxBenefit(budget: number, profile: Profile): MatchTaxBen
       const taxSaved = deduction * benefit.corporateTaxRate;
       return {
         applies: true,
-        tag: `Enhanced tax relief — up to ${benefit.factor * 100}% deduction`,
-        line: `Holds support-recipient status, so this sponsorship deducts at ${benefit.factor * 100}% — worth about ${formatEur(taxSaved)} on a ${formatEur(budget)} budget.`,
+        tag: 'Enhanced tax relief available',
+        line: 'Holds support-recipient status, so this sponsorship can qualify for enhanced tax relief on top of the usual deduction. Exact savings depend on your accountant\'s numbers.',
         deduction,
         taxSaved,
         realCost: budget - taxSaved,
@@ -37,8 +37,8 @@ export function computeTaxBenefit(budget: number, profile: Profile): MatchTaxBen
       const taxSaved = budget * benefit.corporateTaxRate;
       return {
         applies: true,
-        tag: `Eligible under Estonia's tax-free allowance`,
-        line: `Registered recipient, so a ${formatEur(budget)} sponsorship is tax-free — about ${formatEur(taxSaved)} not lost to distribution tax.`,
+        tag: 'Tax-free allowance available',
+        line: 'Registered recipient, so this sponsorship can fall under the tax-free allowance rather than being taxed as a distribution. Exact savings depend on your accountant\'s numbers.',
         deduction: budget,
         taxSaved,
         realCost: budget - taxSaved,
