@@ -1,3 +1,7 @@
+/* Self-hosted so the demo never depends on wifi. */
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/inter';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,7 +14,33 @@
   }
 
   body {
-    @apply bg-slate-50 text-ink-900 antialiased;
+    @apply bg-paper text-ink-950 antialiased;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  ::selection {
+    @apply bg-flare-500 text-white;
+  }
+}
+
+@layer components {
+  /* Big, tight, confident. The house voice for headlines. */
+  .display {
+    @apply font-display font-bold tracking-tightest;
+  }
+
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.14em];
+  }
+
+  /* Diagonal energy for the hero — typographic design, no images. */
+  .flare-rule {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      theme('colors.flare.500') 0px,
+      theme('colors.flare.500') 2px,
+      transparent 2px,
+      transparent 7px
+    );
   }
 }

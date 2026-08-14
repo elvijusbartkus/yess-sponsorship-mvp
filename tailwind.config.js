@@ -4,22 +4,38 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Near-black, warm rather than blue-grey.
         ink: {
-          900: '#0B1220',
-          800: '#131C2E',
-          700: '#1E2A42',
-          500: '#4A5670',
-          400: '#6B7794',
-          300: '#98A2B8',
+          950: '#0B0B0F',
+          900: '#15151B',
+          800: '#22222B',
+          700: '#33333F',
+          600: '#4A4A58',
+          500: '#6B6B78',
+          400: '#8E8E9C',
+          300: '#B5B5C0',
+          200: '#D8D8DE',
+          100: '#E9E9E5',
         },
-        accent: {
-          50: '#EEF6FF',
-          100: '#D9EAFF',
-          300: '#7DB8FF',
-          500: '#1F6FEB',
-          600: '#1758C4',
-          700: '#12459B',
+        // Warm off-white, not cold grey.
+        paper: {
+          DEFAULT: '#FAFAF7',
+          dim: '#F3F3EE',
+          line: '#E6E6DF',
         },
+        // The one bold accent. Used sparingly and with intent.
+        flare: {
+          50: '#FFF1EB',
+          100: '#FFDCCC',
+          200: '#FFBB9E',
+          300: '#FF9770',
+          400: '#FF7442',
+          500: '#FF5A1F',
+          600: '#E8430A',
+          700: '#B93307',
+          800: '#8A2605',
+        },
+        // Verified only — deliberately a different hue from the accent.
         gain: {
           50: '#ECFDF3',
           100: '#D1FADF',
@@ -29,11 +45,25 @@ export default {
         },
       },
       boxShadow: {
-        card: '0 1px 2px rgba(16,24,40,0.06), 0 1px 3px rgba(16,24,40,0.10)',
-        lift: '0 12px 24px -6px rgba(16,24,40,0.12), 0 4px 8px -4px rgba(16,24,40,0.08)',
+        card: '0 1px 2px rgba(11,11,15,0.04), 0 1px 3px rgba(11,11,15,0.06)',
+        lift: '0 18px 32px -12px rgba(11,11,15,0.16), 0 6px 12px -6px rgba(11,11,15,0.08)',
+        flare: '0 18px 32px -12px rgba(255,90,31,0.35)',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
+        display: ['"Space Grotesk Variable"', 'Space Grotesk', 'system-ui', 'sans-serif'],
+        sans: ['"Inter Variable"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+      },
+      letterSpacing: {
+        tightest: '-0.045em',
+      },
+      keyframes: {
+        rise: {
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        rise: 'rise 0.35s cubic-bezier(0.16, 1, 0.3, 1) both',
       },
     },
   },

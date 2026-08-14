@@ -7,9 +7,9 @@ import type { Match, SponsorAnswers } from '../../lib/types';
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white px-4 py-3">
-      <p className="text-xs font-medium uppercase tracking-wide text-ink-400">{label}</p>
-      <p className="mt-1 text-lg font-semibold text-ink-900">{value}</p>
+    <div className="rounded-2xl bg-white px-4 py-4 ring-1 ring-inset ring-paper-line">
+      <p className="eyebrow text-ink-400">{label}</p>
+      <p className="display mt-1.5 text-2xl tabular-nums text-ink-950">{value}</p>
     </div>
   );
 }
@@ -35,41 +35,41 @@ export function MatchDetail({
       <div className="mt-6 flex flex-wrap items-start justify-between gap-4">
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="text-3xl font-semibold tracking-tight text-ink-900">{profile.name}</h1>
+            <h1 className="display text-4xl leading-tight text-ink-950 sm:text-5xl">{profile.name}</h1>
             <VerifiedBadge verified={match.verifiedBadge} />
           </div>
-          <p className="mt-2 text-sm text-ink-400">
+          <p className="mt-2.5 text-sm text-ink-500">
             {profile.type === 'club' ? 'Club' : 'Athlete'} · {profile.sport} · {profile.region},{' '}
             {COUNTRY_LABEL[profile.country]}
           </p>
         </div>
-        <div className="flex h-16 w-16 flex-col items-center justify-center rounded-xl bg-accent-50 ring-1 ring-inset ring-accent-100">
-          <span className="text-xl font-semibold leading-none text-accent-700">{match.score}</span>
-          <span className="mt-0.5 text-[10px] font-medium uppercase tracking-wide text-accent-500">
+        <div className="flex h-20 w-20 shrink-0 flex-col items-center justify-center rounded-2xl bg-ink-950">
+          <span className="display text-3xl leading-none text-flare-500">{match.score}</span>
+          <span className="mt-1 text-[9px] font-semibold uppercase tracking-[0.12em] text-ink-400">
             fit
           </span>
         </div>
       </div>
 
-      <p className="mt-4 text-sm leading-relaxed text-ink-700">{profile.results}</p>
+      <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-ink-700">{profile.results}</p>
 
       {match.caution && (
-        <p className="mt-4 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-ink-500">
+        <p className="mt-5 rounded-2xl bg-paper-dim px-5 py-4 text-sm text-ink-600">
           {match.caution}
         </p>
       )}
 
-      <section className="mt-8">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-ink-400">
+      <section className="mt-10">
+        <h2 className="eyebrow text-ink-400">
           Why we matched you
         </h2>
         <ul className="mt-3 space-y-2">
           {match.reasons.map((reason) => (
-            <li key={reason} className="flex items-start gap-2 text-sm text-ink-700">
+            <li key={reason} className="flex items-start gap-2.5 text-[15px] leading-relaxed text-ink-700">
               <svg
                 viewBox="0 0 20 20"
                 fill="currentColor"
-                className="mt-0.5 h-4 w-4 shrink-0 text-accent-500"
+                className="mt-0.5 h-4 w-4 shrink-0 text-flare-500"
               >
                 <path
                   fillRule="evenodd"
@@ -83,8 +83,8 @@ export function MatchDetail({
         </ul>
       </section>
 
-      <section className="mt-8">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-ink-400">Audience</h2>
+      <section className="mt-10">
+        <h2 className="eyebrow text-ink-400">Audience</h2>
         <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <Stat
             label="Matchday"
@@ -105,15 +105,15 @@ export function MatchDetail({
         </div>
       </section>
 
-      <section className="mt-8">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-ink-400">
+      <section className="mt-10">
+        <h2 className="eyebrow text-ink-400">
           What you get
         </h2>
         <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {profile.activation.map((item) => (
             <li
               key={item}
-              className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-ink-700"
+              className="rounded-xl bg-white px-4 py-3 text-sm text-ink-700 ring-1 ring-inset ring-paper-line"
             >
               {item}
             </li>
@@ -121,18 +121,18 @@ export function MatchDetail({
         </ul>
       </section>
 
-      <section className="mt-8 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-xl border border-slate-200 bg-white px-4 py-3">
-          <p className="text-xs font-medium uppercase tracking-wide text-ink-400">Typical deal</p>
-          <p className="mt-1 text-sm font-semibold text-ink-900">
+      <section className="mt-10 grid gap-3 sm:grid-cols-2">
+        <div className="rounded-2xl bg-white px-4 py-4 ring-1 ring-inset ring-paper-line">
+          <p className="eyebrow text-ink-400">Typical deal</p>
+          <p className="mt-1.5 font-display text-lg font-medium text-ink-950">
             {formatEur(profile.dealRange[0])} – {formatEur(profile.dealRange[1])}
           </p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white px-4 py-3">
-          <p className="text-xs font-medium uppercase tracking-wide text-ink-400">
+        <div className="rounded-2xl bg-white px-4 py-4 ring-1 ring-inset ring-paper-line">
+          <p className="eyebrow text-ink-400">
             Current sponsors
           </p>
-          <p className="mt-1 text-sm font-semibold text-ink-900">
+          <p className="mt-1.5 font-display text-lg font-medium text-ink-950">
             {profile.currentSponsors.length ? profile.currentSponsors.join(', ') : 'None yet'}
           </p>
         </div>
@@ -142,14 +142,14 @@ export function MatchDetail({
       <section
         className={`mt-8 rounded-2xl p-5 ${
           taxBenefit.applies
-            ? 'bg-gain-50 ring-1 ring-inset ring-gain-100'
-            : 'bg-slate-50 ring-1 ring-inset ring-slate-200'
+            ? 'bg-flare-50 ring-1 ring-inset ring-flare-100'
+            : 'bg-paper-dim ring-1 ring-inset ring-paper-line'
         }`}
       >
-        <p className="text-xs font-semibold uppercase tracking-wider text-ink-400">Tax treatment</p>
+        <p className="eyebrow text-ink-400">Tax treatment</p>
         <p
           className={`mt-2 text-sm font-medium ${
-            taxBenefit.applies ? 'text-gain-700' : 'text-ink-700'
+            taxBenefit.applies ? 'text-flare-700' : 'text-ink-700'
           }`}
         >
           {taxBenefit.line}
@@ -158,16 +158,16 @@ export function MatchDetail({
         {taxBenefit.applies && (
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
             <div>
-              <p className="text-xs text-ink-400">You sponsor</p>
-              <p className="text-sm font-semibold text-ink-900">{formatEur(answers.budget)}</p>
+              <p className="eyebrow text-ink-400">You sponsor</p>
+              <p className="display mt-1 text-2xl tabular-nums text-ink-950">{formatEur(answers.budget)}</p>
             </div>
             <div>
-              <p className="text-xs text-ink-400">Tax saved</p>
-              <p className="text-sm font-semibold text-ink-900">{formatEur(taxBenefit.taxSaved)}</p>
+              <p className="eyebrow text-ink-400">Tax saved</p>
+              <p className="display mt-1 text-2xl tabular-nums text-flare-600">{formatEur(taxBenefit.taxSaved)}</p>
             </div>
             <div>
-              <p className="text-xs text-ink-400">Real cost</p>
-              <p className="text-sm font-semibold text-ink-900">{formatEur(taxBenefit.realCost)}</p>
+              <p className="eyebrow text-ink-400">Real cost</p>
+              <p className="display mt-1 text-2xl tabular-nums text-ink-950">{formatEur(taxBenefit.realCost)}</p>
             </div>
           </div>
         )}
@@ -176,10 +176,10 @@ export function MatchDetail({
         <p className="mt-1 text-xs text-ink-300">{taxBenefit.caveat}</p>
       </section>
 
-      <div className="mt-10 border-t border-slate-200 pt-6">
+      <div className="mt-12 border-t border-paper-line pt-8">
         {connected ? (
-          <div className="rounded-xl border border-gain-100 bg-gain-50 px-5 py-4">
-            <p className="font-semibold text-gain-700">Request sent to {profile.name}</p>
+          <div className="rounded-2xl bg-gain-50 px-6 py-5 ring-1 ring-inset ring-gain-100">
+            <p className="font-display text-xl font-bold tracking-tight text-gain-700">Request sent to {profile.name}</p>
             <p className="mt-1 text-sm text-gain-600">
               They typically respond within 48 hours. Nothing is charged for connecting.
             </p>

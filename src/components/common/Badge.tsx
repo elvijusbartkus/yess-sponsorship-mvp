@@ -3,16 +3,18 @@ import type { ReactNode } from 'react';
 type Tone = 'neutral' | 'verified' | 'muted' | 'accent';
 
 const TONES: Record<Tone, string> = {
-  neutral: 'bg-slate-100 text-ink-500',
+  neutral: 'bg-paper-dim text-ink-600',
+  // Verified is green — deliberately a different hue from the orange accent,
+  // so "proven" and "tax benefit" never read as the same signal.
   verified: 'bg-gain-50 text-gain-700 ring-1 ring-inset ring-gain-100',
-  muted: 'bg-slate-50 text-ink-400 ring-1 ring-inset ring-slate-200',
-  accent: 'bg-accent-50 text-accent-700 ring-1 ring-inset ring-accent-100',
+  muted: 'bg-transparent text-ink-400 ring-1 ring-inset ring-paper-line',
+  accent: 'bg-flare-500 text-white',
 };
 
 export function Badge({ tone = 'neutral', children }: { tone?: Tone; children: ReactNode }) {
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium ${TONES[tone]}`}
+      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium ${TONES[tone]}`}
     >
       {children}
     </span>
@@ -30,7 +32,7 @@ export function VerifiedBadge({ verified }: { verified: boolean }) {
             clipRule="evenodd"
           />
         </svg>
-        Verified audience
+        Verified
       </Badge>
     );
   }

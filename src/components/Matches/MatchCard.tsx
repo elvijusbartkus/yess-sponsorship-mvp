@@ -3,78 +3,172 @@ import { formatEur } from '../../lib/taxRules';
 import { COUNTRY_LABEL } from '../../lib/matching';
 import type { Match } from '../../lib/types';
 
-function ScoreDial({ score }: { score: number }) {
-  const tone =
-    score >= 80
-      ? 'bg-accent-50 text-accent-700 ring-accent-100'
-      : score >= 60
-        ? 'bg-slate-100 text-ink-700 ring-slate-200'
-        : 'bg-slate-50 text-ink-400 ring-slate-200';
+/** Big number in an accent ring — the eye should land here first. */
+function ScoreRing({ score, lead }: { score: number; lead: boolean }) {
+  const circumference = 2 * Math.PI * 26;
+  const offset = circumference * (1 - score / 100);
+
   return (
-    <div
-      className={`flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl ring-1 ring-inset ${tone}`}
-    >
-      <span className="text-base font-semibold leading-none">{score}</span>
-      <span className="mt-0.5 text-[9px] font-medium uppercase tracking-wide opacity-70">fit</span>
+    <div className="relative h-16 w-16 shrink-0">
+      <svg viewBox="0 0 60 60" className="h-full w-full -rotate-90">
+        <circle
+          cx="30"
+          cy="30"
+          r="26"
+          fill="none"
+          strokeWidth="4"
+          className={lead ? 'stroke-white/25' : 'stroke-paper-line'}
+        />
+        <circle
+          cx="30"
+          cy="30"
+          r="26"
+          fill="none"
+          strokeWidth="4"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          className="stroke-flare-500 transition-all duration-500"
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span
+          className={`display text-xl leading-none ${lead ? 'text-white' : 'text-ink-950'}`}
+        >
+          {score}
+        </span>
+        <span
+          className={`text-[8px] font-semibold uppercase tracking-[0.12em] ${
+            lead ? 'text-white/50' : 'text-ink-400'
+          }`}
+        >
+          fit
+        </span>
+      </div>
     </div>
   );
 }
 
-export function MatchCard({ match, onSelect }: { match: Match; onSelect: () => void }) {
+export function MatchCard({
+  match,
+  onSelect,
+  lead = false,
+}: {
+  match: Match;
+  onSelect: () => void;
+  lead?: boolean;
+}) {
   const { profile, taxBenefit } = match;
 
   return (
     <button
       onClick={onSelect}
-      className="group w-full rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-card transition-all hover:-translate-y-0.5 hover:border-accent-300 hover:shadow-lift sm:p-6"
+      className={`group relative w-full overflow-hidden rounded-3xl p-6 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-lift sm:p-7 ${
+        lead
+          ? 'bg-ink-950 text-white shadow-lift'
+          : 'bg-white ring-1 ring-inset ring-paper-line hover:ring-ink-950'
+      }`}
     >
-      <div className="flex items-start gap-4">
+      {lead && (
+        <>
+          <div className="flare-rule absolute inset-x-0 top-0 h-1.5" />
+          <span className="eyebrow absolute right-6 top-6 rounded-full bg-flare-500 px-2.5 py-1 text-white">
+            Best match
+          </span>
+        </>
+      )}
+
+      <div className={`flex items-start gap-5 ${lead ? 'mt-6' : ''}`}>
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <h3 className="text-lg font-semibold tracking-tight text-ink-900">{profile.name}</h3>
+          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
+            <h3
+              className={`display text-2xl leading-tight ${lead ? 'text-white' : 'text-ink-950'}`}
+            >
+              {profile.name}
+            </h3>
             <VerifiedBadge verified={match.verifiedBadge} />
           </div>
-          <p className="mt-1 text-sm text-ink-400">
+          <p className={`mt-1.5 text-sm ${lead ? 'text-ink-300' : 'text-ink-500'}`}>
             {profile.sport} · {profile.region}, {COUNTRY_LABEL[profile.country]}
           </p>
         </div>
-        <ScoreDial score={match.score} />
+        <ScoreRing score={match.score} lead={lead} />
       </div>
 
-      {/* Audience is the hero. */}
-      <div className="mt-4 flex flex-wrap items-baseline gap-x-6 gap-y-2">
+      {/* Audience is the hero number of the card. */}
+      <div className="mt-6 flex flex-wrap items-end gap-x-8 gap-y-3">
         <div>
-          <span className="text-2xl font-semibold tracking-tight text-ink-900">
+          <span
+            className={`display text-4xl leading-none tabular-nums ${
+              lead ? 'text-white' : 'text-ink-950'
+            }`}
+          >
             {profile.audienceSize.toLocaleString('en-US')}
           </span>
-          <span className="ml-1.5 text-sm text-ink-400">people reached</span>
+          <span className={`ml-2 text-sm ${lead ? 'text-ink-300' : 'text-ink-500'}`}>
+            people reached
+          </span>
         </div>
-        <div className="text-sm text-ink-400">
-          Typical deal {formatEur(profile.dealRange[0])} – {formatEur(profile.dealRange[1])}
+        <div className={`text-sm ${lead ? 'text-ink-400' : 'text-ink-400'}`}>
+          Typical deal{' '}
+          <span className={lead ? 'text-ink-200' : 'text-ink-700'}>
+            {formatEur(profile.dealRange[0])}–{formatEur(profile.dealRange[1])}
+          </span>
         </div>
       </div>
 
-      <div className="mt-3 flex flex-wrap gap-1.5">
+      <div className="mt-4 flex flex-wrap gap-1.5">
         {profile.demographics.slice(0, 3).map((d) => (
-          <Badge key={d}>{d}</Badge>
+          <span
+            key={d}
+            className={`rounded-full px-2.5 py-1 text-[11px] font-medium ${
+              lead ? 'bg-white/10 text-ink-200' : 'bg-paper-dim text-ink-600'
+            }`}
+          >
+            {d}
+          </span>
         ))}
         {profile.isNational && <Badge tone="accent">National</Badge>}
       </div>
 
-      {match.reasons[0] && <p className="mt-4 text-sm text-ink-700">{match.reasons[0]}</p>}
-
-      {match.caution && (
-        <p className="mt-2 text-xs italic text-ink-400">{match.caution}</p>
+      {match.reasons[0] && (
+        <p className={`mt-5 text-[15px] leading-relaxed ${lead ? 'text-ink-200' : 'text-ink-700'}`}>
+          {match.reasons[0]}
+        </p>
       )}
 
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-3">
-        <p className={`text-xs ${taxBenefit.applies ? 'text-gain-700' : 'text-ink-400'}`}>
+      {match.caution && (
+        <p className={`mt-2 text-[13px] italic ${lead ? 'text-ink-400' : 'text-ink-400'}`}>
+          {match.caution}
+        </p>
+      )}
+
+      <div
+        className={`mt-6 flex flex-wrap items-center justify-between gap-3 border-t pt-4 ${
+          lead ? 'border-white/10' : 'border-paper-line'
+        }`}
+      >
+        <p
+          className={`flex items-center gap-2 text-[13px] ${
+            taxBenefit.applies
+              ? lead
+                ? 'text-flare-300'
+                : 'text-flare-700'
+              : lead
+                ? 'text-ink-400'
+                : 'text-ink-400'
+          }`}
+        >
           {taxBenefit.applies && (
-            <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-gain-500 align-middle" />
+            <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-flare-500" />
           )}
           {taxBenefit.tag}
         </p>
-        <span className="text-sm font-medium text-accent-500 transition-opacity group-hover:opacity-100 sm:opacity-60">
+        <span
+          className={`font-display text-sm font-medium transition-transform group-hover:translate-x-1 ${
+            lead ? 'text-flare-400' : 'text-ink-950'
+          }`}
+        >
           View →
         </span>
       </div>

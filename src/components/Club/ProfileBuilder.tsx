@@ -63,26 +63,26 @@ export function ProfileBuilder({
     switch (current.id) {
       case 'identity':
         return (
-          <div>
-            <h2 className="text-2xl font-semibold tracking-tight text-ink-900 sm:text-3xl">
+          <div className="animate-rise">
+            <h2 className="display text-4xl leading-[1.05] text-ink-950 sm:text-5xl">
               {current.title}
             </h2>
-            <p className="mt-2 text-sm text-ink-400">{current.subtitle}</p>
+            <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-500">{current.subtitle}</p>
 
             <input
               value={nameInput}
               onChange={(e) => setNameInput(e.target.value)}
               placeholder="e.g. FC Tartu Kalev"
-              className="mt-8 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-ink-900 placeholder:text-ink-300 focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
+              className="mt-9 w-full rounded-2xl bg-white px-5 py-4 font-display text-xl text-ink-950 ring-1 ring-inset ring-paper-line placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-flare-500"
             />
 
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
               {(['club', 'athlete'] as const).map((type) => (
                 <button
                   key={type}
                   disabled={!nameInput.trim()}
                   onClick={() => advance({ name: nameInput.trim(), type })}
-                  className="rounded-xl border border-slate-200 bg-white p-4 text-left font-medium text-ink-900 transition-all hover:border-accent-300 hover:shadow-card disabled:cursor-not-allowed disabled:opacity-40"
+                  className="group relative overflow-hidden rounded-2xl bg-white px-5 py-4 text-left font-display text-lg font-medium text-ink-950 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift hover:ring-ink-950 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0 disabled:hover:shadow-none"
                 >
                   I'm {type === 'club' ? 'a club' : 'an athlete'}
                 </button>
@@ -156,23 +156,23 @@ export function ProfileBuilder({
       case 'activation': {
         const selected = draft.activation ?? [];
         return (
-          <div>
-            <h2 className="text-2xl font-semibold tracking-tight text-ink-900 sm:text-3xl">
+          <div className="animate-rise">
+            <h2 className="display text-4xl leading-[1.05] text-ink-950 sm:text-5xl">
               {current.title}
             </h2>
-            <p className="mt-2 text-sm text-ink-400">{current.subtitle}</p>
+            <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-500">{current.subtitle}</p>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+            <div className="mt-9 grid gap-2.5 sm:grid-cols-2">
               {activationOptions.map((item) => {
                 const on = selected.includes(item);
                 return (
                   <button
                     key={item}
                     onClick={() => toggleActivation(item)}
-                    className={`rounded-xl border p-4 text-left font-medium transition-all ${
+                    className={`rounded-2xl px-5 py-4 text-left font-display text-lg font-medium transition-all duration-200 ${
                       on
-                        ? 'border-accent-500 bg-accent-50 text-accent-700 ring-1 ring-accent-500'
-                        : 'border-slate-200 bg-white text-ink-900 hover:border-accent-300'
+                        ? 'bg-ink-950 text-white'
+                        : 'bg-white text-ink-950 ring-1 ring-inset ring-paper-line hover:-translate-y-0.5 hover:shadow-lift hover:ring-ink-950'
                     }`}
                   >
                     {item}
@@ -182,7 +182,7 @@ export function ProfileBuilder({
             </div>
 
             <Button
-              className="mt-6"
+              className="mt-7"
               size="lg"
               disabled={selected.length === 0}
               onClick={() => advance({})}
@@ -212,14 +212,26 @@ export function ProfileBuilder({
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-5 py-10 sm:py-16">
-      <ProgressBar current={step} total={STEPS.length} />
-      <div className="mt-10">{renderStep()}</div>
+    // Mirrors the sponsor funnel's frame, labelled for the other side.
+    <div className="relative flex flex-1">
+      <aside className="relative hidden w-[clamp(80px,10vw,150px)] shrink-0 bg-ink-950 lg:block">
+        <div className="flare-rule absolute inset-y-0 right-0 w-1.5 opacity-90" />
+        <span className="eyebrow absolute bottom-12 left-1/2 -translate-x-1/2 rotate-180 whitespace-nowrap text-ink-500 [writing-mode:vertical-rl]">
+          For clubs &amp; athletes
+        </span>
+      </aside>
 
-      <div className="mt-8">
-        <Button variant="ghost" onClick={() => (step > 0 ? setStep(step - 1) : onCancel())}>
-          ← Back
-        </Button>
+      <div className="flex flex-1 items-center justify-center px-5 py-14">
+        <div className="w-full max-w-xl">
+          <ProgressBar current={step} total={STEPS.length} />
+          <div className="mt-12">{renderStep()}</div>
+
+          <div className="mt-10">
+            <Button variant="ghost" onClick={() => (step > 0 ? setStep(step - 1) : onCancel())}>
+              ← Back
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -19,17 +19,17 @@ type Screen =
 
 function Header({ onHome }: { onHome: () => void }) {
   return (
-    <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/85 backdrop-blur">
+    <header className="sticky top-0 z-20 border-b border-paper-line bg-paper/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
-        <button onClick={onHome} className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent-500 text-sm font-bold text-white">
+        <button onClick={onHome} className="group flex items-center gap-2.5">
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-ink-950 font-display text-sm font-bold text-flare-500 transition-colors group-hover:bg-flare-500 group-hover:text-white">
             S
           </span>
-          <span className="text-sm font-semibold tracking-tight text-ink-900">
+          <span className="font-display text-[15px] font-bold tracking-tight text-ink-950">
             Sponsorship Marketplace
           </span>
         </button>
-        <span className="hidden text-xs text-ink-400 sm:block">EOK × YESS · Tallinn 2026</span>
+        <span className="eyebrow hidden text-ink-400 sm:block">EOK × YESS · Tallinn 2026</span>
       </div>
     </header>
   );
@@ -59,9 +59,12 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-full">
+    // Flex shell so full-height screens (the funnels) can just claim flex-1
+    // instead of guessing the header's height in a calc().
+    <div className="flex min-h-dvh flex-col">
       <Header onHome={goHome} />
 
+      <main className="flex flex-1 flex-col">
       {screen === 'landing' && (
         <Landing
           onSponsorStart={() => setScreen('quiz')}
@@ -114,6 +117,7 @@ export default function App() {
           onHome={goHome}
         />
       )}
+      </main>
     </div>
   );
 }

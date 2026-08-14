@@ -20,46 +20,53 @@ export function QuizStep<T extends string>({
   onSelect,
 }: QuizStepProps<T>) {
   return (
-    <div>
-      <h2 className="text-2xl font-semibold tracking-tight text-ink-900 sm:text-3xl">{title}</h2>
-      <p className="mt-2 text-sm text-ink-400">{subtitle}</p>
+    <div className="animate-rise">
+      <h2 className="display text-4xl leading-[1.05] text-ink-950 sm:text-5xl">{title}</h2>
+      <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-500">{subtitle}</p>
 
-      <div className="mt-8 grid gap-3 sm:grid-cols-2">
-        {options.map((option) => {
+      <div className="mt-9 grid gap-2.5 sm:grid-cols-2">
+        {options.map((option, i) => {
           const isSelected = selected === option.value;
           return (
             <button
               key={String(option.value)}
               onClick={() => onSelect(option.value)}
-              className={`group rounded-xl border p-4 text-left transition-all ${
+              className={`group relative overflow-hidden rounded-2xl px-5 py-4 text-left transition-all duration-200 ${
                 isSelected
-                  ? 'border-accent-500 bg-accent-50 ring-1 ring-accent-500'
-                  : 'border-slate-200 bg-white hover:border-accent-300 hover:shadow-card'
+                  ? 'bg-ink-950 text-white'
+                  : 'bg-white ring-1 ring-inset ring-paper-line hover:-translate-y-0.5 hover:shadow-lift hover:ring-ink-950'
               }`}
             >
+              {/* Accent edge that wipes in on hover — energy without noise. */}
+              <span
+                className={`absolute inset-y-0 left-0 w-1 origin-top transition-transform duration-200 ${
+                  isSelected
+                    ? 'scale-y-100 bg-flare-500'
+                    : 'scale-y-0 bg-flare-500 group-hover:scale-y-100'
+                }`}
+              />
+
               <div className="flex items-center justify-between gap-3">
                 <span
-                  className={`font-medium ${isSelected ? 'text-accent-700' : 'text-ink-900'}`}
+                  className={`font-display text-lg font-medium tracking-tight ${
+                    isSelected ? 'text-white' : 'text-ink-950'
+                  }`}
                 >
                   {option.label}
                 </span>
                 <span
-                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors ${
-                    isSelected ? 'border-accent-500 bg-accent-500' : 'border-slate-300'
+                  className={`font-display text-xs tabular-nums transition-colors ${
+                    isSelected ? 'text-flare-400' : 'text-ink-200 group-hover:text-flare-500'
                   }`}
                 >
-                  {isSelected && (
-                    <svg viewBox="0 0 20 20" fill="white" className="h-3 w-3">
-                      <path
-                        fillRule="evenodd"
-                        d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  )}
+                  {String(i + 1).padStart(2, '0')}
                 </span>
               </div>
-              {option.hint && <p className="mt-1 text-xs text-ink-400">{option.hint}</p>}
+              {option.hint && (
+                <p className={`mt-1 text-[13px] ${isSelected ? 'text-ink-300' : 'text-ink-400'}`}>
+                  {option.hint}
+                </p>
+              )}
             </button>
           );
         })}

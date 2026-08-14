@@ -130,17 +130,30 @@ export function QuizFunnel({ onComplete }: { onComplete: (answers: SponsorAnswer
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-5 py-10 sm:py-16">
-      <ProgressBar current={step} total={quizSteps.length} />
-      <div className="mt-10">{renderStep()}</div>
+    // Fills the viewport so the question sits in a composed frame rather than
+    // floating at the top of an empty page.
+    <div className="relative flex flex-1">
+      <aside className="relative hidden w-[clamp(80px,10vw,150px)] shrink-0 bg-ink-950 lg:block">
+        <div className="flare-rule absolute inset-y-0 right-0 w-1.5 opacity-90" />
+        <span className="eyebrow absolute bottom-12 left-1/2 -translate-x-1/2 rotate-180 whitespace-nowrap text-ink-500 [writing-mode:vertical-rl]">
+          For businesses
+        </span>
+      </aside>
 
-      {step > 0 && (
-        <div className="mt-8">
-          <Button variant="ghost" onClick={() => setStep(step - 1)}>
-            ← Back
-          </Button>
+      <div className="flex flex-1 items-center justify-center px-5 py-14">
+        <div className="w-full max-w-xl">
+          <ProgressBar current={step} total={quizSteps.length} />
+          <div className="mt-12">{renderStep()}</div>
+
+          {step > 0 && (
+            <div className="mt-10">
+              <Button variant="ghost" onClick={() => setStep(step - 1)}>
+                ← Back
+              </Button>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

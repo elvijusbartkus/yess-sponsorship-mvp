@@ -8,15 +8,15 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const VARIANTS = {
   primary:
-    'bg-accent-500 text-white hover:bg-accent-600 active:bg-accent-700 shadow-card disabled:bg-ink-300',
+    'bg-ink-950 text-white hover:bg-flare-500 active:bg-flare-600 disabled:bg-ink-300 disabled:hover:bg-ink-300',
   secondary:
-    'bg-white text-ink-800 border border-slate-200 hover:border-slate-300 hover:bg-slate-50 shadow-card',
-  ghost: 'bg-transparent text-ink-500 hover:text-ink-800 hover:bg-slate-100',
+    'bg-white text-ink-950 ring-1 ring-inset ring-paper-line hover:ring-ink-950 hover:shadow-card',
+  ghost: 'bg-transparent text-ink-500 hover:text-ink-950',
 };
 
 const SIZES = {
   md: 'px-4 py-2 text-sm',
-  lg: 'px-6 py-3 text-base',
+  lg: 'px-6 py-3.5 text-base',
 };
 
 export function Button({
@@ -28,7 +28,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-300 focus-visible:ring-offset-2 disabled:cursor-not-allowed ${VARIANTS[variant]} ${SIZES[size]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-flare-500 focus-visible:ring-offset-2 focus-visible:ring-offset-paper disabled:cursor-not-allowed ${VARIANTS[variant]} ${SIZES[size]} ${className}`}
       {...rest}
     >
       {children}
