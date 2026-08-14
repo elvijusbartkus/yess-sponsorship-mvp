@@ -1,5 +1,4 @@
-import { Badge, CorroboratedBadge } from '../common/Badge';
-import { formatEur } from '../../lib/taxRules';
+import { CorroboratedBadge } from '../common/Badge';
 import { COUNTRY_LABEL } from '../../lib/matching';
 import type { Match } from '../../lib/types';
 
@@ -58,7 +57,7 @@ export function MatchCard({
   onSelect: () => void;
   lead?: boolean;
 }) {
-  const { profile, taxBenefit } = match;
+  const { profile } = match;
 
   return (
     <button
@@ -95,89 +94,30 @@ export function MatchCard({
         <ScoreRing score={match.score} lead={lead} />
       </div>
 
-      {/* Audience is the hero number of the card. */}
-      <div className="mt-6 flex flex-wrap items-end gap-x-8 gap-y-3">
-        <div>
-          <span
-            className={`display text-4xl leading-none tabular-nums ${
-              lead ? 'text-white' : 'text-ink-950'
-            }`}
-          >
-            {profile.audienceSize.toLocaleString('en-US')}
-          </span>
-          <span className={`ml-2 text-sm ${lead ? 'text-ink-300' : 'text-ink-500'}`}>
-            people reached
-          </span>
-        </div>
-        <div className={`text-sm ${lead ? 'text-ink-400' : 'text-ink-400'}`}>
-          Typical deal{' '}
-          <span className={lead ? 'text-ink-200' : 'text-ink-700'}>
-            {formatEur(profile.dealRange[0])}–{formatEur(profile.dealRange[1])}
-          </span>
-        </div>
-      </div>
-
-      <div className="mt-4 flex flex-wrap gap-1.5">
-        {profile.demographics.slice(0, 3).map((d) => (
-          <span
-            key={d}
-            className={`rounded-full px-2.5 py-1 text-[11px] font-medium ${
-              lead ? 'bg-white/10 text-ink-200' : 'bg-paper-dim text-ink-600'
-            }`}
-          >
-            {d}
-          </span>
-        ))}
-        {profile.isNational && <Badge tone="accent">National</Badge>}
+      {/* One big number. */}
+      <div className="mt-6">
+        <span
+          className={`display text-5xl leading-none tabular-nums ${
+            lead ? 'text-white' : 'text-ink-950'
+          }`}
+        >
+          {profile.audienceSize.toLocaleString('en-US')}
+        </span>
+        <span className={`ml-2 text-sm ${lead ? 'text-ink-300' : 'text-ink-500'}`}>reached</span>
       </div>
 
       {match.reasons[0] && (
-        <p className={`mt-5 text-[15px] leading-relaxed ${lead ? 'text-ink-200' : 'text-ink-700'}`}>
+        <p className={`mt-4 text-[15px] leading-snug ${lead ? 'text-ink-200' : 'text-ink-700'}`}>
           {match.reasons[0]}
         </p>
       )}
 
       {match.caution && (
-        <p className={`mt-2 text-[13px] italic ${lead ? 'text-ink-400' : 'text-ink-400'}`}>
+        <p className={`mt-1.5 text-[13px] italic ${lead ? 'text-ink-400' : 'text-ink-400'}`}>
           {match.caution}
         </p>
       )}
 
-      {match.consistencyFlag && (
-        <p className={`mt-2 text-[13px] ${lead ? 'text-flare-300' : 'text-flare-700'}`}>
-          ⚠ {match.consistencyFlag}
-        </p>
-      )}
-
-      <div
-        className={`mt-6 flex flex-wrap items-center justify-between gap-3 border-t pt-4 ${
-          lead ? 'border-white/10' : 'border-paper-line'
-        }`}
-      >
-        <p
-          className={`flex items-center gap-2 text-[13px] ${
-            taxBenefit.applies
-              ? lead
-                ? 'text-flare-300'
-                : 'text-flare-700'
-              : lead
-                ? 'text-ink-400'
-                : 'text-ink-400'
-          }`}
-        >
-          {taxBenefit.applies && (
-            <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-flare-500" />
-          )}
-          {taxBenefit.tag}
-        </p>
-        <span
-          className={`font-display text-sm font-medium transition-transform group-hover:translate-x-1 ${
-            lead ? 'text-flare-400' : 'text-ink-950'
-          }`}
-        >
-          View →
-        </span>
-      </div>
     </button>
   );
 }

@@ -6,8 +6,6 @@ import {
   budgetBands,
   countryOptions,
   demographicOptions,
-  wantsOptions,
-  priorityOptions,
   quizSteps,
   regionsByCountry,
 } from '../../data/sponsorQuiz';
@@ -64,7 +62,7 @@ export function QuizFunnel({
       budget: next.budgetBand!.midpoint,
       demographic: next.demographic!,
       region: next.region!,
-      wants: next.wants!,
+      wants: next.wants ?? 'any',
       priority: next.priority,
     });
   }
@@ -117,26 +115,6 @@ export function QuizFunnel({
           />
         );
       }
-      case 'wants':
-        return (
-          <QuizStep
-            title={current.title}
-            subtitle={current.subtitle}
-            options={wantsOptions}
-            selected={draft.wants}
-            onSelect={(wants) => advance({ wants })}
-          />
-        );
-      case 'priority':
-        return (
-          <QuizStep
-            title={current.title}
-            subtitle={current.subtitle}
-            options={priorityOptions}
-            selected={draft.priority}
-            onSelect={(priority) => advance({ priority })}
-          />
-        );
       default:
         return null;
     }

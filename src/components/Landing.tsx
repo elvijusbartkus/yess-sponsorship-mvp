@@ -69,17 +69,14 @@ export function Landing({
     <div className="mx-auto w-full max-w-5xl px-5 py-16 sm:py-24">
       <div className="animate-rise max-w-4xl">
         <div className="flare-rule h-2 w-28" />
-        <h1 className="display mt-7 text-[clamp(2.75rem,7vw,5.25rem)] leading-[0.92] text-ink-950">
-          Private money can't
+        <h1 className="display mt-7 text-[clamp(2.75rem,7.5vw,5.5rem)] leading-[0.9] text-ink-950">
+          Money can't find
           <br />
-          find its way into sport.
-          <br />
-          <span className="text-flare-500">We're the market that lets it.</span>
+          sport.
+          <span className="text-flare-500"> We're the market.</span>
         </h1>
-        <p className="mt-7 max-w-2xl text-lg leading-relaxed text-ink-500">
-          Thousands of Baltic clubs and athletes have real audiences and no way to be found, valued
-          or funded. Thousands of businesses want local attention and no way to buy it. We match the
-          two on audience, region, budget and goal — so the money finally moves.
+        <p className="mt-6 max-w-xl text-xl leading-snug text-ink-500">
+          We match Baltic clubs and athletes with the businesses that want their audience.
         </p>
       </div>
 
@@ -87,34 +84,26 @@ export function Landing({
         <DoorCard
           primary
           eyebrow="For businesses"
-          title="I want to back sport"
-          body="Create an account, answer five quick questions, and see the clubs and athletes that actually reach your customers — with what you get and what it costs."
+          title="Back sport"
+          body="Three questions. See who reaches your customers."
           cta="Find my matches"
           onClick={onSponsorStart}
         />
         <DoorCard
           eyebrow="For clubs & athletes"
-          title="I want funding"
-          body="Build a free profile in two minutes and become discoverable to every sponsor searching your market. No fees, ever, to be listed or contacted."
+          title="Get funded"
+          body="Free profile. Sponsors find you."
           cta="Get discovered"
           onClick={onClubStart}
         />
       </div>
 
-      <p className="mt-7 max-w-2xl text-sm leading-relaxed text-ink-500">
-        <span className="text-ink-950">Clubs and athletes never pay.</span> Sponsors browse and
-        match for free; a membership unlocks contacting clubs, and we take a commission only when a
-        deal actually closes.
-      </p>
-
       <button
         onClick={onPricing}
-        className="mt-16 inline-flex items-center gap-2 border-t border-paper-line pt-8 font-display text-base font-medium text-ink-950 transition-colors hover:text-flare-500"
+        className="mt-10 font-display text-base font-medium text-ink-500 transition-colors hover:text-flare-500"
       >
-        See exactly how we make money
-        <span aria-hidden>→</span>
+        Clubs free · Sponsors €49/mo + commission on close →
       </button>
-
     </div>
   );
 }

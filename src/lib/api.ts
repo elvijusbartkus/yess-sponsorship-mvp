@@ -28,6 +28,22 @@ export function createProfile(draft: ProfileDraft): Promise<{ profile: Profile }
   return request('/profiles', { method: 'POST', body: JSON.stringify({ draft }) });
 }
 
+export interface Campaign {
+  post: string;
+  story: string;
+  fromModel: boolean;
+}
+
+export function draftCampaign(
+  sponsor: string,
+  profileId: string,
+): Promise<{ campaign: Campaign }> {
+  return request('/campaign', {
+    method: 'POST',
+    body: JSON.stringify({ sponsor, profileId }),
+  });
+}
+
 export interface EnrichmentResult {
   ok: boolean;
   checkedAt: string;

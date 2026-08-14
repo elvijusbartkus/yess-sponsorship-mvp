@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 
-const LINE_MS = 1100;
+// Short on purpose: this sits inside a ~60 second demo, so a long spinner is
+// dead air. Two beats is enough to read as real computation.
+const LINE_MS = 850;
 
 export function MatchingScreen({
   poolSize,
@@ -10,11 +12,9 @@ export function MatchingScreen({
   onDone: () => void;
 }) {
   const lines = [
-    `Scanning ${poolSize} clubs and athletes across the Baltics…`,
-    'Filtering to your market…',
+    `Scanning ${poolSize} clubs and athletes…`,
     'Matching audience, region and budget…',
-    'Checking what each one can actually offer you…',
-    'Calculating your tax position…',
+    'Ranking your shortlist…',
   ];
 
   const [line, setLine] = useState(0);

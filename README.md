@@ -50,32 +50,31 @@ sponsors will see them, plus an illustrative view of who is searching right now.
 Quick-start presets for both sides sit at the bottom of the landing page so
 neither flow needs typing during a demo.
 
-## The demo journey
+## The 60-second demo
 
 ```
-Landing (two doors)
-├─ SPONSOR  sign up → quiz → matching → matches → detail
-│            → MEMBERSHIP GATE (charge point A)
-│            → connect → deal room (charge point B)
-└─ CLUB     profile builder → "you're live" preview (discoverable, free)
+Back sport → account (3 fields) → 3 taps → matching → matches
+  → one match → Contact (membership gate) → deal room → Draft the campaign
 ```
 
-Sample sponsor / sample club shortcut buttons have been removed — every run goes
-through the real onboarding, so the demo shows the actual journey.
+Measured end to end in the browser: **~16 seconds of clicking, 10 clicks**,
+including generating the campaign copy. The quiz is three questions; the two
+refinement questions moved to live chips on the results screen, where changing
+them visibly re-ranks the list — a better demo beat than a funnel step.
 
-**Both revenue lines are screens you can land on:**
+**Both revenue lines are screens, not claims:**
 
-- **Charge point A — membership.** Browsing and matching are free; contacting a
-  club is not. The Connect button reads "Contact this club · Membership" until a
-  membership is started. Recurring revenue, made visible.
-- **Charge point B — commission.** The deal room shows agreed value, the tier
-  applied, what the club receives, and what the sponsor pays. Transactional
-  revenue, made visible.
-- **Pricing screen** in the header answers "how do you make money" by clicking
-  rather than hand-waving.
+- **Membership gate** — browsing and matching are free, contacting is not. The
+  Connect button reads "Contact this club · Membership" until a membership
+  starts, then goes straight to the deal room.
+- **Deal room** — three numbers and nothing else: deal value, our commission,
+  what the club gets.
 
-Suggested order: run the sponsor path end to end (signup → gate → deal room),
-hit the **Rank by** chips on the results screen, then show the club side.
+**The curation layer** sits under the deal: one "Draft the campaign" button
+generates a launch post and a story caption for that specific sponsorship. It's
+the anti-leakage argument made visible — we don't just introduce the two sides,
+we run the marketing, because clubs and athletes are training rather than
+selling themselves. Falls back to a template without an API key.
 
 ## Architecture
 

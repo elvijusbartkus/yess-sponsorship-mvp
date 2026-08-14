@@ -95,23 +95,3 @@ export const clubSeeds: ClubSeed[] = [
     },
   },
 ];
-
-/**
- * Illustrative demand signal shown after a profile goes live, so the club side
- * can see the other half of the marketplace is real.
- */
-export const demandSignal = {
-  activeSponsors: 34,
-  searchingThisWeek: 11,
-  byGoal: [
-    { label: 'Local presence', count: 14 },
-    { label: 'Youth engagement', count: 9 },
-    { label: 'Brand awareness', count: 7 },
-    { label: 'National reach', count: 4 },
-  ],
-  recent: [
-    { name: 'A regional retail chain', detail: 'youth audience in Tartu, €2k–10k' },
-    { name: 'A Tallinn fintech', detail: '18–34 nationally, €10k–50k' },
-    { name: 'A local construction firm', detail: 'families in Pärnu, €500–2k' },
-  ],
-};

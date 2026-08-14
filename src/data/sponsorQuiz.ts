@@ -81,36 +81,32 @@ export const priorityOptions: { value: Priority; label: string; hint: string }[]
   },
 ];
 
+/**
+ * Three taps. The country comes from the sponsor's account, and the two
+ * refinement questions ("what do you want in return", "what matters most")
+ * moved to live chips on the results screen — they're more convincing there,
+ * where you can watch the ranking move, and they don't slow the funnel.
+ */
 export const quizSteps = [
   {
-    id: 'country',
-    title: 'Where does your business operate?',
-    subtitle: 'So we match you to sport your customers actually follow.',
-  },
-  {
     id: 'budget',
-    title: "What's your budget for this sponsorship?",
-    subtitle: 'A range is fine. Browsing and matching are free.',
+    title: "What's your budget?",
+    subtitle: 'A range is fine.',
   },
   {
     id: 'demographic',
-    title: 'Who are you trying to reach?',
+    title: 'Who do you want to reach?',
     subtitle: 'The audience that matters to your business.',
   },
   {
     id: 'region',
-    title: 'Where do you want to be visible?',
-    subtitle: 'A specific city, or right across the country.',
+    title: 'Where?',
+    subtitle: 'A city, or the whole country.',
   },
   {
-    id: 'wants',
-    title: 'What do you want in return?',
-    subtitle: 'We rank clubs by what they can actually deliver.',
-  },
-  {
-    id: 'priority',
-    title: 'What matters most in who you back?',
-    subtitle: 'This re-ranks your matches. You can change it later.',
+    id: 'country',
+    title: 'Where does your business operate?',
+    subtitle: 'Only asked if we don\'t already know.',
   },
 ] as const;
 

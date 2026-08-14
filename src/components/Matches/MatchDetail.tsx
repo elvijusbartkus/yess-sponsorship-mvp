@@ -3,7 +3,7 @@ import { Badge, CorroboratedBadge } from '../common/Badge';
 import { Button } from '../common/Button';
 import { formatEur } from '../../lib/taxRules';
 import { COUNTRY_LABEL } from '../../lib/matching';
-import type { Match, SponsorAnswers } from '../../lib/types';
+import type { Match } from '../../lib/types';
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
@@ -16,14 +16,12 @@ function Stat({ label, value }: { label: string; value: string }) {
 
 export function MatchDetail({
   match,
-  answers,
   onBack,
   onOpenDeal,
   membershipActive,
   onRequireMembership,
 }: {
   match: Match;
-  answers: SponsorAnswers;
   onBack: () => void;
   onOpenDeal: () => void;
   /** Contacting a club is the gated action — see the membership screen. */
@@ -58,18 +56,14 @@ export function MatchDetail({
         </div>
       </div>
 
-      <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-ink-700">{profile.results}</p>
-
       {match.caution && (
         <p className="mt-5 rounded-2xl bg-paper-dim px-5 py-4 text-sm text-ink-600">
           {match.caution}
         </p>
       )}
 
-      <section className="mt-10">
-        <h2 className="eyebrow text-ink-400">
-          Why we matched you
-        </h2>
+      <section className="mt-8">
+        <h2 className="eyebrow text-ink-400">Why</h2>
         <ul className="mt-3 space-y-2">
           {match.reasons.map((reason) => (
             <li key={reason} className="flex items-start gap-2.5 text-[15px] leading-relaxed text-ink-700">
@@ -114,52 +108,13 @@ export function MatchDetail({
 
       <section className="mt-10">
         <h2 className="eyebrow text-ink-400">How we know</h2>
-        {profile.corroboration ? (
-          <div className="mt-3 rounded-2xl bg-white p-5 ring-1 ring-inset ring-paper-line">
-            <p className="text-[15px] leading-relaxed text-ink-700">
-              Their claimed{' '}
-              <span className="font-medium text-ink-950">
-                {profile.corroboration.claimedAudience.toLocaleString('en-US')}
-              </span>{' '}
-              is backed by{' '}
-              <span className="font-medium text-ink-950">
-                {profile.corroboration.socialReach.toLocaleString('en-US')}
-              </span>{' '}
-              public followers,{' '}
-              <span className="font-medium text-ink-950">
-                {profile.corroboration.pressMentions}
-              </span>{' '}
-              press mentions a year and{' '}
-              <span className="font-medium text-ink-950">
-                {profile.corroboration.existingSponsors}
-              </span>{' '}
-              existing sponsor{profile.corroboration.existingSponsors === 1 ? '' : 's'}.
-            </p>
-            {match.consistencyFlag && (
-              <p className="mt-3 rounded-xl bg-flare-50 px-4 py-3 text-sm text-flare-700">
-                {match.consistencyFlag}
-              </p>
-            )}
-            <ul className="mt-4 space-y-1.5">
-              {profile.corroboration.sources.map((source) => (
-                <li key={source} className="flex items-start gap-2 text-[13px] text-ink-500">
-                  <span className="mt-1.5 inline-block h-1 w-1 shrink-0 rounded-full bg-ink-300" />
-                  {source}
-                </li>
-              ))}
-            </ul>
-            {profile.corroboration.lastCheckedAt && (
-              <p className="mt-3 text-xs text-ink-400">
-                Last checked {profile.corroboration.lastCheckedAt.slice(0, 10)}. We corroborate
-                against public data — we do not count people through gates.
-              </p>
-            )}
-          </div>
-        ) : (
-          <p className="mt-3 rounded-2xl bg-paper-dim px-5 py-4 text-[15px] text-ink-600">
-            Self-reported by the club. Nothing here has been checked against public data yet, so
-            treat the audience figure as their own estimate.
-          </p>
+        <p className="mt-3 text-[15px] leading-relaxed text-ink-700">
+          {profile.corroboration
+            ? `Claimed ${profile.corroboration.claimedAudience.toLocaleString('en-US')}, backed by ${profile.corroboration.socialReach.toLocaleString('en-US')} public followers and ${profile.corroboration.pressMentions} press mentions a year.`
+            : 'Self-reported by the club — not yet checked against public data.'}
+        </p>
+        {match.consistencyFlag && (
+          <p className="mt-2 text-[13px] text-flare-700">{match.consistencyFlag}</p>
         )}
       </section>
 
@@ -196,42 +151,13 @@ export function MatchDetail({
         </div>
       </section>
 
-      {/* Supporting benefit, kept in proportion. */}
-      <section
-        className={`mt-8 rounded-2xl p-5 ${
-          taxBenefit.applies
-            ? 'bg-flare-50 ring-1 ring-inset ring-flare-100'
-            : 'bg-paper-dim ring-1 ring-inset ring-paper-line'
-        }`}
-      >
-        <p className="eyebrow text-ink-400">Tax treatment</p>
+      <section className="mt-8">
+        <h2 className="eyebrow text-ink-400">Tax</h2>
         <p
-          className={`mt-2 text-sm font-medium ${
-            taxBenefit.applies ? 'text-flare-700' : 'text-ink-700'
-          }`}
+          className={`mt-2 text-[15px] ${taxBenefit.applies ? 'text-flare-700' : 'text-ink-500'}`}
         >
           {taxBenefit.line}
         </p>
-
-        {taxBenefit.applies && (
-          <div className="mt-4 grid gap-3 sm:grid-cols-3">
-            <div>
-              <p className="eyebrow text-ink-400">You sponsor</p>
-              <p className="display mt-1 text-2xl tabular-nums text-ink-950">{formatEur(answers.budget)}</p>
-            </div>
-            <div>
-              <p className="eyebrow text-ink-400">Tax saved</p>
-              <p className="display mt-1 text-2xl tabular-nums text-flare-600">{formatEur(taxBenefit.taxSaved)}</p>
-            </div>
-            <div>
-              <p className="eyebrow text-ink-400">Real cost</p>
-              <p className="display mt-1 text-2xl tabular-nums text-ink-950">{formatEur(taxBenefit.realCost)}</p>
-            </div>
-          </div>
-        )}
-
-        <p className="mt-4 text-xs text-ink-400">{profile.taxStatus.note}</p>
-        <p className="mt-1 text-xs text-ink-300">{taxBenefit.caveat}</p>
       </section>
 
       <div className="mt-12 border-t border-paper-line pt-8">

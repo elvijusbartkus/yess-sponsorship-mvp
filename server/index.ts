@@ -2,6 +2,7 @@ import express from 'express';
 import { countProfiles, getProfile, insertProfile, listProfiles, seed, updateProfile } from './db';
 import { addModelReasons, llmEnabled } from './reasoning';
 import { applyEnrichment, corroborateFromPublicSources } from './enrich';
+import { draftCampaign } from './campaign';
 import { matchSponsorToProfiles } from '../src/lib/matching';
 import { profileFromDraft } from '../src/lib/draftToProfile';
 import type { ProfileDraft, SponsorAnswers } from '../src/lib/types';
@@ -59,6 +60,18 @@ app.post('/api/profiles', (req, res) => {
   const profile = profileFromDraft(draft, countProfiles());
   insertProfile(profile);
   res.status(201).json({ profile });
+});
+
+/** The curation layer — drafts the campaign copy for a sponsorship. */
+app.post('/api/campaign', async (req, res) => {
+  const { sponsor, profileId } = req.body ?? {};
+  if (typeof sponsor !== 'string' || typeof profileId !== 'string') {
+    return res.status(400).json({ error: 'sponsor and profileId are required' });
+  }
+  const profile = getProfile(profileId);
+  if (!profile) return res.status(404).json({ error: 'Profile not found' });
+
+  res.json({ campaign: await draftCampaign(sponsor, profile) });
 });
 
 /** Optional: prove the corroboration story with a real public lookup. */

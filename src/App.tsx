@@ -12,6 +12,7 @@ import { ProfileBuilder } from './components/Club/ProfileBuilder';
 import { LiveProfile } from './components/Club/LiveProfile';
 import { createProfile, fetchMatches, fetchProfiles } from './lib/api';
 import type {
+  ActivationType,
   Match,
   Priority,
   ProfileDraft,
@@ -123,9 +124,10 @@ export default function App() {
       });
   }, []);
 
-  function rerank(priority: Priority) {
+  /** Re-runs the match with a tweaked answer, without leaving the results. */
+  function refine(patch: Partial<SponsorAnswers>) {
     if (!answers) return;
-    const next = { ...answers, priority };
+    const next = { ...answers, ...patch };
     setAnswers(next);
     fetchMatches(next)
       .then(({ matches: found }) => setMatches(found))
@@ -208,14 +210,14 @@ export default function App() {
                 setScreen('detail');
               }}
               onRestart={goHome}
-              onPriorityChange={rerank}
+              onPriorityChange={(priority: Priority) => refine({ priority })}
+              onWantsChange={(wants: ActivationType | 'any') => refine({ wants })}
             />
           ))}
 
-        {screen === 'detail' && selected && answers && (
+        {screen === 'detail' && selected && (
           <MatchDetail
             match={selected}
-            answers={answers}
             onBack={() => setScreen('results')}
             onOpenDeal={() => setScreen('deal')}
             membershipActive={account?.membershipActive ?? false}
@@ -228,10 +230,13 @@ export default function App() {
             profile={selected.profile}
             onBack={() => setScreen('detail')}
             onStart={() => {
+              // Straight to the deal room: the gate and the commission screen
+              // are the two money moments, and nothing useful sits between
+              // them. Saves two clicks in a sixty-second demo.
               setAccount((current) =>
                 current ? { ...current, membershipActive: true } : current,
               );
-              setScreen('detail');
+              setScreen('deal');
             }}
           />
         )}
@@ -240,6 +245,7 @@ export default function App() {
           <DealRoom
             match={selected}
             answers={answers}
+            sponsorName={account?.company ?? 'Your company'}
             onBack={() => setScreen('detail')}
             onHome={() => setScreen('results')}
           />
