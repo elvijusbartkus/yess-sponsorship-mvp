@@ -230,30 +230,47 @@ export function DealRoom({
 
           {tax.applies && (
             <p className="mt-3 text-xs text-ink-500">
-              {tax.caveat} Commission is charged on top of the sponsorship and is itself an
-              ordinary deductible business expense.
+              {tax.caveat} Commission is charged on top of the sponsorship amount.
             </p>
           )}
         </div>
       </section>
 
-      {/* Why staying on the platform beats going around it */}
+      {/* Why staying on the platform beats going around it. Split honestly:
+          we are the marketplace, not the lawyer or the accountant. */}
       <section className="mt-10">
-        <h2 className="eyebrow text-ink-400">What we do at close</h2>
+        <h2 className="eyebrow text-ink-400">What we do</h2>
         <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
           {[
-            'We generate the sponsorship agreement.',
+            'We introduced you, and we keep the match and agreed value on record.',
             tax.applies
-              ? 'We produce the tax-compliance documentation.'
-              : 'We keep the paperwork and invoicing in one place.',
-            'We track reach and ROI through the season.',
-            'We surface your next matches.',
+              ? 'We show which clubs hold recipient status, so your accountant knows what to claim.'
+              : 'We show the tax position of every match up front, including when there is none.',
+            'We keep matching you as new clubs and athletes join.',
+            'You and the club agree the terms directly — we do not sit inside the contract.',
           ].map((item) => (
             <li
               key={item}
               className="flex items-start gap-2.5 rounded-2xl bg-white px-4 py-3.5 text-[15px] text-ink-700 ring-1 ring-inset ring-paper-line"
             >
               <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-flare-500" />
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        <h2 className="eyebrow mt-8 text-ink-400">On the roadmap</h2>
+        <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
+          {[
+            'Generated agreement templates.',
+            'Tax paperwork prepared for your accountant.',
+            'Verified season reach and ROI reporting.',
+          ].map((item) => (
+            <li
+              key={item}
+              className="flex items-start gap-2.5 rounded-2xl bg-paper-dim px-4 py-3.5 text-[15px] text-ink-500"
+            >
+              <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-ink-300" />
               {item}
             </li>
           ))}

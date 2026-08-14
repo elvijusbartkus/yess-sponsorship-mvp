@@ -9,10 +9,12 @@ export function LiveProfile({
   draft,
   onEdit,
   onHome,
+  onSearchAsSponsor,
 }: {
   draft: ProfileDraft;
   onEdit: () => void;
   onHome: () => void;
+  onSearchAsSponsor: () => void;
 }) {
   const totalReach = draft.audienceSize + draft.instagramFollowers;
 
@@ -27,8 +29,8 @@ export function LiveProfile({
           <p className="font-display text-xl font-bold tracking-tight text-gain-700">You're live</p>
         </div>
         <p className="mt-1.5 text-sm leading-relaxed text-gain-600">
-          Sponsors searching {COUNTRY_LABEL[draft.country]} can now discover and back you. Listing is
-          free, and you are never charged to be contacted.
+          You are in the pool now — sponsors searching {COUNTRY_LABEL[draft.country]} will see this
+          profile in their matches. Listing is free, and you are never charged to be contacted.
         </p>
       </div>
 
@@ -123,6 +125,7 @@ export function LiveProfile({
       </section>
 
       <div className="mt-12 flex flex-wrap gap-3 border-t border-paper-line pt-8">
+        <Button onClick={onSearchAsSponsor}>Search as a sponsor to find yourself →</Button>
         <Button variant="secondary" onClick={onEdit}>
           Edit profile
         </Button>

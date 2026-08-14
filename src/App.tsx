@@ -4,15 +4,18 @@ import { QuizFunnel } from './components/Quiz/QuizFunnel';
 import { MatchResults } from './components/Matches/MatchResults';
 import { MatchDetail } from './components/Matches/MatchDetail';
 import { DealRoom } from './components/Deal/DealRoom';
+import { MatchingScreen } from './components/Matches/MatchingScreen';
 import { ProfileBuilder } from './components/Club/ProfileBuilder';
 import { LiveProfile } from './components/Club/LiveProfile';
 import { matchSponsorToProfiles } from './lib/matching';
-import { profiles } from './data/profiles';
-import type { Match, Priority, ProfileDraft, SponsorAnswers } from './lib/types';
+import { profiles as seedProfiles } from './data/profiles';
+import { profileFromDraft } from './lib/draftToProfile';
+import type { Match, Priority, Profile, ProfileDraft, SponsorAnswers } from './lib/types';
 
 type Screen =
   | 'landing'
   | 'quiz'
+  | 'matching'
   | 'results'
   | 'detail'
   | 'deal'
@@ -42,15 +45,18 @@ export default function App() {
   const [answers, setAnswers] = useState<SponsorAnswers | null>(null);
   const [selected, setSelected] = useState<Match | null>(null);
   const [clubDraft, setClubDraft] = useState<ProfileDraft | null>(null);
+  // The supply side is live state: a club that self-lists during the demo
+  // becomes discoverable to sponsors for the rest of the session.
+  const [pool, setPool] = useState<Profile[]>(seedProfiles);
 
   const matches = useMemo(
-    () => (answers ? matchSponsorToProfiles(answers, profiles) : []),
-    [answers],
+    () => (answers ? matchSponsorToProfiles(answers, pool) : []),
+    [answers, pool],
   );
 
   function runSponsor(next: SponsorAnswers) {
     setAnswers(next);
-    setScreen('results');
+    setScreen('matching');
   }
 
   function goHome() {
@@ -77,12 +83,17 @@ export default function App() {
           onPersona={runSponsor}
           onClubSeed={(draft) => {
             setClubDraft(draft);
+            // Quick-starts must enter the pool too, or the "you're live" claim
+            // is false on the very path most likely to be demoed.
+            setPool((current) => [...current, profileFromDraft(draft, current.length)]);
             setScreen('club-live');
           }}
         />
       )}
 
       {screen === 'quiz' && <QuizFunnel onComplete={runSponsor} />}
+
+      {screen === 'matching' && <MatchingScreen onDone={() => setScreen('results')} />}
 
       {screen === 'results' && answers && (
         <MatchResults
@@ -121,6 +132,7 @@ export default function App() {
           onCancel={goHome}
           onComplete={(draft) => {
             setClubDraft(draft);
+            setPool((current) => [...current, profileFromDraft(draft, current.length)]);
             setScreen('club-live');
           }}
         />
@@ -131,6 +143,7 @@ export default function App() {
           draft={clubDraft}
           onEdit={() => setScreen('club-builder')}
           onHome={goHome}
+          onSearchAsSponsor={() => setScreen('quiz')}
         />
       )}
       </main>
