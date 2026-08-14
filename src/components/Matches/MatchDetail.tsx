@@ -18,10 +18,12 @@ export function MatchDetail({
   match,
   answers,
   onBack,
+  onOpenDeal,
 }: {
   match: Match;
   answers: SponsorAnswers;
   onBack: () => void;
+  onOpenDeal: () => void;
 }) {
   const [connected, setConnected] = useState(false);
   const { profile, taxBenefit } = match;
@@ -183,6 +185,9 @@ export function MatchDetail({
             <p className="mt-1 text-sm text-gain-600">
               They typically respond within 48 hours. Nothing is charged for connecting.
             </p>
+            <div className="mt-5">
+              <Button onClick={onOpenDeal}>Open deal room →</Button>
+            </div>
           </div>
         ) : (
           <div className="flex flex-wrap items-center gap-3">

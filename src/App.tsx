@@ -3,6 +3,7 @@ import { Landing } from './components/Landing';
 import { QuizFunnel } from './components/Quiz/QuizFunnel';
 import { MatchResults } from './components/Matches/MatchResults';
 import { MatchDetail } from './components/Matches/MatchDetail';
+import { DealRoom } from './components/Deal/DealRoom';
 import { ProfileBuilder } from './components/Club/ProfileBuilder';
 import { LiveProfile } from './components/Club/LiveProfile';
 import { matchSponsorToProfiles } from './lib/matching';
@@ -14,6 +15,7 @@ type Screen =
   | 'quiz'
   | 'results'
   | 'detail'
+  | 'deal'
   | 'club-builder'
   | 'club-live';
 
@@ -96,7 +98,21 @@ export default function App() {
       )}
 
       {screen === 'detail' && selected && answers && (
-        <MatchDetail match={selected} answers={answers} onBack={() => setScreen('results')} />
+        <MatchDetail
+          match={selected}
+          answers={answers}
+          onBack={() => setScreen('results')}
+          onOpenDeal={() => setScreen('deal')}
+        />
+      )}
+
+      {screen === 'deal' && selected && answers && (
+        <DealRoom
+          match={selected}
+          answers={answers}
+          onBack={() => setScreen('detail')}
+          onHome={() => setScreen('results')}
+        />
       )}
 
       {screen === 'club-builder' && (
