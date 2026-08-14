@@ -28,7 +28,7 @@ function DoorCard({
   return (
     <button
       onClick={onClick}
-      className={`group relative flex h-full flex-col overflow-hidden rounded-lg p-7 text-left transition-all duration-200 hover:-translate-y-1.5 sm:p-8 ${
+      className={`group relative flex h-full flex-col overflow-hidden rounded-lg p-5 text-left transition-all duration-200 hover:-translate-y-1.5 sm:p-6 ${
         ink ? 'bg-ink-950 text-white hover:shadow-lift' : 'bg-flare-500 text-white hover:shadow-flare'
       }`}
     >
@@ -82,7 +82,7 @@ export function Landing({
   onBrowse: () => void;
 }) {
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 py-10 sm:py-14">
+    <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 py-10 sm:py-10">
       <div className="animate-rise max-w-3xl">
         <div className="flare-rule h-1.5 w-20" />
         <h1 className="display mt-5 text-[clamp(2.25rem,5vw,3.75rem)] leading-[0.95] text-ink-950">
@@ -125,7 +125,7 @@ export function Landing({
         />
       </div>
 
-      <section className="mt-14 grid gap-8 border-t border-paper-line pt-10 sm:grid-cols-2">
+      <section className="mt-10 grid gap-8 border-t border-paper-line pt-10 sm:grid-cols-2">
         <div>
           <p className="eyebrow text-ink-400">How it works for sponsors</p>
           <div className="mt-5 space-y-5">
@@ -160,7 +160,7 @@ export function Landing({
         </div>
       </section>
 
-      <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-paper-line pt-8">
+      <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-paper-line pt-8">
         <button
           onClick={onPricing}
           className="font-display text-[15px] font-medium text-ink-500 transition-colors hover:text-flare-500"

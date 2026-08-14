@@ -33,7 +33,7 @@ export function MatchDetail({
   const { profile, taxBenefit } = match;
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 py-10 sm:py-14">
+    <div className="mx-auto w-full max-w-3xl px-5 py-10 sm:py-10">
       <Button variant="ghost" onClick={onBack}>
         ← Back to matches
       </Button>
@@ -75,7 +75,7 @@ export function MatchDetail({
         </ul>
       </section>
 
-      <section className="mt-10">
+      <section className="mt-8">
         <h2 className="eyebrow text-ink-400">Audience</h2>
         <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <Stat
@@ -105,7 +105,7 @@ export function MatchDetail({
         )}
       </section>
 
-      <section className="mt-10">
+      <section className="mt-8">
         <h2 className="eyebrow text-ink-400">What you get</h2>
         <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {profile.activation.map((item) => (
@@ -119,7 +119,7 @@ export function MatchDetail({
         </ul>
       </section>
 
-      <section className="mt-10 grid gap-3 sm:grid-cols-2">
+      <section className="mt-8 grid gap-3 sm:grid-cols-2">
         <div className="rounded-lg bg-white px-4 py-4 ring-1 ring-inset ring-paper-line">
           <p className="eyebrow text-ink-400">Past deals in this range</p>
           <p className="mt-1.5 font-display text-lg font-medium text-ink-950">
@@ -138,7 +138,7 @@ export function MatchDetail({
         </div>
       </section>
 
-      <div className="mt-12 border-t border-paper-line pt-8">
+      <div className="mt-9 border-t border-paper-line pt-8">
         <div className="flex flex-wrap items-center gap-3">
           <Button size="lg" onClick={onOpenDeal}>
             Propose a deal <ArrowRight className="h-4 w-4" />

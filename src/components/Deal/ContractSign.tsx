@@ -41,7 +41,7 @@ export function ContractSign({
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-5 py-12 sm:py-16">
+    <div className="mx-auto w-full max-w-2xl px-5 py-9 sm:py-12">
       <Button variant="ghost" onClick={onBack}>
         ← Back
       </Button>
@@ -53,7 +53,7 @@ export function ContractSign({
         </h1>
       </div>
 
-      <div className="mt-8 rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-7">
+      <div className="mt-8 rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-5">
         <p className="eyebrow text-ink-400">Terms</p>
         <dl className="mt-3 space-y-2.5 text-[15px] text-ink-700">
           <div className="flex justify-between gap-4">

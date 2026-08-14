@@ -23,17 +23,17 @@ export default {
           dim: '#F3F3EE',
           line: '#E6E6DF',
         },
-        // The one bold accent. Used sparingly and with intent.
+        // The one bold accent — deep blue, kept mostly to black/white otherwise.
         flare: {
-          50: '#FFF1EB',
-          100: '#FFDCCC',
-          200: '#FFBB9E',
-          300: '#FF9770',
-          400: '#FF7442',
-          500: '#FF5A1F',
-          600: '#E8430A',
-          700: '#B93307',
-          800: '#8A2605',
+          50: '#EAF0FD',
+          100: '#CBDAFA',
+          200: '#9BB8F5',
+          300: '#6690EC',
+          400: '#3D6EE0',
+          500: '#2554E0',
+          600: '#1B3FB3',
+          700: '#152F86',
+          800: '#0F2260',
         },
         // Verified only — deliberately a different hue from the accent.
         gain: {
@@ -69,7 +69,7 @@ export default {
       boxShadow: {
         card: '0 1px 2px rgba(11,11,15,0.04), 0 1px 3px rgba(11,11,15,0.06)',
         lift: '0 18px 32px -12px rgba(11,11,15,0.16), 0 6px 12px -6px rgba(11,11,15,0.08)',
-        flare: '0 18px 32px -12px rgba(255,90,31,0.35)',
+        flare: '0 18px 32px -12px rgba(37,84,224,0.35)',
       },
       fontFamily: {
         display: ['"Space Grotesk Variable"', 'Space Grotesk', 'system-ui', 'sans-serif'],

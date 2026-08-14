@@ -46,11 +46,11 @@
     --muted-foreground: #6B6B78;
     --accent: #F3F3EE;
     --accent-foreground: #0B0B0F;
-    --destructive: #B93307;
+    --destructive: #DC2626;
     --destructive-foreground: #FFFFFF;
     --border: #E6E6DF;
     --input: #E6E6DF;
-    --ring: #FF5A1F;
+    --ring: #2554E0;
     /* Sharp, not slop: 6px base radius, never rounded-full on containers. */
     --radius: 0.375rem;
     --radius-sm: calc(var(--radius) - 2px);

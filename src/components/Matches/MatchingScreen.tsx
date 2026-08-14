@@ -34,7 +34,7 @@ export function MatchingScreen({
   }, [onDone, poolSize]);
 
   return (
-    <div className="flex flex-1 items-center justify-center px-5 py-20">
+    <div className="flex flex-1 items-center justify-center px-5 py-14">
       <div className="w-full max-w-lg text-center">
         <motion.div
           className="mx-auto h-20 w-20"
@@ -56,7 +56,7 @@ export function MatchingScreen({
           </svg>
         </motion.div>
 
-        <p className="eyebrow mt-10 text-flare-600">Matching</p>
+        <p className="eyebrow mt-8 text-flare-600">Matching</p>
 
         <AnimatePresence mode="wait">
           <motion.p

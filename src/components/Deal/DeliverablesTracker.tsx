@@ -44,7 +44,7 @@ export function DeliverablesTracker({
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-5 py-12 sm:py-16">
+    <div className="mx-auto w-full max-w-2xl px-5 py-9 sm:py-12">
       <Button variant="ghost" onClick={onBack}>
         ← Back
       </Button>
@@ -60,7 +60,7 @@ export function DeliverablesTracker({
         </p>
       </div>
 
-      <section className="mt-8 rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-7">
+      <section className="mt-8 rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-5">
         <div className="flex flex-wrap items-baseline justify-between gap-3">
           <p className="eyebrow text-ink-400">Deliverables</p>
           <p className="text-sm font-medium text-ink-950">
@@ -119,7 +119,7 @@ export function DeliverablesTracker({
 
       <CampaignCurator sponsorName={sponsorName} profile={profile} />
 
-      <div className="mt-10 border-t border-paper-line pt-8">
+      <div className="mt-8 border-t border-paper-line pt-8">
         <Button variant="ghost" onClick={onHome}>
           Back to matches
         </Button>

@@ -44,7 +44,7 @@ export function DealRoom({
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-5 py-12 sm:py-16">
+    <div className="mx-auto w-full max-w-2xl px-5 py-9 sm:py-12">
       <Button variant="ghost" onClick={onBack}>
         ← Back
       </Button>
@@ -96,7 +96,7 @@ export function DealRoom({
 
       <section className="mt-6 overflow-hidden rounded-lg bg-ink-950 text-white">
         <div className="flare-rule h-2" />
-        <div className="divide-y divide-white/10 p-6 sm:p-8">
+        <div className="divide-y divide-white/10 p-6 sm:p-6">
           <div className="flex items-baseline justify-between gap-4 pb-5">
             <span className="text-[15px] text-ink-300">Deal value</span>
             <span className="display text-4xl tabular-nums text-white">{formatEur(dealValue)}</span>
@@ -126,7 +126,7 @@ export function DealRoom({
         Commission charged on top, only once a deal closes.
       </p>
 
-      <div className="mt-10 border-t border-paper-line pt-8">
+      <div className="mt-8 border-t border-paper-line pt-8">
         <Button size="lg" disabled={dealValue <= 0} onClick={() => onAgree(dealValue)}>
           Continue to contract →
         </Button>

@@ -119,8 +119,8 @@ function Header({
 
 function ErrorBanner({ message, onRetry }: { message: string; onRetry: () => void }) {
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 py-16">
-      <div className="rounded-lg bg-white p-8 ring-1 ring-inset ring-paper-line">
+    <div className="mx-auto w-full max-w-3xl px-5 py-12">
+      <div className="rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line">
         <h2 className="display text-3xl text-ink-950">Couldn't reach the marketplace</h2>
         <p className="mt-3 text-[15px] leading-relaxed text-ink-500">{message}</p>
         <button

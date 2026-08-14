@@ -90,7 +90,7 @@ function ProfileRow({ profile, onSelect }: { profile: Profile; onSelect: () => v
 
 function ProfileDetailPanel({ profile, onBack }: { profile: Profile; onBack: () => void }) {
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 py-10 sm:py-14">
+    <div className="mx-auto w-full max-w-3xl px-5 py-10 sm:py-10">
       <Button variant="ghost" onClick={onBack}>
         ← Back to browsing
       </Button>
@@ -204,7 +204,7 @@ export function BrowseList({ onBack }: { onBack: () => void }) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 py-10 sm:py-14">
+    <div className="mx-auto w-full max-w-3xl px-5 py-10 sm:py-10">
       <Button variant="ghost" onClick={onBack}>
         ← Home
       </Button>
@@ -214,10 +214,6 @@ export function BrowseList({ onBack }: { onBack: () => void }) {
       </h1>
       <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-500">
         No quiz, no fit score — just the full list, filterable.
-      </p>
-      <p className="mt-3 inline-block rounded-md bg-paper-dim px-4 py-2.5 text-[13px] leading-relaxed text-ink-600">
-        This directory is free for anyone to view. Personalized matching and contacting a club or
-        athlete is a sponsor membership feature.
       </p>
 
       <div className="mt-8 flex flex-col gap-2.5 sm:flex-row">

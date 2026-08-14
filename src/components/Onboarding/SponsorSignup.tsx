@@ -37,7 +37,7 @@ export function SponsorSignup({
 
   return (
     <div className="flex flex-1 flex-col">
-      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center px-5 py-14">
+      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center px-5 py-10">
         <div className="w-full animate-rise">
           <p className="eyebrow text-flare-600">Create your sponsor account</p>
           <h1 className="display mt-3 text-4xl leading-[1.05] text-ink-950 sm:text-5xl">
@@ -94,7 +94,7 @@ export function SponsorSignup({
 
           <div className="mt-8 overflow-hidden rounded-lg bg-ink-950 text-white">
             <div className="flare-rule h-2" />
-            <div className="p-6 sm:p-7">
+            <div className="p-6 sm:p-5">
               {launchPromo.active && (
                 <p className="eyebrow inline-block rounded-md bg-flare-500 px-2.5 py-1 text-white">
                   Launch offer — first {launchPromo.sponsorFreeMonths} months free

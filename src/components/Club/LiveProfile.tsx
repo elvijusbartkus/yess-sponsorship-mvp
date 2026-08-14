@@ -29,7 +29,7 @@ export function LiveProfile({
   );
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-5 py-14 sm:py-20">
+    <div className="mx-auto w-full max-w-2xl px-5 py-10 sm:py-14">
       <div className="animate-rise flex items-center gap-3">
         <span className="relative flex h-3 w-3">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gain-500 opacity-60" />
@@ -52,7 +52,7 @@ export function LiveProfile({
       </p>
 
       {/* Exactly what a sponsor sees — same card language as their side. */}
-      <div className="mt-10 rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-7">
+      <div className="mt-8 rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-5">
         <div className="flex flex-wrap items-center gap-2">
           <h2 className="display text-2xl leading-tight text-ink-950">{draft.name}</h2>
           <Badge tone="muted">Self-reported</Badge>
@@ -85,7 +85,7 @@ export function LiveProfile({
         </div>
       </div>
 
-      <div className="mt-10 flex flex-wrap gap-3">
+      <div className="mt-8 flex flex-wrap gap-3">
         <Button variant="secondary" onClick={onEdit}>
           Edit
         </Button>
@@ -94,7 +94,7 @@ export function LiveProfile({
         </Button>
       </div>
 
-      <section className="mt-14">
+      <section className="mt-10">
         <h2 className="eyebrow text-ink-400">Businesses you could reach out to</h2>
         <p className="mt-2 max-w-md text-[15px] leading-relaxed text-ink-500">
           Illustrative sponsor types, scored against your profile with the same

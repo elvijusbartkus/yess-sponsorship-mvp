@@ -46,7 +46,7 @@ export function MatchCard({
   return (
     <button
       onClick={onSelect}
-      className={`group relative w-full overflow-hidden rounded-lg p-6 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-lift sm:p-7 ${
+      className={`group relative w-full overflow-hidden rounded-lg p-6 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-lift sm:p-5 ${
         lead
           ? 'bg-ink-950 text-white shadow-lift'
           : 'bg-white ring-1 ring-inset ring-paper-line hover:ring-ink-950'

@@ -11,7 +11,7 @@ export function Pricing({ onBack }: { onBack: () => void }) {
   const pct = (rate: number) => `${Math.round(rate * 100)}%`;
 
   return (
-    <div className="mx-auto w-full max-w-4xl px-5 py-14 sm:py-20">
+    <div className="mx-auto w-full max-w-4xl px-5 py-10 sm:py-14">
       <div className="animate-rise max-w-2xl">
         <div className="flare-rule h-1.5 w-20" />
         <h1 className="display mt-5 text-[clamp(2.25rem,5.5vw,4rem)] leading-[0.95] text-ink-950">
@@ -29,7 +29,7 @@ export function Pricing({ onBack }: { onBack: () => void }) {
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <section className="rounded-lg bg-white p-7 ring-1 ring-inset ring-paper-line sm:p-8">
+        <section className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line sm:p-6">
           <p className="eyebrow text-ink-400">Clubs &amp; athletes</p>
           <p className="mt-2">
             <span className="display text-5xl leading-none tabular-nums text-ink-950">
@@ -50,7 +50,7 @@ export function Pricing({ onBack }: { onBack: () => void }) {
 
         <section className="overflow-hidden rounded-lg bg-ink-950 text-white">
           <div className="flare-rule h-2" />
-          <div className="p-7 sm:p-8">
+          <div className="p-5 sm:p-6">
             <p className="eyebrow text-flare-400">Sponsors</p>
             <p className="mt-2">
               <span className="display text-5xl leading-none tabular-nums text-white">
@@ -71,7 +71,7 @@ export function Pricing({ onBack }: { onBack: () => void }) {
         </section>
       </div>
 
-      <section className="mt-4 rounded-lg bg-white p-7 ring-1 ring-inset ring-paper-line sm:p-8">
+      <section className="mt-4 rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line sm:p-6">
         <p className="eyebrow text-ink-400">On every closed deal</p>
         <p className="mt-2">
           <span className="display text-5xl leading-none tabular-nums text-ink-950">
@@ -88,11 +88,11 @@ export function Pricing({ onBack }: { onBack: () => void }) {
         </p>
       </section>
 
-      <p className="mt-10 max-w-2xl text-lg leading-relaxed text-ink-700">
+      <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ink-700">
         <span className="font-medium text-ink-950">We only grow when sport gets funded.</span>
       </p>
 
-      <div className="mt-10 border-t border-paper-line pt-8">
+      <div className="mt-8 border-t border-paper-line pt-8">
         <Button variant="secondary" onClick={onBack}>
           ← Back
         </Button>

@@ -24,7 +24,7 @@ export function MatchResults({
   const [otherOpen, setOtherOpen] = useState(false);
   const [otherText, setOtherText] = useState('');
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 py-12 sm:py-16">
+    <div className="mx-auto w-full max-w-3xl px-5 py-9 sm:py-12">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="animate-rise">
           <p className="eyebrow flex items-center gap-2 text-flare-600">
@@ -89,9 +89,6 @@ export function MatchResults({
               </span>
             )}
           </div>
-          {answers.note && (
-            <p className="mt-1.5 text-xs italic text-ink-400">You also mentioned: "{answers.note}"</p>
-          )}
         </div>
 
         <div>
@@ -129,12 +126,12 @@ export function MatchResults({
       </div>
 
       {matches.length === 0 && (
-        <p className="mt-10 rounded-lg bg-white px-6 py-10 text-center text-sm text-ink-400 ring-1 ring-inset ring-paper-line">
+        <p className="mt-8 rounded-lg bg-white px-6 py-10 text-center text-sm text-ink-400 ring-1 ring-inset ring-paper-line">
           Nothing in this market matches yet. Try a different region or budget.
         </p>
       )}
 
-      <p className="mt-10 text-center text-xs text-ink-400">
+      <p className="mt-8 text-center text-xs text-ink-400">
         Matching is part of your membership.
       </p>
     </div>
