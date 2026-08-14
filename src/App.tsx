@@ -10,6 +10,7 @@ import { MembershipGate } from './components/Membership/MembershipGate';
 import { Pricing } from './components/Pricing';
 import { ProfileBuilder } from './components/Club/ProfileBuilder';
 import { LiveProfile } from './components/Club/LiveProfile';
+import { BrowseList } from './components/Browse/BrowseList';
 import { createProfile, fetchMatches, fetchProfiles } from './lib/api';
 import type {
   ActivationType,
@@ -31,9 +32,18 @@ type Screen =
   | 'membership'
   | 'deal'
   | 'club-builder'
-  | 'club-live';
+  | 'club-live'
+  | 'browse';
 
-function Header({ onHome, onPricing }: { onHome: () => void; onPricing: () => void }) {
+function Header({
+  onHome,
+  onPricing,
+  onBrowse,
+}: {
+  onHome: () => void;
+  onPricing: () => void;
+  onBrowse: () => void;
+}) {
   return (
     <header className="sticky top-0 z-20 border-b border-paper-line bg-paper/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
@@ -46,6 +56,12 @@ function Header({ onHome, onPricing }: { onHome: () => void; onPricing: () => vo
           </span>
         </button>
         <div className="flex items-center gap-5">
+          <button
+            onClick={onBrowse}
+            className="font-display text-sm font-medium text-ink-500 transition-colors hover:text-flare-500"
+          >
+            Browse
+          </button>
           <button
             onClick={onPricing}
             className="font-display text-sm font-medium text-ink-500 transition-colors hover:text-flare-500"
@@ -152,7 +168,7 @@ export default function App() {
 
   return (
     <div className="flex min-h-dvh flex-col">
-      <Header onHome={goHome} onPricing={() => setScreen('pricing')} />
+      <Header onHome={goHome} onPricing={() => setScreen('pricing')} onBrowse={() => setScreen('browse')} />
 
       <main className="flex flex-1 flex-col">
         {screen === 'landing' && (
@@ -163,10 +179,13 @@ export default function App() {
               setScreen('club-builder');
             }}
             onPricing={() => setScreen('pricing')}
+            onBrowse={() => setScreen('browse')}
           />
         )}
 
         {screen === 'pricing' && <Pricing onBack={() => setScreen('landing')} />}
+
+        {screen === 'browse' && <BrowseList onBack={goHome} />}
 
         {screen === 'sponsor-signup' && (
           <SponsorSignup
@@ -263,7 +282,6 @@ export default function App() {
             draft={clubDraft}
             onEdit={() => setScreen('club-builder')}
             onHome={goHome}
-            onSearchAsSponsor={() => setScreen('quiz')}
           />
         )}
       </main>

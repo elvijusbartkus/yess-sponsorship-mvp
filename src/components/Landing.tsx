@@ -41,10 +41,12 @@ export function Landing({
   onSponsorStart,
   onClubStart,
   onPricing,
+  onBrowse,
 }: {
   onSponsorStart: () => void;
   onClubStart: () => void;
   onPricing: () => void;
+  onBrowse: () => void;
 }) {
   return (
     // Sized so the headline and both doors clear the fold on a laptop.
@@ -80,12 +82,20 @@ export function Landing({
         />
       </div>
 
-      <button
-        onClick={onPricing}
-        className="mt-7 self-start font-display text-[15px] font-medium text-ink-500 transition-colors hover:text-flare-500"
-      >
-        Clubs free · Sponsors €49/mo + commission on close →
-      </button>
+      <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2">
+        <button
+          onClick={onPricing}
+          className="font-display text-[15px] font-medium text-ink-500 transition-colors hover:text-flare-500"
+        >
+          Clubs free · Sponsors €49/mo + commission on close →
+        </button>
+        <button
+          onClick={onBrowse}
+          className="font-display text-[15px] font-medium text-ink-500 transition-colors hover:text-flare-500"
+        >
+          Just browsing? See every club & athlete →
+        </button>
+      </div>
     </div>
   );
 }

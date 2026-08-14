@@ -1,23 +1,31 @@
+import { useMemo } from 'react';
 import { Badge } from '../common/Badge';
 import { Button } from '../common/Button';
 import { formatEur } from '../../lib/taxRules';
-import { COUNTRY_LABEL } from '../../lib/matching';
+import { COUNTRY_LABEL, matchProfileToSponsorLeads } from '../../lib/matching';
+import { profileFromDraft } from '../../lib/draftToProfile';
+import { sponsorLeads } from '../../data/sponsorLeads';
 import type { ProfileDraft } from '../../lib/types';
 
 export function LiveProfile({
   draft,
   onEdit,
   onHome,
-  onSearchAsSponsor,
 }: {
   draft: ProfileDraft;
   onEdit: () => void;
   onHome: () => void;
-  onSearchAsSponsor: () => void;
 }) {
   // For an athlete the following IS the audience — adding both would double it.
   const totalReach =
     draft.type === 'athlete' ? draft.audienceSize : draft.audienceSize + draft.instagramFollowers;
+
+  // Reverse-matched against the same scoring engine a sponsor's own search
+  // uses — this is "who could you reach out to", not a live inbox.
+  const leadMatches = useMemo(
+    () => matchProfileToSponsorLeads(profileFromDraft(draft, 0), sponsorLeads),
+    [draft],
+  );
 
   return (
     <div className="mx-auto w-full max-w-2xl px-5 py-14 sm:py-20">
@@ -72,9 +80,6 @@ export function LiveProfile({
       </div>
 
       <div className="mt-10 flex flex-wrap gap-3">
-        <Button size="lg" onClick={onSearchAsSponsor}>
-          See yourself as a sponsor →
-        </Button>
         <Button variant="secondary" onClick={onEdit}>
           Edit
         </Button>
@@ -82,6 +87,42 @@ export function LiveProfile({
           Home
         </Button>
       </div>
+
+      <section className="mt-14">
+        <h2 className="eyebrow text-ink-400">Businesses you could reach out to</h2>
+        <p className="mt-2 max-w-md text-[15px] leading-relaxed text-ink-500">
+          Illustrative sponsor types, scored against your profile with the same
+          matching engine sponsors use — not live leads, a starting list.
+        </p>
+
+        {leadMatches.length === 0 ? (
+          <p className="mt-5 text-sm text-ink-400">
+            No strong sponsor type for this profile yet — try widening what you offer.
+          </p>
+        ) : (
+          <div className="mt-5 space-y-3">
+            {leadMatches.map(({ lead, score, reasons }) => (
+              <div
+                key={lead.id}
+                className="rounded-2xl bg-white p-5 ring-1 ring-inset ring-paper-line"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="font-display text-lg font-medium text-ink-950">{lead.label}</p>
+                    <p className="mt-0.5 text-sm text-ink-500">{lead.blurb}</p>
+                  </div>
+                  <div className="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-xl bg-ink-950">
+                    <span className="display text-base leading-none text-flare-500">{score}</span>
+                  </div>
+                </div>
+                {reasons[0] && (
+                  <p className="mt-3 text-sm leading-relaxed text-ink-700">{reasons[0]}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 }

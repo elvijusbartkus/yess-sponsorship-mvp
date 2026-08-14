@@ -1,4 +1,4 @@
-import type { ActivationType, Demographic, Match, Profile, SponsorAnswers } from './types';
+import type { ActivationType, Demographic, Match, Persona, Profile, SponsorAnswers } from './types';
 import { computeTaxBenefit } from './taxRules';
 
 /**
@@ -247,6 +247,40 @@ function buildCaution(parts: Parts, score: number): string | undefined {
   return undefined;
 }
 
+/**
+ * The core scoring pass, shared by both directions of the match: a sponsor
+ * searching profiles, and a profile checking which sponsor archetypes would
+ * want it. Same weights, same clamps, same reason-building either way — a
+ * fit is a fit regardless of who's asking.
+ */
+function scoreMatch(
+  answers: SponsorAnswers,
+  profile: Profile,
+): { score: number; reasons: string[]; parts: Parts } {
+  const parts: Parts = {
+    demographic: scoreDemographic(answers, profile),
+    geography: scoreGeography(answers, profile),
+    budget: scoreBudget(answers, profile),
+    wants: scoreWants(answers, profile),
+    priority: scorePriority(answers, profile),
+    corroborated: profile.audienceCorroborated ? 5 : 0,
+  };
+
+  const raw =
+    parts.demographic + parts.geography + parts.budget + parts.wants + parts.priority + parts.corroborated;
+
+  // Clamp, never rescale: a perfect fit must read as a high number.
+  // But audience is the point of the whole exercise, so a profile that
+  // does not reach the target at all is capped no matter how well the
+  // other factors score. Otherwise a card can show 87 next to "audience
+  // does not overlap your target", which is a straight contradiction.
+  let score = Math.min(100, raw);
+  if (parts.demographic === 0) score = Math.min(score, 45);
+  else if (parts.demographic <= 16) score = Math.min(score, 72);
+
+  return { score, reasons: buildReasons(answers, profile, parts), parts };
+}
+
 export function matchSponsorToProfiles(
   answers: SponsorAnswers,
   allProfiles: Profile[] = [],
@@ -257,36 +291,11 @@ export function matchSponsorToProfiles(
     // demographic, budget and goal points and leak into the results.
     .filter((profile) => profile.country === answers.country)
     .map((profile) => {
-      const parts: Parts = {
-        demographic: scoreDemographic(answers, profile),
-        geography: scoreGeography(answers, profile),
-        budget: scoreBudget(answers, profile),
-        wants: scoreWants(answers, profile),
-        priority: scorePriority(answers, profile),
-        corroborated: profile.audienceCorroborated ? 5 : 0,
-      };
-
-      const raw =
-        parts.demographic +
-        parts.geography +
-        parts.budget +
-        parts.wants +
-        parts.priority +
-        parts.corroborated;
-
-      // Clamp, never rescale: a perfect fit must read as a high number.
-      // But audience is the point of the whole exercise, so a profile that
-      // does not reach the target at all is capped no matter how well the
-      // other factors score. Otherwise a card can show 87 next to "audience
-      // does not overlap your target", which is a straight contradiction.
-      let score = Math.min(100, raw);
-      if (parts.demographic === 0) score = Math.min(score, 45);
-      else if (parts.demographic <= 16) score = Math.min(score, 72);
-
+      const { score, reasons, parts } = scoreMatch(answers, profile);
       return {
         profile,
         score,
-        reasons: buildReasons(answers, profile, parts),
+        reasons,
         caution: buildCaution(parts, score),
         taxBenefit: computeTaxBenefit(answers.budget, profile),
         corroboratedBadge: profile.audienceCorroborated,
@@ -295,5 +304,28 @@ export function matchSponsorToProfiles(
     })
     .filter((m) => m.score > 0)
     .sort((a, b) => b.score - a.score || b.profile.audienceSize - a.profile.audienceSize)
+    .slice(0, 5);
+}
+
+export interface SponsorLeadMatch {
+  lead: Persona;
+  score: number;
+  reasons: string[];
+}
+
+/**
+ * The reverse direction: given a club/athlete profile, which sponsor
+ * archetypes would want them? Same scoring as the sponsor-facing match, just
+ * run with the lead's answers against this one profile.
+ */
+export function matchProfileToSponsorLeads(profile: Profile, leads: Persona[]): SponsorLeadMatch[] {
+  return leads
+    .filter((lead) => lead.answers.country === profile.country)
+    .map((lead) => {
+      const { score, reasons } = scoreMatch(lead.answers, profile);
+      return { lead, score, reasons };
+    })
+    .filter((m) => m.score > 0)
+    .sort((a, b) => b.score - a.score)
     .slice(0, 5);
 }
