@@ -70,7 +70,7 @@ export function ContractSign({
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-5 py-9 sm:py-12">
+    <div className="mx-auto w-full max-w-2xl px-5 py-12 sm:py-16">
       <Button variant="ghost" onClick={onBack}>
         ← Back
       </Button>

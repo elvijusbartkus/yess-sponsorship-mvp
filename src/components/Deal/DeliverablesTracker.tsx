@@ -43,7 +43,7 @@ export function DeliverablesTracker({
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-5 py-9 sm:py-12">
+    <div className="mx-auto w-full max-w-2xl px-5 py-12 sm:py-16">
       <Button variant="ghost" onClick={onBack}>
         ← Back
       </Button>
@@ -61,15 +61,15 @@ export function DeliverablesTracker({
 
       <button
         onClick={onLaunchCampaign}
-        className="group mt-6 flex w-full items-center justify-between gap-4 overflow-hidden rounded-lg bg-ink-950 p-5 text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift"
+        className="group mt-6 flex w-full items-center justify-between gap-4 overflow-hidden rounded-xl bg-ink-950 p-5 text-left ring-hairline-dark transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift"
       >
         <div className="flex items-center gap-3.5">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-white/10 text-flare-400">
-            <Megaphone className="h-4.5 w-4.5" />
+          <div className="icon-glow-dark h-9 w-9">
+            <Megaphone className="h-4.5 w-4.5" strokeWidth={2.25} />
           </div>
           <div>
             <p className="font-display text-[15px] font-medium text-white">Launch the campaign</p>
-            <p className="mt-0.5 text-[13px] leading-snug text-ink-300">
+            <p className="mt-0.5 text-[13px] leading-snug text-white/80">
               We draft the post and story for this deal — see it generated.
             </p>
           </div>

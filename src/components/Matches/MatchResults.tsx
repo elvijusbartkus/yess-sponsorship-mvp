@@ -12,7 +12,7 @@ export function MatchResults({
   onRestart: () => void;
 }) {
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 py-9 sm:py-12">
+    <div className="mx-auto w-full max-w-3xl px-5 py-12 sm:py-16">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="animate-rise">
           <p className="eyebrow flex items-center gap-2 text-flare-600">

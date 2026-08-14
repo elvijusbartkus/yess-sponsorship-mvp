@@ -68,9 +68,9 @@ function SocialPostCard({
   regenerating: boolean;
 }) {
   return (
-    <div className="overflow-hidden rounded-lg bg-white ring-1 ring-inset ring-paper-line">
+    <div className="overflow-hidden rounded-xl bg-white ring-1 ring-inset ring-paper-line">
       <div className="flex items-center gap-3 p-4">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-flare-500 text-sm font-semibold text-white">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_25%,theme(colors.flare.400),theme(colors.flare.600)_75%)] text-sm font-semibold text-white">
           {initials(name)}
         </div>
         <div className="min-w-0 flex-1">
@@ -117,7 +117,7 @@ function StoryFrame({
   return (
     <div className="flex flex-col">
       <p className="mb-2.5 text-[11px] font-medium uppercase tracking-wide text-ink-400">Story</p>
-      <div className="relative aspect-[9/16] w-full max-w-[220px] overflow-hidden rounded-lg bg-gradient-to-br from-ink-950 via-ink-900 to-flare-700">
+      <div className="relative aspect-[9/16] w-full max-w-[220px] overflow-hidden rounded-xl bg-gradient-to-br from-ink-950 via-ink-900 to-flare-700 ring-hairline-dark">
         <p className="absolute left-4 top-4 text-[11px] font-medium uppercase tracking-wide text-white/60">
           {tag}
         </p>
@@ -198,7 +198,7 @@ export function CampaignPage({
   const firstName = profile.name.split(' ')[0];
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-5 py-9 sm:py-12">
+    <div className="mx-auto w-full max-w-2xl px-5 py-12 sm:py-16">
       <Button variant="ghost" onClick={onBack}>
         ← Back
       </Button>
@@ -257,7 +257,7 @@ export function CampaignPage({
               : 'Drafted from a template — connect a model key for live copy.'}
           </p>
 
-          <section className="mt-9 rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+          <section className="mt-9 rounded-xl bg-white p-5 ring-1 ring-inset ring-paper-line">
             <p className="eyebrow text-ink-400">Deliverables</p>
             <ul className="mt-3 space-y-2">
               <ChecklistRow label="Launch post" state="done" />

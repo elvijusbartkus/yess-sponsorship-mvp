@@ -48,7 +48,7 @@ export function MatchCard({
       onClick={onSelect}
       className={`group relative w-full overflow-hidden rounded-lg p-5 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-lift ${
         lead
-          ? 'bg-ink-950 text-white shadow-lift'
+          ? 'bg-ink-950 text-white shadow-lift ring-hairline-dark'
           : 'bg-white ring-1 ring-inset ring-paper-line hover:ring-ink-950'
       }`}
     >
@@ -66,7 +66,7 @@ export function MatchCard({
             </h3>
             <CorroboratedBadge corroborated={match.corroboratedBadge} />
           </div>
-          <p className={`mt-1.5 text-sm ${lead ? 'text-ink-300' : 'text-ink-500'}`}>
+          <p className={`mt-1.5 text-sm ${lead ? 'text-white/70' : 'text-ink-500'}`}>
             {profile.type === 'club' ? 'Club' : 'Athlete'} · {profile.sport}
           </p>
         </div>
@@ -105,7 +105,7 @@ export function MatchCard({
       </div>
 
       {match.reasons[0] && (
-        <p className={`mt-3.5 text-[15px] leading-snug ${lead ? 'text-ink-200' : 'text-ink-700'}`}>
+        <p className={`mt-3.5 text-[15px] leading-snug ${lead ? 'text-white/80' : 'text-ink-700'}`}>
           {match.reasons[0]}
         </p>
       )}

@@ -4,10 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Near-black, warm rather than blue-grey.
+        // Rich charcoal, warm rather than blue-grey — never pure black.
         ink: {
-          950: '#0B0B0F',
-          900: '#15151B',
+          950: '#0F0F11',
+          900: '#18181B',
           800: '#22222B',
           700: '#33333F',
           600: '#4A4A58',
@@ -17,11 +17,11 @@ export default {
           200: '#D8D8DE',
           100: '#E9E9E5',
         },
-        // Warm off-white, not cold grey.
+        // Warm off-white, not cold grey. Never pure white.
         paper: {
-          DEFAULT: '#FAFAF7',
-          dim: '#F3F3EE',
-          line: '#E6E6DF',
+          DEFAULT: '#F7F7F5',
+          dim: '#F0F0EC',
+          line: '#E4E4DD',
         },
         // The one bold accent — deep blue, kept mostly to black/white otherwise.
         flare: {
@@ -67,12 +67,16 @@ export default {
         xl: 'var(--radius-xl)',
       },
       boxShadow: {
-        card: '0 1px 2px rgba(11,11,15,0.04), 0 1px 3px rgba(11,11,15,0.06)',
-        lift: '0 18px 32px -12px rgba(11,11,15,0.16), 0 6px 12px -6px rgba(11,11,15,0.08)',
-        flare: '0 18px 32px -12px rgba(37,84,224,0.35)',
+        card: '0 1px 2px rgba(15,15,17,0.03), 0 2px 8px -2px rgba(15,15,17,0.05)',
+        lift: '0 24px 48px -16px rgba(15,15,17,0.14), 0 8px 16px -8px rgba(15,15,17,0.07)',
+        flare: '0 24px 48px -16px rgba(37,84,224,0.32)',
+        glow: '0 0 0 1px rgba(37,84,224,0.15), 0 12px 32px -8px rgba(37,84,224,0.28)',
       },
       fontFamily: {
-        display: ['"Space Grotesk Variable"', 'Space Grotesk', 'system-ui', 'sans-serif'],
+        // Syne: the "striking display font" — geometric, confident, and
+        // distinct from the body face, so headings never read as body text
+        // turned up a size.
+        display: ['"Syne Variable"', 'Syne', 'system-ui', 'sans-serif'],
         sans: ['"Inter Variable"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
       },
       letterSpacing: {

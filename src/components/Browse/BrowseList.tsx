@@ -90,7 +90,7 @@ function ProfileRow({ profile, onSelect }: { profile: Profile; onSelect: () => v
 
 function ProfileDetailPanel({ profile, onBack }: { profile: Profile; onBack: () => void }) {
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 py-10 sm:py-10">
+    <div className="mx-auto w-full max-w-3xl px-5 py-12 sm:py-16">
       <Button variant="ghost" onClick={onBack}>
         ← Back to browsing
       </Button>
@@ -204,7 +204,7 @@ export function BrowseList({ onBack }: { onBack: () => void }) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 py-10 sm:py-10">
+    <div className="mx-auto w-full max-w-3xl px-5 py-12 sm:py-16">
       <Button variant="ghost" onClick={onBack}>
         ← Home
       </Button>

@@ -28,8 +28,8 @@ export function Pricing({ onBack }: { onBack: () => void }) {
         )}
       </div>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <section className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line sm:p-6">
+      <div className="mt-10 grid gap-4 sm:grid-cols-2">
+        <section className="rounded-xl bg-white p-5 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card sm:p-6">
           <p className="eyebrow text-ink-400">Clubs &amp; athletes</p>
           <p className="mt-2">
             <span className="display text-5xl leading-none tabular-nums text-ink-950">
@@ -48,7 +48,7 @@ export function Pricing({ onBack }: { onBack: () => void }) {
           </p>
         </section>
 
-        <section className="overflow-hidden rounded-lg bg-ink-950 text-white">
+        <section className="overflow-hidden rounded-xl bg-ink-950 text-white ring-hairline-dark transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift">
           <div className="p-5 sm:p-6">
             <p className="eyebrow text-flare-400">Sponsors</p>
             <p className="mt-2">
@@ -56,13 +56,13 @@ export function Pricing({ onBack }: { onBack: () => void }) {
                 {membershipPlan.currency}
                 {membershipPlan.priceMonthly}
               </span>
-              <span className="ml-2 text-base text-ink-400">/ month</span>
+              <span className="ml-2 text-base text-white/60">/ month</span>
             </p>
-            <p className="mt-1 text-sm text-ink-400">
+            <p className="mt-1 text-sm text-white/60">
               or {membershipPlan.currency}
               {membershipPlan.priceAnnual}/year
             </p>
-            <p className="mt-5 border-t border-white/10 pt-5 text-[15px] leading-relaxed text-ink-300">
+            <p className="mt-5 border-t border-white/10 pt-5 text-[15px] leading-relaxed text-white/80">
               Browsing and matching are free for anyone. Membership only comes up when you contact
               someone or propose a deal.
             </p>
@@ -70,7 +70,7 @@ export function Pricing({ onBack }: { onBack: () => void }) {
         </section>
       </div>
 
-      <section className="mt-4 rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line sm:p-6">
+      <section className="mt-4 rounded-xl bg-white p-5 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card sm:p-6">
         <p className="eyebrow text-ink-400">On every closed deal</p>
         <p className="mt-2">
           <span className="display text-5xl leading-none tabular-nums text-ink-950">

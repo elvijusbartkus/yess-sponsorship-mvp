@@ -44,7 +44,7 @@ export function DealRoom({
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-5 py-9 sm:py-12">
+    <div className="mx-auto w-full max-w-2xl px-5 py-12 sm:py-16">
       <Button variant="ghost" onClick={onBack}>
         ← Back
       </Button>
@@ -94,10 +94,10 @@ export function DealRoom({
         )}
       </div>
 
-      <section className="mt-6 overflow-hidden rounded-lg bg-ink-950 text-white">
+      <section className="mt-6 overflow-hidden rounded-xl bg-ink-950 text-white ring-hairline-dark">
         <div className="divide-y divide-white/10 p-6 sm:p-6">
           <div className="flex items-baseline justify-between gap-4 pb-5">
-            <span className="text-[15px] text-ink-300">Deal value</span>
+            <span className="text-[15px] text-white/80">Deal value</span>
             <span className="display text-4xl tabular-nums text-white">{formatEur(dealValue)}</span>
           </div>
 
@@ -107,13 +107,13 @@ export function DealRoom({
               Our commission ({commission.rateLabel}
               {launchPromo.active ? ' · launch rate' : ''})
             </span>
-            <span className="text-sm tabular-nums text-ink-300">
+            <span className="text-sm tabular-nums text-white/80">
               {formatEur(commission.amount)}
             </span>
           </div>
 
           <div className="flex items-baseline justify-between gap-4 pt-5">
-            <span className="text-[15px] text-ink-300">{profile.name} gets</span>
+            <span className="text-[15px] text-white/80">{profile.name} gets</span>
             <span className="display text-4xl tabular-nums text-gain-500">
               {formatEur(dealValue)}
             </span>

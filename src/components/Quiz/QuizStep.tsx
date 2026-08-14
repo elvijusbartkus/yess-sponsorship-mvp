@@ -79,7 +79,7 @@ export function QuizStep<T extends string>({
                 </span>
               </div>
               {option.hint && (
-                <p className={`mt-1 text-[13px] ${isSelected ? 'text-ink-300' : 'text-ink-400'}`}>
+                <p className={`mt-1 text-[13px] ${isSelected ? 'text-white/80' : 'text-ink-400'}`}>
                   {option.hint}
                 </p>
               )}

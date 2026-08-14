@@ -29,7 +29,7 @@ export function MembershipDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-sm border-none bg-ink-950 p-6 text-white">
+      <DialogContent className="max-w-sm border-none bg-ink-950 p-6 text-white ring-hairline-dark">
         <DialogHeader>
           <p className="eyebrow text-ink-400">Membership</p>
           <DialogTitle className="display mt-1 text-2xl leading-tight text-white">
@@ -44,7 +44,7 @@ export function MembershipDialog({
           <button
             onClick={() => setBilling('monthly')}
             className={`rounded-sm px-3 py-1 text-sm font-medium transition-colors ${
-              billing === 'monthly' ? 'bg-white text-ink-950' : 'text-ink-300 hover:text-white'
+              billing === 'monthly' ? 'bg-white text-ink-950' : 'text-white/70 hover:text-white'
             }`}
           >
             Monthly
@@ -52,7 +52,7 @@ export function MembershipDialog({
           <button
             onClick={() => setBilling('annual')}
             className={`rounded-sm px-3 py-1 text-sm font-medium transition-colors ${
-              billing === 'annual' ? 'bg-white text-ink-950' : 'text-ink-300 hover:text-white'
+              billing === 'annual' ? 'bg-white text-ink-950' : 'text-white/70 hover:text-white'
             }`}
           >
             Yearly
@@ -74,7 +74,7 @@ export function MembershipDialog({
 
         <ul className="mt-5 space-y-2 border-t border-white/10 pt-4">
           {membershipPlan.includes.map((item) => (
-            <li key={item} className="flex items-start gap-2.5 text-[13px] leading-relaxed text-ink-200">
+            <li key={item} className="flex items-start gap-2.5 text-[13px] leading-relaxed text-white/80">
               <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-flare-400" />
               {item}
             </li>
@@ -83,7 +83,7 @@ export function MembershipDialog({
 
         <button
           onClick={onStart}
-          className="mt-6 w-full rounded-md bg-flare-500 py-3 text-center font-display text-base font-medium text-white transition-colors hover:bg-flare-400"
+          className="mt-6 w-full rounded-lg bg-[radial-gradient(circle_at_30%_20%,theme(colors.flare.400),theme(colors.flare.600)_75%)] py-3 text-center font-display text-base font-medium text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-glow"
         >
           Start membership
         </button>

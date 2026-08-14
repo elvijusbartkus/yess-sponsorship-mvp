@@ -166,7 +166,7 @@ export function ProfileBuilder({
                     }`}
                   >
                     <p className="font-display text-lg font-medium">{opt.label}</p>
-                    <p className={`mt-0.5 text-sm ${on ? 'text-ink-300' : 'text-ink-500'}`}>
+                    <p className={`mt-0.5 text-sm ${on ? 'text-white/80' : 'text-ink-500'}`}>
                       {opt.hint}
                     </p>
                   </button>
@@ -393,7 +393,7 @@ export function ProfileBuilder({
 
   return (
     <div className="flex flex-1 flex-col">
-      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center px-5 py-10">
+      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center px-5 py-14">
         <div className="w-full">
           <ProgressBar current={step} total={steps.length} />
           <div className="mt-9">{renderStep()}</div>

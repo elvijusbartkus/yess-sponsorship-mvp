@@ -217,7 +217,7 @@ export function QuizFunnel({
     // floating at the top of an empty page.
     <div className="flex flex-1 flex-col">
 
-      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center px-5 py-10">
+      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center px-5 py-14">
         <div className="w-full">
           <ProgressBar current={step} total={steps.length} />
           <div className="mt-9">{renderStep()}</div>

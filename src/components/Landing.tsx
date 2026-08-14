@@ -32,14 +32,16 @@ function DoorCard({
     <button
       onClick={onClick}
       className={`group relative flex h-full flex-col overflow-hidden rounded-lg p-5 text-left transition-all duration-200 hover:-translate-y-1.5 sm:p-6 ${
-        ink ? 'bg-ink-950 text-white hover:shadow-lift' : 'bg-flare-500 text-white hover:shadow-flare'
+        ink
+          ? 'bg-ink-950 text-white ring-1 ring-inset ring-white/10 hover:shadow-lift'
+          : 'bg-[radial-gradient(circle_at_25%_15%,theme(colors.flare.400),theme(colors.flare.600)_75%)] text-white hover:shadow-glow'
       }`}
     >
       <p className={`eyebrow ${ink ? 'text-flare-400' : 'text-white/70'}`}>{eyebrow}</p>
 
       <h2 className="display mt-3 text-3xl leading-[1.05] text-white sm:text-4xl">{title}</h2>
 
-      <p className={`mt-2.5 flex-1 text-[15px] leading-relaxed ${ink ? 'text-ink-300' : 'text-white/80'}`}>
+      <p className="mt-2.5 flex-1 text-[15px] leading-relaxed text-white/80">
         {body}
       </p>
 
@@ -63,8 +65,8 @@ function Step({
 }) {
   return (
     <div className="flex items-start gap-3.5">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-paper-dim text-ink-950">
-        <Icon className="h-4.5 w-4.5" />
+      <div className="icon-glow h-9 w-9">
+        <Icon className="h-4.5 w-4.5" strokeWidth={2.25} />
       </div>
       <div>
         <p className="font-display text-[15px] font-medium text-ink-950">{label}</p>
@@ -85,9 +87,9 @@ function SectionEyebrow({ children }: { children: string }) {
 
 function MarketStat({ label, value, note }: { label: string; value: string; note: string }) {
   return (
-    <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+    <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card">
       <p className="eyebrow text-ink-400">{label}</p>
-      <p className="display mt-2 text-4xl leading-none text-ink-950">{value}</p>
+      <p className="display mt-2 text-4xl leading-none tracking-tightest text-ink-950">{value}</p>
       <p className="mt-2 text-[13px] leading-snug text-ink-500">{note}</p>
     </div>
   );
@@ -121,7 +123,7 @@ export function Landing({
         </p>
       </div>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
+      <div className="mt-10 grid gap-4 sm:grid-cols-2">
         <DoorCard
           tone="ink"
           eyebrow="For businesses"
@@ -141,7 +143,7 @@ export function Landing({
       </div>
 
       {/* PROBLEM */}
-      <section className="mt-9 border-t border-paper-line pt-8">
+      <section className="mt-16 border-t border-paper-line pt-14">
         <SectionEyebrow>The problem</SectionEyebrow>
         <h2 className="display mt-3 max-w-2xl text-3xl leading-[1.1] text-ink-950 sm:text-4xl">
           Private sport money never reaches the clubs and athletes that need it.
@@ -165,8 +167,8 @@ export function Landing({
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="mt-9 grid gap-8 border-t border-paper-line pt-8 sm:grid-cols-2">
-        <div>
+      <section className="mt-16 grid gap-6 border-t border-paper-line pt-14 sm:grid-cols-2">
+        <div className="rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line">
           <p className="eyebrow text-ink-400">How it works for sponsors</p>
           <div className="mt-5 space-y-5">
             <Step icon={Search} label="Answer a few questions" body="Budget, audience, region — three taps." />
@@ -188,7 +190,7 @@ export function Landing({
             Start as a sponsor <ArrowRight className="h-3.5 w-3.5" />
           </button>
         </div>
-        <div>
+        <div className="rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line">
           <p className="eyebrow text-ink-400">How it works for clubs & athletes</p>
           <div className="mt-5 space-y-5">
             <Step
@@ -217,7 +219,7 @@ export function Landing({
       </section>
 
       {/* THE MARKETING / JUSTIFICATION LAYER — the core differentiator */}
-      <section className="mt-9 overflow-hidden rounded-lg bg-ink-950 p-5 text-white sm:p-6">
+      <section className="mt-16 overflow-hidden rounded-xl bg-ink-950 p-6 text-white ring-hairline-dark sm:p-8">
         <div className="flare-rule h-1.5 w-10" />
         <p className="eyebrow mt-3 text-flare-400">Why we're not just a directory</p>
         <h2 className="display mt-2.5 max-w-2xl text-2xl leading-[1.1] text-white sm:text-3xl">
@@ -225,26 +227,26 @@ export function Landing({
         </h2>
         <div className="mt-6 grid gap-5 sm:grid-cols-2">
           <div className="flex items-start gap-3.5">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-white/10 text-flare-400">
-              <Megaphone className="h-4.5 w-4.5" />
+            <div className="icon-glow-dark h-9 w-9">
+              <Megaphone className="h-4.5 w-4.5" strokeWidth={2.25} />
             </div>
             <div>
               <p className="font-display text-[15px] font-medium text-white">We draft the campaign</p>
-              <p className="mt-1 text-[13px] leading-relaxed text-ink-300">
+              <p className="mt-1 text-[13px] leading-relaxed text-white/80">
                 A launch post and story caption get generated for every signed deal — clubs and
                 athletes are training, not marketers.
               </p>
             </div>
           </div>
           <div className="flex items-start gap-3.5">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-white/10 text-flare-400">
-              <FileCheck2 className="h-4.5 w-4.5" />
+            <div className="icon-glow-dark h-9 w-9">
+              <FileCheck2 className="h-4.5 w-4.5" strokeWidth={2.25} />
             </div>
             <div>
               <p className="font-display text-[15px] font-medium text-white">
                 We prove it, deliverable by deliverable
               </p>
-              <p className="mt-1 text-[13px] leading-relaxed text-ink-300">
+              <p className="mt-1 text-[13px] leading-relaxed text-white/80">
                 Every activation item is tracked — posted or not, reach logged — a real record to
                 justify the spend and renew against, instead of a deal that quietly lapses.
               </p>
@@ -254,45 +256,47 @@ export function Landing({
       </section>
 
       {/* WHO ARE OUR USERS */}
-      <section className="mt-9 border-t border-paper-line pt-8">
+      <section className="mt-16 border-t border-paper-line pt-14">
         <SectionEyebrow>Who we're building for</SectionEyebrow>
         <h2 className="display mt-3 max-w-2xl text-2xl leading-[1.1] text-ink-950 sm:text-3xl">
           Three sides. One broken market.
         </h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-3">
-          <div className="rounded-lg bg-white p-4 ring-1 ring-inset ring-paper-line">
-            <div className="flex items-center gap-2.5">
-              <Trophy className="h-5 w-5 text-flare-500" />
-              <p className="font-display text-lg font-medium text-ink-950">Clubs & athletes</p>
+          <div className="group rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card">
+            <div className="icon-glow h-10 w-10">
+              <Trophy className="h-5 w-5" strokeWidth={2.25} />
             </div>
-            <p className="mt-2.5 text-[13px] leading-relaxed text-ink-700">
+            <p className="mt-3 font-display text-lg font-medium text-ink-950">Clubs & athletes</p>
+            <p className="mt-2 text-[13px] leading-relaxed text-ink-700">
               2,900+ registered clubs, 240,000+ participants. Need money.
             </p>
           </div>
-          <div className="rounded-lg bg-white p-4 ring-1 ring-inset ring-paper-line">
-            <div className="flex items-center gap-2.5">
-              <Building2 className="h-5 w-5 text-flare-500" />
-              <p className="font-display text-lg font-medium text-ink-950">Businesses</p>
+          <div className="group rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card">
+            <div className="icon-glow h-10 w-10">
+              <Building2 className="h-5 w-5" strokeWidth={2.25} />
             </div>
-            <p className="mt-2.5 text-[13px] leading-relaxed text-ink-700">
+            <p className="mt-3 font-display text-lg font-medium text-ink-950">Businesses</p>
+            <p className="mt-2 text-[13px] leading-relaxed text-ink-700">
               Thousands of local firms, €500–50k to spend, no one to spend it on.
             </p>
           </div>
-          <div className="rounded-lg bg-white p-4 ring-1 ring-inset ring-paper-line">
-            <div className="flex items-center gap-2.5">
-              <Landmark className="h-5 w-5 text-flare-500" />
-              <p className="font-display text-lg font-medium text-ink-950">The Committee</p>
+          <div className="group rounded-lg bg-ink-950 p-5 ring-hairline-dark transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift sm:col-span-3 sm:flex sm:items-center sm:gap-6">
+            <div className="icon-glow-dark h-10 w-10">
+              <Landmark className="h-5 w-5" strokeWidth={2.25} />
             </div>
-            <p className="mt-2.5 text-[13px] leading-relaxed text-ink-700">
-              Already centralizes every club via the Sports Register. One lever to onboard all of
-              them.
-            </p>
+            <div className="sm:flex-1">
+              <p className="mt-3 font-display text-lg font-medium text-white sm:mt-0">The Committee</p>
+              <p className="mt-2 text-[13px] leading-relaxed text-white/80">
+                Already centralizes every club via the Sports Register. One lever to onboard all of
+                them.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* MARKET SIZE + GO-TO-MARKET, side by side to keep the page shorter */}
-      <section className="mt-9 grid gap-8 border-t border-paper-line pt-8 sm:grid-cols-2">
+      <section className="mt-16 grid gap-8 border-t border-paper-line pt-14 sm:grid-cols-2">
         <div>
           <SectionEyebrow>Market size</SectionEyebrow>
           <div className="mt-4 grid grid-cols-3 gap-2.5">
