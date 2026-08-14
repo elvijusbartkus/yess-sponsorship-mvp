@@ -46,19 +46,19 @@ export function MatchCard({
   return (
     <button
       onClick={onSelect}
-      className={`group relative w-full overflow-hidden rounded-lg p-6 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-lift sm:p-5 ${
+      className={`group relative w-full overflow-hidden rounded-lg p-5 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-lift ${
         lead
           ? 'bg-ink-950 text-white shadow-lift'
           : 'bg-white ring-1 ring-inset ring-paper-line hover:ring-ink-950'
       }`}
     >
       {lead && (
-        <div className="mt-4 flex justify-end">
+        <div className="mb-3 flex justify-end">
           <span className="eyebrow rounded-md bg-flare-500 px-2.5 py-1 text-white">Best match</span>
         </div>
       )}
 
-      <div className={`flex items-start justify-between gap-4 ${lead ? 'mt-3' : ''}`}>
+      <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
             <h3 className={`display text-2xl leading-tight ${lead ? 'text-white' : 'text-ink-950'}`}>
@@ -83,7 +83,7 @@ export function MatchCard({
 
       {/* Always three concrete facts — never just one big vanity number. */}
       <div
-        className={`mt-6 grid grid-cols-3 gap-4 border-t pt-5 ${
+        className={`mt-4 grid grid-cols-3 gap-3 border-t pt-4 ${
           lead ? 'border-white/10' : 'border-paper-line'
         }`}
       >
@@ -105,7 +105,7 @@ export function MatchCard({
       </div>
 
       {match.reasons[0] && (
-        <p className={`mt-5 text-[15px] leading-snug ${lead ? 'text-ink-200' : 'text-ink-700'}`}>
+        <p className={`mt-3.5 text-[15px] leading-snug ${lead ? 'text-ink-200' : 'text-ink-700'}`}>
           {match.reasons[0]}
         </p>
       )}

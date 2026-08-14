@@ -16,12 +16,8 @@ import { LiveProfile } from './components/Club/LiveProfile';
 import { BrowseList } from './components/Browse/BrowseList';
 import { createProfile, fetchMatches, fetchProfiles } from './lib/api';
 import type {
-  ActivationType,
-  ClubSeed,
   ContractRecord,
   Match,
-  Persona,
-  Priority,
   ProfileDraft,
   SponsorAccount,
   SponsorAnswers,
@@ -179,6 +175,12 @@ export default function App() {
 
   useEffect(loadPool, [loadPool]);
 
+  // Every screen change opens at the top — otherwise a card opened from
+  // halfway down a scrolled list lands mid-page instead of at its own start.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [screen]);
+
   function showResultsWhenBothReady() {
     if (matchesReady.current && animationDone.current) setScreen('results');
   }
@@ -203,16 +205,6 @@ export default function App() {
       });
   }, []);
 
-  /** Re-runs the match with a tweaked answer, without leaving the results. */
-  function refine(patch: Partial<SponsorAnswers>) {
-    if (!answers) return;
-    const next = { ...answers, ...patch };
-    setAnswers(next);
-    fetchMatches(next)
-      .then(({ matches: found }) => setMatches(found))
-      .catch((e: Error) => setError(e.message));
-  }
-
   function goHome() {
     setAnswers(null);
     setSelected(null);
@@ -231,21 +223,6 @@ export default function App() {
       .catch((e: Error) => setError(e.message));
   }
 
-  /** One-click demo runs — skip typing on stage, go straight to the payoff screen. */
-  function tryPersona(persona: Persona) {
-    setAccount({
-      company: persona.label,
-      email: 'demo@sponsorship-marketplace.example',
-      country: persona.answers.country,
-      membershipActive: false,
-    });
-    runSponsor(persona.answers);
-  }
-
-  function tryClubSeed(seed: ClubSeed) {
-    publishProfile(seed.draft);
-  }
-
   function renderScreen() {
     switch (screen) {
       case 'landing':
@@ -258,8 +235,6 @@ export default function App() {
             }}
             onPricing={() => setScreen('pricing')}
             onBrowse={() => setScreen('browse')}
-            onTryPersona={tryPersona}
-            onTryClubSeed={tryClubSeed}
           />
         );
 
@@ -306,15 +281,11 @@ export default function App() {
         return (
           <MatchResults
             matches={matches}
-            answers={answers}
             onSelect={(match) => {
               setSelected(match);
               setScreen('detail');
             }}
             onRestart={goHome}
-            onPriorityChange={(priority: Priority) => refine({ priority })}
-            onWantsChange={(wants: ActivationType | 'any') => refine({ wants })}
-            onNoteChange={(note) => refine({ note })}
           />
         );
 
@@ -363,7 +334,6 @@ export default function App() {
         return (
           <DeliverablesTracker
             match={selected}
-            sponsorName={account?.company ?? 'Your company'}
             contract={contract}
             onBack={() => setScreen('contract')}
             onHome={() => setScreen('results')}

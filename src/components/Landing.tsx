@@ -9,13 +9,8 @@ import {
   Rocket,
   Building2,
   Trophy,
-  Play,
 } from 'lucide-react';
 import { clubPlan, commission, launchPromo, membershipPlan } from '../data/pricing';
-import { personas } from '../data/personas';
-import { clubSeeds } from '../data/clubFlow';
-import { ScoreboardTicker } from './Landing/ScoreboardTicker';
-import type { ClubSeed, Persona } from '../lib/types';
 
 function DoorCard({
   eyebrow,
@@ -103,15 +98,11 @@ export function Landing({
   onClubStart,
   onPricing,
   onBrowse,
-  onTryPersona,
-  onTryClubSeed,
 }: {
   onSponsorStart: () => void;
   onClubStart: () => void;
   onPricing: () => void;
   onBrowse: () => void;
-  onTryPersona: (persona: Persona) => void;
-  onTryClubSeed: (seed: ClubSeed) => void;
 }) {
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 py-10 sm:py-10">
@@ -125,7 +116,6 @@ export function Landing({
         <p className="mt-4 max-w-xl text-lg leading-snug text-ink-500">
           We match Baltic clubs and athletes with the businesses that want their audience.
         </p>
-        <ScoreboardTicker />
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -145,34 +135,6 @@ export function Landing({
           body="Sponsors find you. Keep your other sponsors and agents — this isn't exclusive."
           onClick={onClubStart}
         />
-      </div>
-
-      {/* DEMO SHORTCUTS — one click, no typing, for live walkthroughs. */}
-      <div className="mt-4 rounded-lg bg-paper-dim p-4">
-        <p className="flex items-center gap-1.5 text-xs font-medium text-ink-500">
-          <Play className="h-3.5 w-3.5" />
-          Demo shortcuts — skip the typing
-        </p>
-        <div className="mt-2.5 flex flex-wrap gap-2">
-          {personas.map((persona) => (
-            <button
-              key={persona.id}
-              onClick={() => onTryPersona(persona)}
-              className="rounded-md bg-white px-3 py-1.5 text-[13px] font-medium text-ink-700 ring-1 ring-inset ring-paper-line transition-colors hover:ring-ink-950"
-            >
-              {persona.label}
-            </button>
-          ))}
-          {clubSeeds.map((seed) => (
-            <button
-              key={seed.id}
-              onClick={() => onTryClubSeed(seed)}
-              className="rounded-md bg-flare-50 px-3 py-1.5 text-[13px] font-medium text-flare-700 ring-1 ring-inset ring-flare-100 transition-colors hover:ring-flare-500"
-            >
-              {seed.label}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* PROBLEM */}

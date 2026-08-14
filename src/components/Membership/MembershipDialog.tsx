@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Check } from 'lucide-react';
-import { Button } from '../common/Button';
 import {
   Dialog,
   DialogContent,
@@ -13,7 +12,8 @@ import { launchPromo, membershipPlan } from '../../data/pricing';
 /**
  * Shown only at the moment it matters — pressing Contact or Propose a deal —
  * never proactively. Browsing and matching stay fully free; this is the one
- * screen where the sponsor decides whether to pay to act.
+ * screen where the sponsor decides whether to pay to act, so the CTA gets
+ * the one accent color the rest of the app spends carefully.
  */
 export function MembershipDialog({
   open,
@@ -25,70 +25,68 @@ export function MembershipDialog({
   onStart: () => void;
 }) {
   const [billing, setBilling] = useState<'monthly' | 'annual'>('monthly');
+  const price = billing === 'monthly' ? membershipPlan.priceMonthly : membershipPlan.priceAnnual;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md border-none bg-ink-950 p-0 text-white sm:max-w-md">
-        <DialogHeader className="px-6 pt-6">
-          <DialogTitle className="display text-3xl leading-tight text-white">
-            Unlock this action
+      <DialogContent className="max-w-sm border-none bg-ink-950 p-6 text-white">
+        <DialogHeader>
+          <p className="eyebrow text-ink-400">Membership</p>
+          <DialogTitle className="display mt-1 text-2xl leading-tight text-white">
+            Contact clubs & close deals
           </DialogTitle>
-          <DialogDescription className="text-[15px] text-ink-300">
-            Matching stays free. Membership is what lets you contact clubs and athletes and close
-            deals.
+          <DialogDescription className="mt-1 text-sm text-ink-400">
+            Matching stays free — this is what unlocks reaching out.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="px-6 pb-6">
-          {launchPromo.active && (
-            <p className="eyebrow mt-2 inline-block rounded-md bg-flare-500 px-2.5 py-1 text-white">
-              Launch offer — first {launchPromo.sponsorFreeMonths} months free
-            </p>
-          )}
-
-          <div className="mt-4 flex items-center gap-2">
-            <button
-              onClick={() => setBilling('monthly')}
-              className={`rounded-md px-3 py-1.5 text-sm font-medium ${
-                billing === 'monthly' ? 'bg-white text-ink-950' : 'text-ink-300'
-              }`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setBilling('annual')}
-              className={`rounded-md px-3 py-1.5 text-sm font-medium ${
-                billing === 'annual' ? 'bg-white text-ink-950' : 'text-ink-300'
-              }`}
-            >
-              Yearly
-            </button>
-          </div>
-
-          <p className="mt-3">
-            <span className="display text-5xl leading-none tabular-nums text-white">
-              {membershipPlan.currency}
-              {billing === 'monthly' ? membershipPlan.priceMonthly : membershipPlan.priceAnnual}
-            </span>
-            <span className="ml-2 text-base text-ink-400">
-              / {billing === 'monthly' ? 'month' : 'year'}
-            </span>
-          </p>
-
-          <ul className="mt-5 space-y-2">
-            {membershipPlan.includes.map((item) => (
-              <li key={item} className="flex items-start gap-2.5 text-sm leading-relaxed text-ink-200">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-flare-400" />
-                {item}
-              </li>
-            ))}
-          </ul>
-
-          <Button size="lg" className="mt-6 w-full" onClick={onStart}>
-            Start membership
-          </Button>
-          <p className="mt-3 text-center text-xs text-ink-400">Cancel any time.</p>
+        <div className="mt-5 inline-flex w-fit items-center gap-1 rounded-md bg-white/5 p-1">
+          <button
+            onClick={() => setBilling('monthly')}
+            className={`rounded-sm px-3 py-1 text-sm font-medium transition-colors ${
+              billing === 'monthly' ? 'bg-white text-ink-950' : 'text-ink-300 hover:text-white'
+            }`}
+          >
+            Monthly
+          </button>
+          <button
+            onClick={() => setBilling('annual')}
+            className={`rounded-sm px-3 py-1 text-sm font-medium transition-colors ${
+              billing === 'annual' ? 'bg-white text-ink-950' : 'text-ink-300 hover:text-white'
+            }`}
+          >
+            Yearly
+          </button>
         </div>
+
+        <p className="mt-4">
+          <span className="display text-4xl leading-none tabular-nums text-white">
+            {membershipPlan.currency}
+            {price}
+          </span>
+          <span className="ml-1.5 text-sm text-ink-400">/ {billing === 'monthly' ? 'mo' : 'yr'}</span>
+        </p>
+        {launchPromo.active && (
+          <p className="mt-1.5 text-[13px] font-medium text-flare-400">
+            First {launchPromo.sponsorFreeMonths} months free, launch offer.
+          </p>
+        )}
+
+        <ul className="mt-5 space-y-2 border-t border-white/10 pt-4">
+          {membershipPlan.includes.map((item) => (
+            <li key={item} className="flex items-start gap-2.5 text-[13px] leading-relaxed text-ink-200">
+              <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-flare-400" />
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        <button
+          onClick={onStart}
+          className="mt-6 w-full rounded-md bg-flare-500 py-3 text-center font-display text-base font-medium text-white transition-colors hover:bg-flare-400"
+        >
+          Start membership
+        </button>
       </DialogContent>
     </Dialog>
   );

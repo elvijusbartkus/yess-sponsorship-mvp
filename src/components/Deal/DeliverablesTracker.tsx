@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { CheckCircle2, Circle } from 'lucide-react';
 import { Button } from '../common/Button';
-import { CampaignCurator } from './CampaignCurator';
 import { formatEur } from '../../lib/taxRules';
 import type { ContractRecord, Deliverable, Match } from '../../lib/types';
 
@@ -15,13 +14,11 @@ import type { ContractRecord, Deliverable, Match } from '../../lib/types';
  */
 export function DeliverablesTracker({
   match,
-  sponsorName,
   contract,
   onBack,
   onHome,
 }: {
   match: Match;
-  sponsorName: string;
   contract: ContractRecord;
   onBack: () => void;
   onHome: () => void;
@@ -116,8 +113,6 @@ export function DeliverablesTracker({
           </p>
         )}
       </section>
-
-      <CampaignCurator sponsorName={sponsorName} profile={profile} />
 
       <div className="mt-8 border-t border-paper-line pt-8">
         <Button variant="ghost" onClick={onHome}>
