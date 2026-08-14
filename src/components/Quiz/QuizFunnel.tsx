@@ -7,6 +7,7 @@ import {
   countryOptions,
   demographicOptions,
   goalOptions,
+  priorityOptions,
   quizSteps,
   regionsByCountry,
 } from '../../data/sponsorQuiz';
@@ -15,6 +16,7 @@ import type {
   Country,
   Demographic,
   Goal,
+  Priority,
   Region,
   SponsorAnswers,
 } from '../../lib/types';
@@ -25,6 +27,7 @@ interface Draft {
   demographic?: Demographic;
   region?: Region | 'National';
   goal?: Goal;
+  priority?: Priority;
 }
 
 export function QuizFunnel({ onComplete }: { onComplete: (answers: SponsorAnswers) => void }) {
@@ -49,6 +52,7 @@ export function QuizFunnel({ onComplete }: { onComplete: (answers: SponsorAnswer
       demographic: next.demographic!,
       region: next.region!,
       goal: next.goal!,
+      priority: next.priority,
     });
   }
 
@@ -108,6 +112,16 @@ export function QuizFunnel({ onComplete }: { onComplete: (answers: SponsorAnswer
             options={goalOptions}
             selected={draft.goal}
             onSelect={(goal) => advance({ goal })}
+          />
+        );
+      case 'priority':
+        return (
+          <QuizStep
+            title={current.title}
+            subtitle={current.subtitle}
+            options={priorityOptions}
+            selected={draft.priority}
+            onSelect={(priority) => advance({ priority })}
           />
         );
       default:

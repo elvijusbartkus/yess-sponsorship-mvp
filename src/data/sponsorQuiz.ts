@@ -1,4 +1,4 @@
-import type { BudgetBand, Country, Demographic, Goal, Region } from '../lib/types';
+import type { BudgetBand, Country, Demographic, Goal, Priority, Region } from '../lib/types';
 
 export const budgetBands: BudgetBand[] = [
   { id: 'b1', label: '€500 – €2,000', min: 500, max: 2000, midpoint: 1250 },
@@ -34,12 +34,55 @@ export const goalOptions: { value: Goal; label: string; hint: string }[] = [
   { value: 'national-reach', label: 'National reach', hint: 'Country-wide visibility and broadcast' },
 ];
 
+export const priorityOptions: { value: Priority; label: string; hint: string }[] = [
+  {
+    value: 'verified-audience',
+    label: 'Biggest verified audience',
+    hint: 'Numbers proven at the gate, not self-reported',
+  },
+  {
+    value: 'value-for-money',
+    label: 'Best value for money',
+    hint: 'Most people reached per euro spent',
+  },
+  {
+    value: 'local-story',
+    label: 'Strongest local story',
+    hint: 'A community club your customers actually know',
+  },
+];
+
 export const quizSteps = [
-  { id: 'country', title: 'Where does your business operate?', subtitle: 'This determines which tax relief applies to your sponsorship.' },
-  { id: 'budget', title: 'What is your sponsorship budget?', subtitle: 'A range is fine — we price the tax benefit against it.' },
-  { id: 'demographic', title: 'Who are you trying to reach?', subtitle: 'The audience that matters to your business.' },
-  { id: 'region', title: 'Where do you want to be visible?', subtitle: 'A specific city, or nationally.' },
-  { id: 'goal', title: "What's the goal of this sponsorship?", subtitle: 'We weight matches toward what you actually want.' },
+  {
+    id: 'country',
+    title: 'Where does your business operate?',
+    subtitle: 'So we match you to sport your customers actually follow.',
+  },
+  {
+    id: 'budget',
+    title: "What's your budget for this sponsorship?",
+    subtitle: 'A range is fine. Free to browse, free to connect.',
+  },
+  {
+    id: 'demographic',
+    title: 'Who are you trying to reach?',
+    subtitle: 'The audience that matters to your business.',
+  },
+  {
+    id: 'region',
+    title: 'Where do you want to be visible?',
+    subtitle: 'A specific city, or right across the country.',
+  },
+  {
+    id: 'goal',
+    title: "What's the goal of this sponsorship?",
+    subtitle: 'We weight matches toward what you actually want out of it.',
+  },
+  {
+    id: 'priority',
+    title: 'What matters most in who you back?',
+    subtitle: 'This re-ranks your matches. You can change it later.',
+  },
 ] as const;
 
 export type QuizStepId = (typeof quizSteps)[number]['id'];

@@ -73,6 +73,9 @@ export interface BudgetBand {
   midpoint: number;
 }
 
+/** Optional 6th question — re-weights the ranking so the matching visibly responds. */
+export type Priority = 'verified-audience' | 'value-for-money' | 'local-story';
+
 export interface SponsorAnswers {
   budgetBand: BudgetBand;
   /** budgetBand.midpoint — the number the scoring and tax maths run on. */
@@ -82,21 +85,33 @@ export interface SponsorAnswers {
   /** 'National' means national within `country`. */
   region: Region | 'National';
   goal: Goal;
+  priority?: Priority;
 }
 
+/**
+ * A restrained, honest tax note. `applies: false` means there is genuinely no
+ * enhanced relief — the UI must then show no euro saving at all.
+ */
 export interface MatchTaxBenefit {
-  headline: string;
-  subline: string;
-  deductibleAmount: number;
-  cashSaving: number;
-  /** Rendered on the detail screen only — the card stays clean. */
+  applies: boolean;
+  /** Short tag for the card — no euro figure, so cards don't all read alike. */
+  tag: string;
+  /** The fuller line, detail screen only. */
+  line: string;
+  deduction: number;
+  taxSaved: number;
+  realCost: number;
+  /** Detail screen only. */
   caveat: string;
 }
 
 export interface Match {
   profile: Profile;
   score: number;
+  /** Specific to this profile's actual top-scoring factors. Never boilerplate. */
   reasons: string[];
+  /** Honest note when the fit is only adjacent, shown on weaker matches. */
+  caution?: string;
   taxBenefit: MatchTaxBenefit;
   verifiedBadge: boolean;
 }
@@ -106,4 +121,24 @@ export interface Persona {
   label: string;
   blurb: string;
   answers: SponsorAnswers;
+}
+
+/** What the club/athlete flow collects. Deliberately short. */
+export interface ProfileDraft {
+  name: string;
+  type: 'club' | 'athlete';
+  sport: string;
+  country: Country;
+  region: Region;
+  audienceSize: number;
+  instagramFollowers: number;
+  activation: string[];
+  dealRange: [number, number];
+}
+
+export interface ClubSeed {
+  id: string;
+  label: string;
+  blurb: string;
+  draft: ProfileDraft;
 }

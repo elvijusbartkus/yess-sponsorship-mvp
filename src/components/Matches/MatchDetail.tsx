@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { Badge, VerifiedBadge } from '../common/Badge';
 import { Button } from '../common/Button';
 import { formatEur } from '../../lib/taxRules';
+import { COUNTRY_LABEL } from '../../lib/matching';
 import type { Match, SponsorAnswers } from '../../lib/types';
-
-const COUNTRY_LABEL: Record<string, string> = { EE: 'Estonia', LV: 'Latvia', LT: 'Lithuania' };
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
@@ -26,7 +25,6 @@ export function MatchDetail({
 }) {
   const [connected, setConnected] = useState(false);
   const { profile, taxBenefit } = match;
-  const hasEnhancedRelief = profile.taxStatus.benefit.kind !== 'none';
 
   return (
     <div className="mx-auto w-full max-w-3xl px-5 py-10 sm:py-14">
@@ -55,50 +53,11 @@ export function MatchDetail({
 
       <p className="mt-4 text-sm leading-relaxed text-ink-700">{profile.results}</p>
 
-      {/* The wedge, in full */}
-      <section
-        className={`mt-8 rounded-2xl p-5 ${
-          hasEnhancedRelief
-            ? 'bg-gain-50 ring-1 ring-inset ring-gain-100'
-            : 'bg-slate-50 ring-1 ring-inset ring-slate-200'
-        }`}
-      >
-        <p className="text-xs font-semibold uppercase tracking-wider text-ink-400">
-          Your tax position
+      {match.caution && (
+        <p className="mt-4 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-ink-500">
+          {match.caution}
         </p>
-        <p
-          className={`mt-2 text-xl font-semibold ${
-            hasEnhancedRelief ? 'text-gain-700' : 'text-ink-800'
-          }`}
-        >
-          {taxBenefit.headline}
-        </p>
-        <p className={`mt-1 text-sm ${hasEnhancedRelief ? 'text-gain-600' : 'text-ink-500'}`}>
-          {taxBenefit.subline}
-        </p>
-
-        <div className="mt-4 grid gap-3 sm:grid-cols-3">
-          <div>
-            <p className="text-xs text-ink-400">You sponsor</p>
-            <p className="text-sm font-semibold text-ink-900">{formatEur(answers.budget)}</p>
-          </div>
-          <div>
-            <p className="text-xs text-ink-400">Off taxable profit</p>
-            <p className="text-sm font-semibold text-ink-900">
-              {formatEur(taxBenefit.deductibleAmount)}
-            </p>
-          </div>
-          <div>
-            <p className="text-xs text-ink-400">Cash effect</p>
-            <p className="text-sm font-semibold text-ink-900">
-              {taxBenefit.cashSaving > 0 ? formatEur(taxBenefit.cashSaving) : '—'}
-            </p>
-          </div>
-        </div>
-
-        <p className="mt-4 text-xs text-ink-400">{profile.taxStatus.note}</p>
-        <p className="mt-1 text-xs text-ink-300">{taxBenefit.caveat}</p>
-      </section>
+      )}
 
       <section className="mt-8">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-ink-400">
@@ -129,7 +88,11 @@ export function MatchDetail({
         <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <Stat
             label="Matchday"
-            value={profile.reach.matchAttendance ? profile.reach.matchAttendance.toLocaleString('en-US') : '—'}
+            value={
+              profile.reach.matchAttendance
+                ? profile.reach.matchAttendance.toLocaleString('en-US')
+                : '—'
+            }
           />
           <Stat label="Instagram" value={profile.reach.instagramFollowers.toLocaleString('en-US')} />
           <Stat label="Facebook" value={profile.reach.facebookFans.toLocaleString('en-US')} />
@@ -175,13 +138,50 @@ export function MatchDetail({
         </div>
       </section>
 
+      {/* Supporting benefit, kept in proportion. */}
+      <section
+        className={`mt-8 rounded-2xl p-5 ${
+          taxBenefit.applies
+            ? 'bg-gain-50 ring-1 ring-inset ring-gain-100'
+            : 'bg-slate-50 ring-1 ring-inset ring-slate-200'
+        }`}
+      >
+        <p className="text-xs font-semibold uppercase tracking-wider text-ink-400">Tax treatment</p>
+        <p
+          className={`mt-2 text-sm font-medium ${
+            taxBenefit.applies ? 'text-gain-700' : 'text-ink-700'
+          }`}
+        >
+          {taxBenefit.line}
+        </p>
+
+        {taxBenefit.applies && (
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            <div>
+              <p className="text-xs text-ink-400">You sponsor</p>
+              <p className="text-sm font-semibold text-ink-900">{formatEur(answers.budget)}</p>
+            </div>
+            <div>
+              <p className="text-xs text-ink-400">Tax saved</p>
+              <p className="text-sm font-semibold text-ink-900">{formatEur(taxBenefit.taxSaved)}</p>
+            </div>
+            <div>
+              <p className="text-xs text-ink-400">Real cost</p>
+              <p className="text-sm font-semibold text-ink-900">{formatEur(taxBenefit.realCost)}</p>
+            </div>
+          </div>
+        )}
+
+        <p className="mt-4 text-xs text-ink-400">{profile.taxStatus.note}</p>
+        <p className="mt-1 text-xs text-ink-300">{taxBenefit.caveat}</p>
+      </section>
+
       <div className="mt-10 border-t border-slate-200 pt-6">
         {connected ? (
           <div className="rounded-xl border border-gain-100 bg-gain-50 px-5 py-4">
             <p className="font-semibold text-gain-700">Request sent to {profile.name}</p>
             <p className="mt-1 text-sm text-gain-600">
-              They typically respond within 48 hours. We handle the paperwork and confirm the tax
-              treatment before anything is signed.
+              They typically respond within 48 hours. Nothing is charged for connecting.
             </p>
           </div>
         ) : (
@@ -190,7 +190,7 @@ export function MatchDetail({
               Connect with {profile.name}
             </Button>
             <span className="text-xs text-ink-400">
-              Free to connect. We take a commission only when a deal closes.
+              Free to connect. We only earn when a deal closes — 2% on large deals, 10% on small.
             </span>
           </div>
         )}

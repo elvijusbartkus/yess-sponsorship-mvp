@@ -9,7 +9,7 @@ export const personas: Persona[] = [
   {
     id: 'tartu-gym',
     label: 'Local gym, Tartu',
-    blurb: 'Small budget, wants youth in one city',
+    blurb: '€500–2k · youth · Tartu · local presence',
     answers: {
       budgetBand: budgetBands[0],
       budget: budgetBands[0].midpoint,
@@ -17,12 +17,13 @@ export const personas: Persona[] = [
       demographic: 'youth',
       region: 'Tartu',
       goal: 'local-presence',
+      priority: 'local-story',
     },
   },
   {
     id: 'ee-bank',
     label: 'Estonian bank',
-    blurb: 'National reach, 18–34, mid-six-figure marketing budget',
+    blurb: '€10k–50k · 18–34 · national · brand awareness',
     answers: {
       budgetBand: budgetBands[2],
       budget: budgetBands[2].midpoint,
@@ -30,12 +31,13 @@ export const personas: Persona[] = [
       demographic: '18-34',
       region: 'National',
       goal: 'brand-awareness',
+      priority: 'verified-audience',
     },
   },
   {
     id: 'baltic-beverage',
-    label: 'Baltic beverage brand',
-    blurb: 'Lithuania-based, national reach — the 200% deduction run',
+    label: 'Lithuanian beverage brand',
+    blurb: '€10k–50k · 18–34 · national · brand awareness',
     answers: {
       budgetBand: budgetBands[2],
       budget: budgetBands[2].midpoint,
@@ -43,6 +45,7 @@ export const personas: Persona[] = [
       demographic: '18-34',
       region: 'National',
       goal: 'brand-awareness',
+      priority: 'verified-audience',
     },
   },
 ];

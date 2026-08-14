@@ -1,44 +1,47 @@
 import type { MatchTaxBenefit, Profile } from './types';
 
-export const TAX_CAVEAT = 'Subject to recipient status and statutory caps.';
+export const TAX_CAVEAT =
+  'Indicative only — subject to recipient status and statutory caps. Confirm with your accountant.';
 
 export function formatEur(amount: number): string {
   return `€${Math.round(amount).toLocaleString('en-US')}`;
 }
 
 /**
- * The wedge. Computes what a sponsorship of `budget` is actually worth to the
- * sponsor's tax position, given the recipient's country and legal status.
+ * A supporting benefit, not the product. One restrained line per match.
  *
- * Lead with the big number (deduction from the taxable base), back it with the
- * real one (cash effect). A differentiator that survives a CFO doing the
- * arithmetic in their head is worth more than one that doesn't.
+ * Rates as of 2025: Lithuanian corporate income tax 16%, Estonian distribution
+ * tax 22%. Where there is no qualifying status there is no saving, and the UI
+ * must show none — a faked euro figure on a non-qualifying profile is the
+ * fastest way to lose a room of sponsors.
  */
 export function computeTaxBenefit(budget: number, profile: Profile): MatchTaxBenefit {
   const benefit = profile.taxStatus.benefit;
 
   switch (benefit.kind) {
     case 'multiplier': {
-      const deductibleAmount = budget * benefit.factor;
-      const cashSaving = deductibleAmount * benefit.corporateTaxRate;
+      const deduction = budget * benefit.factor;
+      const taxSaved = deduction * benefit.corporateTaxRate;
       return {
-        headline: `Your ${formatEur(budget)} writes ${formatEur(deductibleAmount)} off taxable profit`,
-        subline: `≈ ${formatEur(cashSaving)} lower tax bill at ${Math.round(
-          benefit.corporateTaxRate * 100,
-        )}% corporate income tax`,
-        deductibleAmount,
-        cashSaving,
+        applies: true,
+        tag: `Enhanced tax relief — up to ${benefit.factor * 100}% deduction`,
+        line: `Holds support-recipient status, so this sponsorship deducts at ${benefit.factor * 100}% — worth about ${formatEur(taxSaved)} on a ${formatEur(budget)} budget.`,
+        deduction,
+        taxSaved,
+        realCost: budget - taxSaved,
         caveat: TAX_CAVEAT,
       };
     }
 
     case 'allowance': {
-      const cashSaving = budget * benefit.corporateTaxRate;
+      const taxSaved = budget * benefit.corporateTaxRate;
       return {
-        headline: `Fully tax-free under Estonia's donation allowance`,
-        subline: `≈ ${formatEur(cashSaving)} saved vs. a taxed distribution — capacity almost no company uses`,
-        deductibleAmount: budget,
-        cashSaving,
+        applies: true,
+        tag: `Eligible under Estonia's tax-free allowance`,
+        line: `Registered recipient, so a ${formatEur(budget)} sponsorship is tax-free — about ${formatEur(taxSaved)} not lost to distribution tax.`,
+        deduction: budget,
+        taxSaved,
+        realCost: budget - taxSaved,
         caveat: TAX_CAVEAT,
       };
     }
@@ -46,10 +49,12 @@ export function computeTaxBenefit(budget: number, profile: Profile): MatchTaxBen
     case 'none':
     default:
       return {
-        headline: 'Deductible as marketing spend',
-        subline: 'No enhanced relief — priced as pure audience value',
-        deductibleAmount: budget,
-        cashSaving: 0,
+        applies: false,
+        tag: 'Standard marketing spend',
+        line: 'No enhanced relief applies here — this is deductible as ordinary marketing spend.',
+        deduction: budget,
+        taxSaved: 0,
+        realCost: budget,
         caveat: TAX_CAVEAT,
       };
   }

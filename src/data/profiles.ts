@@ -1,12 +1,16 @@
 import type { Profile } from '../lib/types';
 
-const EE_CIT = 0.2;
-const LT_CIT = 0.15;
+const EE_DISTRIBUTION_TAX = 0.22;
+const LT_CIT = 0.16;
 
 /**
- * Eight seed profiles. Demo geography rule: Estonia-first. Cross-border scores
- * zero, so an Estonian sponsor sees Estonian matches. The Lithuanian 200% club
- * is the second run, surfaced by the Baltic-wide persona.
+ * Eight seed profiles, mixed across country, region, demographic, verified
+ * status, deal range and tax status, so different sponsor answers produce
+ * visibly different rankings.
+ *
+ * Demo geography rule: Estonia-first. Sponsors are matched inside their own
+ * market, so an Estonian sponsor sees Estonian clubs. The Lithuanian club with
+ * support-recipient status is the second run, surfaced by the Baltic persona.
  */
 export const profiles: Profile[] = [
   {
@@ -36,7 +40,7 @@ export const profiles: Profile[] = [
     dealRange: [2000, 15000],
     taxStatus: {
       hasSponsorshipStatus: true,
-      benefit: { kind: 'allowance', corporateTaxRate: EE_CIT },
+      benefit: { kind: 'allowance', corporateTaxRate: EE_DISTRIBUTION_TAX },
       note: 'Registered recipient — qualifies under Estonia\'s tax-free donation allowance (3% of paid wages or 10% of prior-year profit).',
     },
     currentSponsors: ['Tartu Mill', 'A. Le Coq'],
@@ -69,7 +73,7 @@ export const profiles: Profile[] = [
     dealRange: [1000, 6000],
     taxStatus: {
       hasSponsorshipStatus: true,
-      benefit: { kind: 'allowance', corporateTaxRate: EE_CIT },
+      benefit: { kind: 'allowance', corporateTaxRate: EE_DISTRIBUTION_TAX },
       note: 'Registered recipient — qualifies under Estonia\'s tax-free donation allowance.',
     },
     currentSponsors: [],
@@ -102,7 +106,7 @@ export const profiles: Profile[] = [
     dealRange: [8000, 60000],
     taxStatus: {
       hasSponsorshipStatus: true,
-      benefit: { kind: 'allowance', corporateTaxRate: EE_CIT },
+      benefit: { kind: 'allowance', corporateTaxRate: EE_DISTRIBUTION_TAX },
       note: 'Supported via a registered athletics foundation — qualifies under Estonia\'s tax-free donation allowance.',
     },
     currentSponsors: ['Nordea', 'Sportland'],
@@ -134,7 +138,7 @@ export const profiles: Profile[] = [
     dealRange: [500, 4000],
     taxStatus: {
       hasSponsorshipStatus: true,
-      benefit: { kind: 'allowance', corporateTaxRate: EE_CIT },
+      benefit: { kind: 'allowance', corporateTaxRate: EE_DISTRIBUTION_TAX },
       note: 'Registered recipient — qualifies under Estonia\'s tax-free donation allowance.',
     },
     currentSponsors: ['Pärnu Kaubamaja'],
@@ -200,7 +204,7 @@ export const profiles: Profile[] = [
     taxStatus: {
       hasSponsorshipStatus: true,
       benefit: { kind: 'multiplier', factor: 2, corporateTaxRate: LT_CIT },
-      note: 'Holds official support-recipient status in Lithuania — sponsorship deducts at 200% from taxable profit.',
+      note: 'Holds official support-recipient status in Lithuania — sponsorship deducts at 200% from taxable profit, capped at 40% of taxable profit.',
     },
     currentSponsors: ['Šviesa', 'Ignitis'],
     imageHint: 'Packed Lithuanian basketball arena under LED boards',
