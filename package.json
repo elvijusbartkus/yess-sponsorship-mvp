@@ -11,7 +11,8 @@
     "test": "vitest run",
     "server": "tsx watch server/index.ts",
     "dev:all": "concurrently -n api,web -c magenta,cyan \"npm:server\" \"npm:dev\"",
-    "seed": "tsx server/db.ts"
+    "seed": "tsx server/db.ts",
+    "start": "tsx server/index.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.117.1",
@@ -20,7 +21,8 @@
     "better-sqlite3": "^13.0.3",
     "express": "^5.2.1",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "tsx": "^4.23.12"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^9.6.0",
@@ -34,9 +36,11 @@
     "oxlint": "^1.75.0",
     "postcss": "^8.5.26",
     "tailwindcss": "^3.4.19",
-    "tsx": "^4.23.12",
     "typescript": "~6.0.2",
     "vite": "^8.2.0",
     "vitest": "^4.1.10"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
