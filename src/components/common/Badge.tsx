@@ -1,0 +1,38 @@
+import type { ReactNode } from 'react';
+
+type Tone = 'neutral' | 'verified' | 'muted' | 'accent';
+
+const TONES: Record<Tone, string> = {
+  neutral: 'bg-slate-100 text-ink-500',
+  verified: 'bg-gain-50 text-gain-700 ring-1 ring-inset ring-gain-100',
+  muted: 'bg-slate-50 text-ink-400 ring-1 ring-inset ring-slate-200',
+  accent: 'bg-accent-50 text-accent-700 ring-1 ring-inset ring-accent-100',
+};
+
+export function Badge({ tone = 'neutral', children }: { tone?: Tone; children: ReactNode }) {
+  return (
+    <span
+      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium ${TONES[tone]}`}
+    >
+      {children}
+    </span>
+  );
+}
+
+export function VerifiedBadge({ verified }: { verified: boolean }) {
+  if (verified) {
+    return (
+      <Badge tone="verified">
+        <svg viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5">
+          <path
+            fillRule="evenodd"
+            d="M10 1.5l2.2 1.6 2.7-.2.9 2.6 2.2 1.6-1 2.6 1 2.6-2.2 1.6-.9 2.6-2.7-.2L10 18.5l-2.2-1.6-2.7.2-.9-2.6-2.2-1.6 1-2.6-1-2.6 2.2-1.6.9-2.6 2.7.2L10 1.5zm3.4 6.2a.75.75 0 10-1.1-1L9 10.2 7.7 8.9a.75.75 0 10-1.1 1l1.9 1.9c.3.3.8.3 1.1 0l3.8-4.1z"
+            clipRule="evenodd"
+          />
+        </svg>
+        Verified audience
+      </Badge>
+    );
+  }
+  return <Badge tone="muted">Self-reported</Badge>;
+}
