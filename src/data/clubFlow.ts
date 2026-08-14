@@ -1,4 +1,4 @@
-import type { ClubSeed, Country, Region } from '../lib/types';
+import type { ActivationType, ClubSeed, Country, Region } from '../lib/types';
 
 export const sportOptions = [
   'Football',
@@ -20,6 +20,16 @@ export const activationOptions = [
   'Newsletter',
   'Hospitality',
 ];
+
+/** Lets a self-listed club be matched on what it offers, like the seed data. */
+export const activationTypeOf: Record<string, ActivationType> = {
+  'Kit branding': 'visibility',
+  'Venue banners': 'visibility',
+  'Social posts': 'content',
+  'Newsletter': 'content',
+  'Named event': 'naming',
+  'Hospitality': 'hospitality',
+};
 
 export const audienceBands = [
   { id: 'a1', label: 'Under 500', value: 300 },
@@ -63,6 +73,7 @@ export const clubSeeds: ClubSeed[] = [
       audienceSize: 1200,
       instagramFollowers: 4500,
       activation: ['Kit branding', 'Venue banners', 'Social posts'],
+      activationTypes: ['visibility', 'content'],
       dealRange: [2000, 10000],
     },
   },
@@ -79,6 +90,7 @@ export const clubSeeds: ClubSeed[] = [
       audienceSize: 5000,
       instagramFollowers: 4500,
       activation: ['Social posts', 'Named event', 'Hospitality'],
+      activationTypes: ['content', 'naming', 'hospitality'],
       dealRange: [500, 2000],
     },
   },

@@ -34,6 +34,7 @@ export function profileFromDraft(draft: ProfileDraft, index: number): Profile {
       draft.type === 'club' ? 'Club' : 'Athlete'
     } profile, not yet independently verified.`,
     activation: draft.activation,
+    activationTypes: draft.activationTypes,
     dealRange: draft.dealRange,
     taxStatus: {
       hasSponsorshipStatus: false,

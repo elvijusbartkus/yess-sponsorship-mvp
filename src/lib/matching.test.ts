@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { matchSponsorToProfiles, scoreDemographic, scoreGeography } from './matching';
+import {
+  matchSponsorToProfiles,
+  scoreDemographic,
+  scoreGeography,
+  scoreWants,
+} from './matching';
 import { computeTaxBenefit } from './taxRules';
 import { profiles } from '../data/profiles';
 import { personas } from '../data/personas';
@@ -59,14 +64,41 @@ describe('score bounds', () => {
   });
 });
 
+describe('what the sponsor wants in return', () => {
+  it('scores zero when the club cannot deliver it', () => {
+    // HK Riga offers visibility and naming, but no hospitality.
+    expect(scoreWants({ ...tartuGym, wants: 'hospitality' }, byId('hk-riga-stars'))).toBe(0);
+    expect(scoreWants({ ...tartuGym, wants: 'naming' }, byId('hk-riga-stars'))).toBe(12);
+  });
+
+  it('stays neutral when the sponsor has no preference', () => {
+    for (const profile of profiles) {
+      expect(scoreWants({ ...tartuGym, wants: 'any' }, profile)).toBe(7);
+    }
+  });
+
+  it('changes the ranking, so the question earns its place', () => {
+    const base = { ...eeBank, region: 'Tallinn' as const, demographic: 'all' as const };
+    const order = (w: 'visibility' | 'naming' | 'hospitality') =>
+      matchSponsorToProfiles({ ...base, wants: w }, profiles).map((m) => m.profile.id).join();
+    expect(order('naming')).not.toBe(order('hospitality'));
+  });
+
+  it('says so honestly when the club cannot deliver it', () => {
+    const matches = matchSponsorToProfiles({ ...tartuGym, wants: 'hospitality' }, profiles);
+    const cannot = matches.filter((m) => !m.profile.activationTypes.includes('hospitality'));
+    for (const m of cannot) expect(m.caution).toBeDefined();
+  });
+});
+
 describe('the optional priority question visibly re-ranks', () => {
   const base: SponsorAnswers = {
     ...eeBank,
     demographic: 'youth',
     region: 'Tallinn',
-    goal: 'brand-awareness',
-    budgetBand: budgetBands[0],
-    budget: budgetBands[0].midpoint,
+    wants: 'visibility',
+    budgetBand: budgetBands[2],
+    budget: budgetBands[2].midpoint,
   };
 
   it('puts a verified profile top when the sponsor asks for verified audience', () => {

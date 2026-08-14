@@ -93,7 +93,9 @@ export default function App() {
 
       {screen === 'quiz' && <QuizFunnel onComplete={runSponsor} />}
 
-      {screen === 'matching' && <MatchingScreen onDone={() => setScreen('results')} />}
+      {screen === 'matching' && (
+        <MatchingScreen poolSize={pool.length} onDone={() => setScreen('results')} />
+      )}
 
       {screen === 'results' && answers && (
         <MatchResults

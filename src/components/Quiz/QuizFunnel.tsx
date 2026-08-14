@@ -6,16 +6,16 @@ import {
   budgetBands,
   countryOptions,
   demographicOptions,
-  goalOptions,
+  wantsOptions,
   priorityOptions,
   quizSteps,
   regionsByCountry,
 } from '../../data/sponsorQuiz';
 import type {
+  ActivationType,
   BudgetBand,
   Country,
   Demographic,
-  Goal,
   Priority,
   Region,
   SponsorAnswers,
@@ -26,7 +26,7 @@ interface Draft {
   budgetBand?: BudgetBand;
   demographic?: Demographic;
   region?: Region | 'National';
-  goal?: Goal;
+  wants?: ActivationType | 'any';
   priority?: Priority;
 }
 
@@ -51,7 +51,7 @@ export function QuizFunnel({ onComplete }: { onComplete: (answers: SponsorAnswer
       budget: next.budgetBand!.midpoint,
       demographic: next.demographic!,
       region: next.region!,
-      goal: next.goal!,
+      wants: next.wants!,
       priority: next.priority,
     });
   }
@@ -104,14 +104,14 @@ export function QuizFunnel({ onComplete }: { onComplete: (answers: SponsorAnswer
           />
         );
       }
-      case 'goal':
+      case 'wants':
         return (
           <QuizStep
             title={current.title}
             subtitle={current.subtitle}
-            options={goalOptions}
-            selected={draft.goal}
-            onSelect={(goal) => advance({ goal })}
+            options={wantsOptions}
+            selected={draft.wants}
+            onSelect={(wants) => advance({ wants })}
           />
         );
       case 'priority':

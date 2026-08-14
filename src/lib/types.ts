@@ -17,11 +17,12 @@ export type Region =
 
 export type Demographic = 'youth' | '18-34' | '35-54' | 'families' | 'all';
 
-export type Goal =
-  | 'brand-awareness'
-  | 'local-presence'
-  | 'youth-engagement'
-  | 'national-reach';
+/**
+ * What the sponsor actually gets. Replaces the old `Goal`, which restated the
+ * region and demographic answers rather than adding anything, and lets the
+ * matcher finally use each profile's activation options.
+ */
+export type ActivationType = 'visibility' | 'content' | 'hospitality' | 'naming';
 
 /**
  * Tax benefit is a discriminated union on purpose. Lithuania's "deduct twice the
@@ -55,6 +56,8 @@ export interface Profile {
   };
   results: string;
   activation: string[];
+  /** Categorised form of `activation`, so it can be matched on. */
+  activationTypes: ActivationType[];
   dealRange: [number, number];
   taxStatus: {
     hasSponsorshipStatus: boolean;
@@ -84,7 +87,8 @@ export interface SponsorAnswers {
   demographic: Demographic;
   /** 'National' means national within `country`. */
   region: Region | 'National';
-  goal: Goal;
+  /** 'any' = no preference. */
+  wants: ActivationType | 'any';
   priority?: Priority;
 }
 
@@ -133,6 +137,8 @@ export interface ProfileDraft {
   audienceSize: number;
   instagramFollowers: number;
   activation: string[];
+  /** Categorised form of `activation`, so it can be matched on. */
+  activationTypes: ActivationType[];
   dealRange: [number, number];
 }
 

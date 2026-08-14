@@ -1,7 +1,7 @@
 import { MatchCard } from './MatchCard';
 import { Button } from '../common/Button';
 import { COUNTRY_LABEL } from '../../lib/matching';
-import { priorityOptions } from '../../data/sponsorQuiz';
+import { priorityOptions, wantsOptions } from '../../data/sponsorQuiz';
 import type { Match, Priority, SponsorAnswers } from '../../lib/types';
 
 export function MatchResults({
@@ -37,7 +37,7 @@ export function MatchResults({
             {answers.region === 'National'
               ? `${COUNTRY_LABEL[answers.country]} nationally`
               : answers.region}{' '}
-            · {answers.goal.replace(/-/g, ' ')}
+            · {wantsOptions.find((w) => w.value === answers.wants)?.label.toLowerCase()}
           </p>
         </div>
         <Button variant="secondary" onClick={onRestart}>

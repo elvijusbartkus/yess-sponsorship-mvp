@@ -37,6 +37,7 @@ export const profiles: Profile[] = [
       'Matchday hospitality for 10',
       'Co-branded social content, 2× per month',
     ],
+    activationTypes: ['visibility', 'hospitality', 'content'],
     dealRange: [2000, 15000],
     taxStatus: {
       hasSponsorshipStatus: true,
@@ -70,6 +71,7 @@ export const profiles: Profile[] = [
       'Named youth tournament',
       'Parent newsletter placement (1,900 households)',
     ],
+    activationTypes: ['visibility', 'naming', 'content'],
     dealRange: [1000, 6000],
     taxStatus: {
       hasSponsorshipStatus: true,
@@ -103,6 +105,7 @@ export const profiles: Profile[] = [
       'Brand ambassador appearances, 4× per year',
       'Dedicated Instagram content series',
     ],
+    activationTypes: ['visibility', 'content', 'hospitality'],
     dealRange: [8000, 60000],
     taxStatus: {
       hasSponsorshipStatus: true,
@@ -135,6 +138,7 @@ export const profiles: Profile[] = [
       'Summer beach volleyball series naming rights',
       'Local press and radio co-mentions',
     ],
+    activationTypes: ['visibility', 'naming', 'content'],
     dealRange: [500, 4000],
     taxStatus: {
       hasSponsorshipStatus: true,
@@ -167,6 +171,7 @@ export const profiles: Profile[] = [
       'Hall LED and matchday PA reads',
       'Russian- and Estonian-language social content',
     ],
+    activationTypes: ['visibility', 'content'],
     dealRange: [1500, 9000],
     taxStatus: {
       hasSponsorshipStatus: false,
@@ -200,6 +205,7 @@ export const profiles: Profile[] = [
       'Youth academy naming rights',
       'Hospitality at Ryto senior fixtures',
     ],
+    activationTypes: ['visibility', 'naming', 'hospitality'],
     dealRange: [5000, 80000],
     taxStatus: {
       hasSponsorshipStatus: true,
@@ -232,6 +238,7 @@ export const profiles: Profile[] = [
       'Race-day content and training vlogs',
       'Corporate ride-outs and team-building days',
     ],
+    activationTypes: ['visibility', 'content', 'hospitality'],
     dealRange: [2000, 12000],
     taxStatus: {
       hasSponsorshipStatus: false,
@@ -264,6 +271,7 @@ export const profiles: Profile[] = [
       'Jersey sponsorship',
       'Family zone naming rights',
     ],
+    activationTypes: ['visibility', 'naming'],
     dealRange: [3000, 20000],
     taxStatus: {
       hasSponsorshipStatus: false,

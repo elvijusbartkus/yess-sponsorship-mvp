@@ -1,4 +1,11 @@
-import type { BudgetBand, Country, Demographic, Goal, Priority, Region } from '../lib/types';
+import type {
+  ActivationType,
+  BudgetBand,
+  Country,
+  Demographic,
+  Priority,
+  Region,
+} from '../lib/types';
 
 export const budgetBands: BudgetBand[] = [
   { id: 'b1', label: '€500 – €2,000', min: 500, max: 2000, midpoint: 1250 },
@@ -27,11 +34,33 @@ export const demographicOptions: { value: Demographic; label: string; hint: stri
   { value: 'all', label: 'Broad audience', hint: 'No specific segment' },
 ];
 
-export const goalOptions: { value: Goal; label: string; hint: string }[] = [
-  { value: 'brand-awareness', label: 'Brand awareness', hint: 'Be seen by as many people as possible' },
-  { value: 'local-presence', label: 'Local presence', hint: 'Own a city or region' },
-  { value: 'youth-engagement', label: 'Youth engagement', hint: 'Reach young people and their families' },
-  { value: 'national-reach', label: 'National reach', hint: 'Country-wide visibility and broadcast' },
+/**
+ * Replaces the old "goal" question, which restated the region and demographic
+ * answers. This one asks something they alone can answer, and matches directly
+ * against what each club can actually deliver.
+ */
+export const wantsOptions: { value: ActivationType | 'any'; label: string; hint: string }[] = [
+  {
+    value: 'visibility',
+    label: 'Our logo in front of people',
+    hint: 'Shirts, boards, venue and broadcast',
+  },
+  {
+    value: 'content',
+    label: 'Content we can use',
+    hint: 'Social posts, athlete stories, newsletters',
+  },
+  {
+    value: 'hospitality',
+    label: 'Access and hospitality',
+    hint: 'Matchday guests, appearances, client entertaining',
+  },
+  {
+    value: 'naming',
+    label: 'Our name on something',
+    hint: 'A team, an event or an academy carrying your brand',
+  },
+  { value: 'any', label: "We're open", hint: 'Show us what each one offers' },
 ];
 
 export const priorityOptions: { value: Priority; label: string; hint: string }[] = [
@@ -74,9 +103,9 @@ export const quizSteps = [
     subtitle: 'A specific city, or right across the country.',
   },
   {
-    id: 'goal',
-    title: "What's the goal of this sponsorship?",
-    subtitle: 'We weight matches toward what you actually want out of it.',
+    id: 'wants',
+    title: 'What do you want in return?',
+    subtitle: 'We rank clubs by what they can actually deliver.',
   },
   {
     id: 'priority',

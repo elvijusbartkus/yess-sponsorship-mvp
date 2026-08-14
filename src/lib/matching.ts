@@ -1,4 +1,4 @@
-import type { Demographic, Match, Profile, SponsorAnswers } from './types';
+import type { ActivationType, Demographic, Match, Profile, SponsorAnswers } from './types';
 import { computeTaxBenefit } from './taxRules';
 
 /**
@@ -28,12 +28,23 @@ const DEMOGRAPHIC_LABEL: Record<Demographic, string> = {
   all: 'broad',
 };
 
-const GOAL_LABEL: Record<SponsorAnswers['goal'], string> = {
-  'brand-awareness': 'brand awareness',
-  'local-presence': 'local presence',
-  'youth-engagement': 'youth engagement',
-  'national-reach': 'national reach',
+const WANTS_LABEL: Record<ActivationType, string> = {
+  visibility: 'logo visibility',
+  content: 'usable content',
+  hospitality: 'access and hospitality',
+  naming: 'naming rights',
 };
+
+/** The concrete thing a profile offers for each category, for the reason line. */
+function offerFor(profile: Profile, want: ActivationType): string | undefined {
+  const needle: Record<ActivationType, RegExp> = {
+    visibility: /brand|logo|LED|banner|board|shirt|kit|jersey|court/i,
+    content: /social|content|newsletter|press|vlog|series/i,
+    hospitality: /hospitality|appearance|ride-out|guest|entertain/i,
+    naming: /naming|named/i,
+  };
+  return profile.activation.find((a) => needle[want].test(a));
+}
 
 export function scoreDemographic(answers: SponsorAnswers, profile: Profile): number {
   if (profile.demographics.includes(answers.demographic)) return 40;
@@ -60,20 +71,13 @@ export function scoreBudget(answers: SponsorAnswers, profile: Profile): number {
   return 0;
 }
 
-export function scoreGoal(answers: SponsorAnswers, profile: Profile): number {
-  switch (answers.goal) {
-    case 'youth-engagement':
-      return profile.demographics.includes('youth') ? 10 : 3;
-    case 'national-reach':
-      return profile.isNational ? 10 : 3;
-    case 'local-presence':
-      return !profile.isNational ? 10 : 3;
-    case 'brand-awareness':
-      if (profile.audienceSize >= 10000) return 10;
-      return profile.audienceSize >= 1000 ? 7 : 3;
-    default:
-      return 3;
-  }
+/**
+ * Can this profile actually deliver what the sponsor asked for? Replaces the
+ * old goal score, which mostly re-read the region and demographic answers.
+ */
+export function scoreWants(answers: SponsorAnswers, profile: Profile): number {
+  if (answers.wants === 'any') return 7;
+  return profile.activationTypes.includes(answers.wants) ? 12 : 0;
 }
 
 /**
@@ -119,7 +123,7 @@ interface Parts {
   demographic: number;
   geography: number;
   budget: number;
-  goal: number;
+  wants: number;
   priority: number;
   verified: number;
 }
@@ -179,16 +183,14 @@ function buildReasons(answers: SponsorAnswers, profile: Profile, parts: Parts): 
     });
   }
 
-  if (parts.goal >= 10) {
-    const detail =
-      answers.goal === 'brand-awareness'
-        ? `${profile.audienceSize.toLocaleString('en-US')} people reached across matchday and social`
-        : answers.goal === 'youth-engagement'
-          ? `${profile.type === 'club' ? 'A youth programme' : 'A young following'} you can put your name on`
-          : answers.goal === 'national-reach'
-            ? `${profile.reach.pressMentions} press mentions a year plus broadcast exposure`
-            : `Rooted in ${profile.region} rather than spread thin nationally`;
-    candidates.push({ weight: 60, text: `Strong for ${GOAL_LABEL[answers.goal]}: ${detail}` });
+  if (parts.wants > 0 && answers.wants !== 'any') {
+    const offer = offerFor(profile, answers.wants);
+    candidates.push({
+      weight: 85,
+      text: offer
+        ? `Delivers the ${WANTS_LABEL[answers.wants]} you asked for: ${offer.toLowerCase()}`
+        : `Offers the ${WANTS_LABEL[answers.wants]} you asked for`,
+    });
   }
 
   if (parts.priority > 0 && answers.priority === 'verified-audience') {
@@ -225,6 +227,9 @@ function buildCaution(parts: Parts, score: number): string | undefined {
   if (parts.budget === 0) {
     return 'Their typical deal size sits outside your budget band.';
   }
+  if (parts.wants === 0) {
+    return "They don't currently offer the thing you asked for.";
+  }
   return undefined;
 }
 
@@ -242,7 +247,7 @@ export function matchSponsorToProfiles(
         demographic: scoreDemographic(answers, profile),
         geography: scoreGeography(answers, profile),
         budget: scoreBudget(answers, profile),
-        goal: scoreGoal(answers, profile),
+        wants: scoreWants(answers, profile),
         priority: scorePriority(answers, profile),
         verified: profile.audienceVerified ? 5 : 0,
       };
@@ -251,7 +256,7 @@ export function matchSponsorToProfiles(
         parts.demographic +
         parts.geography +
         parts.budget +
-        parts.goal +
+        parts.wants +
         parts.priority +
         parts.verified;
 

@@ -4,6 +4,7 @@ import { Button } from '../common/Button';
 import { QuizStep } from '../Quiz/QuizStep';
 import {
   activationOptions,
+  activationTypeOf,
   audienceBands,
   clubRegionsByCountry,
   dealRangeOptions,
@@ -48,7 +49,11 @@ export function ProfileBuilder({
       setStep(step + 1);
       return;
     }
-    onComplete(next as ProfileDraft);
+    const chosen = next.activation ?? [];
+    onComplete({
+      ...(next as ProfileDraft),
+      activationTypes: [...new Set(chosen.map((a) => activationTypeOf[a]).filter(Boolean))],
+    });
   }
 
   function toggleActivation(item: string) {
