@@ -22,4 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-data/
+# SQLite database directory (repo root only — an unanchored 'data/' would
+# also swallow src/data/, which is source code).
+/data/
