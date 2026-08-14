@@ -8,8 +8,16 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     ...init,
   });
   if (!res.ok) {
+    // A 404 on /api almost always means the frontend is deployed without the
+    // API behind it — say that, rather than echoing a hosting provider's
+    // request id at the user.
+    if (res.status === 404 && BASE === '/api') {
+      throw new Error(
+        'No API is running at /api. In development run `npm run dev:all`; when deployed, set VITE_API_URL to the backend URL.',
+      );
+    }
     const body = await res.text().catch(() => '');
-    throw new Error(`${res.status} ${res.statusText}${body ? ` — ${body}` : ''}`);
+    throw new Error(`${res.status} ${res.statusText}${body ? ` — ${body.slice(0, 140)}` : ''}`);
   }
   return (await res.json()) as T;
 }

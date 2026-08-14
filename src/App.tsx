@@ -52,7 +52,6 @@ function Header({ onHome, onPricing }: { onHome: () => void; onPricing: () => vo
           >
             Pricing
           </button>
-          <span className="eyebrow hidden text-ink-400 sm:block">EOK × YESS · Tallinn 2026</span>
         </div>
       </div>
     </header>

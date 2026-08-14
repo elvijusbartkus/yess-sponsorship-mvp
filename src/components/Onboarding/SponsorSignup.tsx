@@ -28,16 +28,10 @@ export function SponsorSignup({
   }
 
   return (
-    <div className="relative flex flex-1">
-      <aside className="relative hidden w-[clamp(80px,10vw,150px)] shrink-0 bg-ink-950 lg:block">
-        <div className="flare-rule absolute inset-y-0 right-0 w-1.5 opacity-90" />
-        <span className="eyebrow absolute bottom-12 left-1/2 -translate-x-1/2 rotate-180 whitespace-nowrap text-ink-500 [writing-mode:vertical-rl]">
-          For businesses
-        </span>
-      </aside>
+    <div className="flex flex-1 flex-col">
 
-      <div className="flex flex-1 items-center justify-center px-5 py-14">
-        <div className="w-full max-w-xl animate-rise">
+      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center px-5 py-14">
+        <div className="w-full animate-rise">
           <p className="eyebrow text-flare-600">Step 1 of 2</p>
           <h1 className="display mt-3 text-4xl leading-[1.05] text-ink-950 sm:text-5xl">
             Create your sponsor account

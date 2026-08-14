@@ -15,7 +15,9 @@ export function LiveProfile({
   onHome: () => void;
   onSearchAsSponsor: () => void;
 }) {
-  const totalReach = draft.audienceSize + draft.instagramFollowers;
+  // For an athlete the following IS the audience — adding both would double it.
+  const totalReach =
+    draft.type === 'athlete' ? draft.audienceSize : draft.audienceSize + draft.instagramFollowers;
 
   return (
     <div className="mx-auto w-full max-w-2xl px-5 py-14 sm:py-20">
@@ -50,7 +52,9 @@ export function LiveProfile({
             <span className="display text-4xl leading-none tabular-nums text-ink-950">
               {totalReach.toLocaleString('en-US')}
             </span>
-            <span className="ml-2 text-sm text-ink-500">reached</span>
+            <span className="ml-2 text-sm text-ink-500">
+              {draft.type === 'athlete' ? 'following' : 'reached'}
+            </span>
           </div>
           <div className="text-sm text-ink-400">
             {formatEur(draft.dealRange[0])}–{formatEur(draft.dealRange[1])}
@@ -58,6 +62,7 @@ export function LiveProfile({
         </div>
 
         <div className="mt-5 flex flex-wrap gap-1.5">
+          {draft.competitionLevel && <Badge>{draft.competitionLevel.replace(/-/g, ' ')}</Badge>}
           {draft.activation.map((a) => (
             <Badge key={a} tone="accent">
               {a}

@@ -233,8 +233,19 @@ is left as roadmap rather than faked.
 
 ## Deployment
 
-Not deployed — that needs accounts and credentials this repo doesn't have.
-What's ready:
+**The frontend and the API are two separate deploys.** A 404 on `/api` means the
+frontend is live without the backend behind it — the most common failure.
+
+1. **Backend** (Render): Build `npm install`, Start `npm start`. Set
+   `CORS_ORIGIN` to your frontend URL. Optional: `ANTHROPIC_API_KEY`.
+2. **Frontend** (Vercel): `vercel.json` is committed with the build config and
+   SPA rewrite. **Set `VITE_API_URL` to `https://<your-render-app>/api`** and
+   redeploy — it is read at build time, so changing it needs a rebuild.
+
+Without step 2 the app loads and then fails on every request. The error screen
+now says so explicitly rather than echoing a hosting request id.
+
+Other notes:
 
 - **Frontend** → Vercel/Netlify. Build `npm run build`, output `dist/`. Set
   `VITE_API_URL` to the deployed API's `/api` base.

@@ -101,9 +101,20 @@ export function QuizFunnel({
         );
       case 'region': {
         const cities = regionsByCountry[draft.country ?? 'EE'];
+        // Conditional on the budget answer: a national campaign isn't a real
+        // option at the smallest band, so we don't offer it there.
+        const nationalIsPlausible = (draft.budgetBand?.max ?? 0) > 2000;
         const options: { value: Region | 'National'; label: string; hint?: string }[] = [
           ...cities.map((city) => ({ value: city as Region | 'National', label: city })),
-          { value: 'National', label: 'Nationally', hint: 'Country-wide visibility' },
+          ...(nationalIsPlausible
+            ? [
+                {
+                  value: 'National' as Region | 'National',
+                  label: 'Nationally',
+                  hint: 'Country-wide visibility',
+                },
+              ]
+            : []),
         ];
         return (
           <QuizStep
@@ -123,16 +134,10 @@ export function QuizFunnel({
   return (
     // Fills the viewport so the question sits in a composed frame rather than
     // floating at the top of an empty page.
-    <div className="relative flex flex-1">
-      <aside className="relative hidden w-[clamp(80px,10vw,150px)] shrink-0 bg-ink-950 lg:block">
-        <div className="flare-rule absolute inset-y-0 right-0 w-1.5 opacity-90" />
-        <span className="eyebrow absolute bottom-12 left-1/2 -translate-x-1/2 rotate-180 whitespace-nowrap text-ink-500 [writing-mode:vertical-rl]">
-          For businesses
-        </span>
-      </aside>
+    <div className="flex flex-1 flex-col">
 
-      <div className="flex flex-1 items-center justify-center px-5 py-14">
-        <div className="w-full max-w-xl">
+      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center px-5 py-14">
+        <div className="w-full">
           <ProgressBar current={step} total={steps.length} />
           <div className="mt-12">{renderStep()}</div>
 

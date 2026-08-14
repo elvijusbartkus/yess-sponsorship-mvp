@@ -10,6 +10,20 @@ import type { ProfileDraft, SponsorAnswers } from '../src/lib/types';
 const app = express();
 app.use(express.json({ limit: '256kb' }));
 
+/**
+ * Once deployed, the frontend (Vercel) and this API (Render) are different
+ * origins, so the browser needs CORS. Set CORS_ORIGIN to the frontend URL in
+ * production; the permissive default keeps local dev and previews working.
+ */
+const CORS_ORIGIN = process.env.CORS_ORIGIN ?? '*';
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', CORS_ORIGIN);
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
+  next();
+});
+
 const PORT = Number(process.env.PORT ?? 8787);
 
 seed();

@@ -173,6 +173,8 @@ export interface ProfileDraft {
   region: Region;
   audienceSize: number;
   instagramFollowers: number;
+  /** Athletes only — clubs leave this undefined. */
+  competitionLevel?: string;
   activation: string[];
   /** Categorised form of `activation`, so it can be matched on. */
   activationTypes: ActivationType[];

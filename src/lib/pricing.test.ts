@@ -34,3 +34,23 @@ describe('the money model is stated consistently', () => {
     expect(amount).toBe(800);
   });
 });
+
+describe('club and athlete flows produce matchable profiles', () => {
+  it('every offered activation maps to a category the matcher scores', async () => {
+    const { activationTypeOf, clubActivations, athleteActivations } = await import(
+      '../data/clubFlow'
+    );
+    for (const label of [...clubActivations, ...athleteActivations]) {
+      expect(activationTypeOf[label], `no category for "${label}"`).toBeDefined();
+    }
+  });
+
+  it('clubs and athletes are asked different things', async () => {
+    const { clubActivations, athleteActivations, clubAudienceBands, athleteAudienceBands } =
+      await import('../data/clubFlow');
+    expect(clubActivations).not.toEqual(athleteActivations);
+    expect(clubAudienceBands.map((b) => b.label)).not.toEqual(
+      athleteAudienceBands.map((b) => b.label),
+    );
+  });
+});
