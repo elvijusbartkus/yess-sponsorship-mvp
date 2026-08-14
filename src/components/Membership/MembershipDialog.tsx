@@ -29,7 +29,6 @@ export function MembershipDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md border-none bg-ink-950 p-0 text-white sm:max-w-md">
-        <div className="flare-rule h-2" />
         <DialogHeader className="px-6 pt-6">
           <DialogTitle className="display text-3xl leading-tight text-white">
             Unlock this action

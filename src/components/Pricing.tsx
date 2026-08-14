@@ -49,7 +49,6 @@ export function Pricing({ onBack }: { onBack: () => void }) {
         </section>
 
         <section className="overflow-hidden rounded-lg bg-ink-950 text-white">
-          <div className="flare-rule h-2" />
           <div className="p-5 sm:p-6">
             <p className="eyebrow text-flare-400">Sponsors</p>
             <p className="mt-2">

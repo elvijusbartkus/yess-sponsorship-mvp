@@ -66,6 +66,20 @@
   html {
     @apply font-sans;
   }
+
+  /* Quality floor: every interactive element gets a visible keyboard focus
+     ring, not just the ones that happened to get an explicit focus class.
+     Components with their own focus-visible styling override this. */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [role='button']:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
 }
 
 @layer components {
@@ -78,7 +92,14 @@
     @apply text-[11px] font-semibold uppercase tracking-[0.14em];
   }
 
-  /* Diagonal energy for the hero — typographic design, no images. */
+  /*
+   * The one recurring signature mark on the site — diagonal hazard-stripe
+   * energy, like the rumble strip on a stadium hoarding. Deliberately rare:
+   * it appears only where something genuinely important is being staked out
+   * (the hero's opening claim, the "why we're different" thesis), never as
+   * decoration on every dark card. Repeating it everywhere would turn a
+   * signature into wallpaper.
+   */
   .flare-rule {
     background-image: repeating-linear-gradient(
       -45deg,

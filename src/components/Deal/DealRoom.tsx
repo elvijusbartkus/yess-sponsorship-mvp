@@ -95,7 +95,6 @@ export function DealRoom({
       </div>
 
       <section className="mt-6 overflow-hidden rounded-lg bg-ink-950 text-white">
-        <div className="flare-rule h-2" />
         <div className="divide-y divide-white/10 p-6 sm:p-6">
           <div className="flex items-baseline justify-between gap-4 pb-5">
             <span className="text-[15px] text-ink-300">Deal value</span>

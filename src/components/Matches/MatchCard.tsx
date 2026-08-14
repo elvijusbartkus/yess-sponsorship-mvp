@@ -52,8 +52,6 @@ export function MatchCard({
           : 'bg-white ring-1 ring-inset ring-paper-line hover:ring-ink-950'
       }`}
     >
-      {lead && <div className="flare-rule absolute inset-x-0 top-0 h-1.5" />}
-
       {lead && (
         <div className="mt-4 flex justify-end">
           <span className="eyebrow rounded-md bg-flare-500 px-2.5 py-1 text-white">Best match</span>

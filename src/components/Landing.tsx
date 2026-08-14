@@ -14,6 +14,7 @@ import {
 import { clubPlan, commission, launchPromo, membershipPlan } from '../data/pricing';
 import { personas } from '../data/personas';
 import { clubSeeds } from '../data/clubFlow';
+import { ScoreboardTicker } from './Landing/ScoreboardTicker';
 import type { ClubSeed, Persona } from '../lib/types';
 
 function DoorCard({
@@ -124,6 +125,7 @@ export function Landing({
         <p className="mt-4 max-w-xl text-lg leading-snug text-ink-500">
           We match Baltic clubs and athletes with the businesses that want their audience.
         </p>
+        <ScoreboardTicker />
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
