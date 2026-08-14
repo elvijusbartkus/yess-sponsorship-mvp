@@ -17,7 +17,7 @@ function DoorCard({
   return (
     <button
       onClick={onClick}
-      className={`group relative flex h-full flex-col overflow-hidden rounded-3xl p-7 text-left transition-all duration-200 hover:-translate-y-1.5 sm:p-8 ${
+      className={`group relative flex h-full flex-col overflow-hidden rounded-lg p-7 text-left transition-all duration-200 hover:-translate-y-1.5 sm:p-8 ${
         ink ? 'bg-ink-950 text-white hover:shadow-lift' : 'bg-flare-500 text-white hover:shadow-flare'
       }`}
     >

@@ -158,7 +158,7 @@ export function ProfileBuilder({
                   <button
                     key={opt.value}
                     onClick={() => setDraft({ ...draft, type: opt.value })}
-                    className={`rounded-2xl px-5 py-4 text-left transition-all duration-200 ${
+                    className={`rounded-lg px-5 py-4 text-left transition-all duration-200 ${
                       on
                         ? 'bg-ink-950 text-white'
                         : 'bg-white text-ink-950 ring-1 ring-inset ring-paper-line hover:-translate-y-0.5 hover:shadow-lift hover:ring-ink-950'
@@ -185,7 +185,7 @@ export function ProfileBuilder({
                   placeholder={
                     draft.type === 'athlete' ? 'e.g. Kertu Lepik' : 'e.g. FC Tartu Kalev'
                   }
-                  className="w-full rounded-2xl bg-white px-5 py-4 font-display text-xl text-ink-950 ring-1 ring-inset ring-paper-line placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-flare-500"
+                  className="w-full rounded-lg bg-white px-5 py-4 font-display text-xl text-ink-950 ring-1 ring-inset ring-paper-line placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-flare-500"
                 />
                 <Button
                   size="lg"
@@ -228,7 +228,7 @@ export function ProfileBuilder({
                   <button
                     key={c.value}
                     onClick={() => setDraft({ ...draft, country: c.value, region: undefined })}
-                    className={`rounded-2xl px-5 py-3.5 text-left font-display text-lg font-medium transition-all duration-200 ${
+                    className={`rounded-lg px-5 py-3.5 text-left font-display text-lg font-medium transition-all duration-200 ${
                       on
                         ? 'bg-ink-950 text-white'
                         : 'bg-white text-ink-950 ring-1 ring-inset ring-paper-line hover:-translate-y-0.5 hover:shadow-lift hover:ring-ink-950'
@@ -249,7 +249,7 @@ export function ProfileBuilder({
                     <button
                       key={r}
                       onClick={() => advance({ country: draft.country, region: r as Region })}
-                      className="rounded-2xl bg-white px-5 py-3.5 text-left font-display text-lg font-medium text-ink-950 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift hover:ring-ink-950"
+                      className="rounded-lg bg-white px-5 py-3.5 text-left font-display text-lg font-medium text-ink-950 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift hover:ring-ink-950"
                     >
                       {r}
                     </button>
@@ -320,7 +320,7 @@ export function ProfileBuilder({
                   <button
                     key={item}
                     onClick={() => toggleActivation(item)}
-                    className={`rounded-2xl px-5 py-4 text-left font-display text-lg font-medium transition-all duration-200 ${
+                    className={`rounded-lg px-5 py-4 text-left font-display text-lg font-medium transition-all duration-200 ${
                       on
                         ? 'bg-ink-950 text-white'
                         : 'bg-white text-ink-950 ring-1 ring-inset ring-paper-line hover:-translate-y-0.5 hover:shadow-lift hover:ring-ink-950'

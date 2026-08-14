@@ -51,7 +51,7 @@ function ProfileRow({ profile, onSelect }: { profile: Profile; onSelect: () => v
   return (
     <button
       onClick={onSelect}
-      className="w-full rounded-2xl bg-white p-5 text-left ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift hover:ring-ink-950"
+      className="w-full rounded-lg bg-white p-5 text-left ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift hover:ring-ink-950"
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
@@ -124,7 +124,7 @@ function ProfileDetailPanel({ profile, onBack }: { profile: Profile; onBack: () 
             { label: 'Facebook', value: profile.reach.facebookFans.toLocaleString('en-US') },
             { label: 'Press / yr', value: String(profile.reach.pressMentions) },
           ].map((s) => (
-            <div key={s.label} className="rounded-2xl bg-white px-4 py-4 ring-1 ring-inset ring-paper-line">
+            <div key={s.label} className="rounded-lg bg-white px-4 py-4 ring-1 ring-inset ring-paper-line">
               <p className="eyebrow text-ink-400">{s.label}</p>
               <p className="display mt-1.5 text-2xl tabular-nums text-ink-950">{s.value}</p>
             </div>
@@ -138,7 +138,7 @@ function ProfileDetailPanel({ profile, onBack }: { profile: Profile; onBack: () 
           {profile.activation.map((item) => (
             <li
               key={item}
-              className="rounded-xl bg-white px-4 py-3 text-sm text-ink-700 ring-1 ring-inset ring-paper-line"
+              className="rounded-md bg-white px-4 py-3 text-sm text-ink-700 ring-1 ring-inset ring-paper-line"
             >
               {item}
             </li>
@@ -147,13 +147,13 @@ function ProfileDetailPanel({ profile, onBack }: { profile: Profile; onBack: () 
       </section>
 
       <section className="mt-8 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-2xl bg-white px-4 py-4 ring-1 ring-inset ring-paper-line">
+        <div className="rounded-lg bg-white px-4 py-4 ring-1 ring-inset ring-paper-line">
           <p className="eyebrow text-ink-400">Typical deal</p>
           <p className="mt-1.5 font-display text-lg font-medium text-ink-950">
             {formatEur(profile.dealRange[0])} – {formatEur(profile.dealRange[1])}
           </p>
         </div>
-        <div className="rounded-2xl bg-white px-4 py-4 ring-1 ring-inset ring-paper-line">
+        <div className="rounded-lg bg-white px-4 py-4 ring-1 ring-inset ring-paper-line">
           <p className="eyebrow text-ink-400">Current sponsors</p>
           <p className="mt-1.5 font-display text-lg font-medium text-ink-950">
             {profile.currentSponsors.length ? profile.currentSponsors.join(', ') : 'None yet'}
@@ -209,6 +209,10 @@ export function BrowseList({ onBack }: { onBack: () => void }) {
       </h1>
       <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-500">
         No quiz, no fit score — just the full list, filterable.
+      </p>
+      <p className="mt-3 inline-block rounded-md bg-paper-dim px-4 py-2.5 text-[13px] leading-relaxed text-ink-600">
+        This directory is free for anyone to view. Personalized matching and contacting a club or
+        athlete is a sponsor membership feature.
       </p>
 
       <div className="mt-8 space-y-3">

@@ -11,12 +11,15 @@ export const membershipPlan = {
   priceAnnual: 490,
   currency: '€',
   includes: [
+    'Run the matching quiz and see your ranked, scored matches',
     'Contact any club or athlete you match with',
-    'Unlimited matching and re-ranking',
+    'Unlimited re-ranking as your answers change',
     'Deal support through to signature',
     'Season reach reporting on live sponsorships',
   ],
-  freeTier: ['Build a sponsor profile', 'Run the matching quiz', 'See and compare your matches'],
+  // Only the public directory is free for a sponsor — it's a plain list, not
+  // a personalised search. The moment they want to be matched, they pay.
+  freeTier: ['Browse the full public list of clubs and athletes'],
 } as const;
 
 export const commissionTiers = {

@@ -37,7 +37,7 @@ export function SponsorSignup({
             Create your sponsor account
           </h1>
           <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-500">
-            Three fields. Then we'll ask what you want out of a sponsorship.
+            Three fields. Then membership, then what you want out of a sponsorship.
           </p>
 
           <div className="mt-9 space-y-3">
@@ -47,7 +47,7 @@ export function SponsorSignup({
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
                 placeholder="e.g. Tartu Fitness OÜ"
-                className="mt-2 w-full rounded-2xl bg-white px-5 py-4 font-display text-xl text-ink-950 ring-1 ring-inset ring-paper-line placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-flare-500"
+                className="mt-2 w-full rounded-lg bg-white px-5 py-4 font-display text-xl text-ink-950 ring-1 ring-inset ring-paper-line placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-flare-500"
               />
             </label>
 
@@ -58,7 +58,7 @@ export function SponsorSignup({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@company.ee"
-                className="mt-2 w-full rounded-2xl bg-white px-5 py-4 font-display text-xl text-ink-950 ring-1 ring-inset ring-paper-line placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-flare-500"
+                className="mt-2 w-full rounded-lg bg-white px-5 py-4 font-display text-xl text-ink-950 ring-1 ring-inset ring-paper-line placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-flare-500"
               />
             </label>
 
@@ -71,7 +71,7 @@ export function SponsorSignup({
                     <button
                       key={option.value}
                       onClick={() => setCountry(option.value)}
-                      className={`rounded-2xl px-5 py-4 text-left font-display text-lg font-medium transition-all duration-200 ${
+                      className={`rounded-lg px-5 py-4 text-left font-display text-lg font-medium transition-all duration-200 ${
                         active
                           ? 'bg-ink-950 text-white'
                           : 'bg-white text-ink-950 ring-1 ring-inset ring-paper-line hover:-translate-y-0.5 hover:shadow-lift hover:ring-ink-950'
@@ -86,16 +86,17 @@ export function SponsorSignup({
           </div>
 
           {/* Plant the paywall early — the sponsor should never be surprised by it. */}
-          <p className="mt-6 rounded-2xl bg-paper-dim px-5 py-4 text-[13px] leading-relaxed text-ink-600">
-            <span className="font-medium text-ink-950">Free to browse and match.</span>{' '}
+          <p className="mt-6 rounded-lg bg-paper-dim px-5 py-4 text-[13px] leading-relaxed text-ink-600">
+            <span className="font-medium text-ink-950">Browsing the public list is free.</span>{' '}
             {membershipPlan.name} ({membershipPlan.currency}
-            {membershipPlan.priceMonthly}/month) unlocks contacting clubs and closing deals. Clubs
-            are never charged.
+            {membershipPlan.priceMonthly}/month) is what unlocks the matching engine — running your
+            answers against real clubs and athletes, and contacting the ones you want. Clubs are
+            never charged.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Button size="lg" disabled={!ready} onClick={submit}>
-              Continue to matching →
+              Continue to membership →
             </Button>
             <Button variant="ghost" onClick={onCancel}>
               ← Back

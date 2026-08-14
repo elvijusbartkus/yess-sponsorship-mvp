@@ -29,17 +29,21 @@ export function CampaignCurator({
   }
 
   return (
-    <section className="mt-10 rounded-3xl bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-7">
-      <p className="eyebrow text-flare-600">We curate the campaign</p>
+    <section className="mt-10 rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-7">
+      <p className="eyebrow text-flare-600">Set up the campaign</p>
       <h2 className="display mt-3 text-2xl leading-tight text-ink-950">
-        {profile.name} trains. We do the marketing.
+        {profile.name} trains. We draft the marketing.
       </h2>
+      <p className="mt-2 text-sm text-ink-500">
+        Turns this deal into a launch post and story caption — the deliverables above are what
+        actually get tracked.
+      </p>
 
       {!campaign && (
         <button
           onClick={generate}
           disabled={loading}
-          className="mt-5 rounded-full bg-ink-950 px-6 py-3 font-medium text-white transition-all hover:bg-flare-500 disabled:opacity-50"
+          className="mt-5 rounded-md bg-ink-950 px-6 py-3 font-medium text-white transition-all hover:bg-flare-500 disabled:opacity-50"
         >
           {loading ? 'Drafting…' : 'Draft the campaign'}
         </button>
@@ -47,11 +51,11 @@ export function CampaignCurator({
 
       {campaign && (
         <div className="mt-5 space-y-3 animate-rise">
-          <div className="rounded-2xl bg-paper-dim p-5">
+          <div className="rounded-lg bg-paper-dim p-5">
             <p className="eyebrow text-ink-400">Launch post</p>
             <p className="mt-2 text-[15px] leading-relaxed text-ink-800">{campaign.post}</p>
           </div>
-          <div className="rounded-2xl bg-paper-dim p-5">
+          <div className="rounded-lg bg-paper-dim p-5">
             <p className="eyebrow text-ink-400">Story</p>
             <p className="mt-2 text-[15px] leading-relaxed text-ink-800">{campaign.story}</p>
           </div>

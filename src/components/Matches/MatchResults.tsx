@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { MatchCard } from './MatchCard';
 import { Button } from '../common/Button';
 import { priorityOptions, wantsOptions } from '../../data/sponsorQuiz';
@@ -10,6 +11,7 @@ export function MatchResults({
   onRestart,
   onPriorityChange,
   onWantsChange,
+  onNoteChange,
 }: {
   matches: Match[];
   answers: SponsorAnswers;
@@ -17,18 +19,20 @@ export function MatchResults({
   onRestart: () => void;
   onPriorityChange: (priority: Priority) => void;
   onWantsChange: (wants: ActivationType | 'any') => void;
+  onNoteChange: (note: string) => void;
 }) {
-
+  const [otherOpen, setOtherOpen] = useState(false);
+  const [otherText, setOtherText] = useState('');
   return (
     <div className="mx-auto w-full max-w-3xl px-5 py-12 sm:py-16">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div className="animate-rise">
           <p className="eyebrow flex items-center gap-2 text-flare-600">
             <span className="inline-block h-2 w-2 rounded-full bg-flare-500" />
-            {matches.length} matches
+            {matches.length} clubs & athletes matched to you
           </p>
           <h1 className="display mt-3 text-[clamp(2.5rem,6vw,4rem)] leading-[0.95] text-ink-950">
-            Sport worth backing
+            Your matches
           </h1>
         </div>
         <Button variant="secondary" onClick={onRestart}>
@@ -37,46 +41,79 @@ export function MatchResults({
       </div>
 
       {/* The two questions we took out of the funnel, live where you can watch
-          the ranking move when you change them. */}
-      <div className="mt-7 space-y-2.5">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="eyebrow mr-1 w-20 shrink-0 text-ink-400">I want</span>
-          {[...wantsOptions].map((option) => {
-            const active = answers.wants === option.value;
-            return (
+          the ranking move when you change them. Named for what they actually
+          do, not "I want" / "Rank by" — those read like form labels rather
+          than a control the sponsor is actively using. */}
+      <div className="mt-7 space-y-3">
+        <div>
+          <p className="text-xs font-medium text-ink-400">What you want back from the sponsorship</p>
+          <div className="mt-1.5 flex flex-wrap items-center gap-2">
+            {[...wantsOptions].map((option) => {
+              const active = answers.wants === option.value;
+              return (
+                <button
+                  key={option.value}
+                  onClick={() => onWantsChange(option.value)}
+                  className={`rounded-md px-3.5 py-2 text-[13px] font-medium transition-all duration-200 ${
+                    active
+                      ? 'bg-ink-950 text-white'
+                      : 'bg-white text-ink-600 ring-1 ring-inset ring-paper-line hover:ring-ink-950'
+                  }`}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+            {!otherOpen ? (
               <button
-                key={option.value}
-                onClick={() => onWantsChange(option.value)}
-                className={`rounded-full px-3.5 py-2 text-[13px] font-medium transition-all duration-200 ${
-                  active
-                    ? 'bg-ink-950 text-white'
-                    : 'bg-white text-ink-600 ring-1 ring-inset ring-paper-line hover:ring-ink-950'
-                }`}
+                onClick={() => setOtherOpen(true)}
+                className="rounded-md border border-dashed border-paper-line px-3.5 py-2 text-[13px] font-medium text-ink-500 transition-colors hover:border-ink-950 hover:text-ink-950"
               >
-                {option.label}
+                Something else
               </button>
-            );
-          })}
+            ) : (
+              <span className="flex items-center gap-2">
+                <input
+                  autoFocus
+                  value={otherText}
+                  onChange={(e) => setOtherText(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && otherText.trim()) {
+                      onNoteChange(otherText.trim());
+                      setOtherOpen(false);
+                    }
+                  }}
+                  placeholder="Write it in…"
+                  className="w-40 rounded-md border border-dashed border-paper-line bg-white px-2.5 py-1.5 text-[13px] text-ink-950 placeholder:text-ink-300 focus:outline-none focus:border-flare-500"
+                />
+              </span>
+            )}
+          </div>
+          {answers.note && (
+            <p className="mt-1.5 text-xs italic text-ink-400">You also mentioned: "{answers.note}"</p>
+          )}
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="eyebrow mr-1 w-20 shrink-0 text-ink-400">Rank by</span>
-          {priorityOptions.map((option) => {
-            const active = answers.priority === option.value;
-            return (
-              <button
-                key={option.value}
-                onClick={() => onPriorityChange(option.value)}
-                className={`rounded-full px-3.5 py-2 text-[13px] font-medium transition-all duration-200 ${
-                  active
-                    ? 'bg-flare-500 text-white shadow-flare'
-                    : 'bg-white text-ink-600 ring-1 ring-inset ring-paper-line hover:ring-ink-950'
-                }`}
-              >
-                {option.label}
-              </button>
-            );
-          })}
+        <div>
+          <p className="text-xs font-medium text-ink-400">Reorder the list by</p>
+          <div className="mt-1.5 flex flex-wrap items-center gap-2">
+            {priorityOptions.map((option) => {
+              const active = answers.priority === option.value;
+              return (
+                <button
+                  key={option.value}
+                  onClick={() => onPriorityChange(option.value)}
+                  className={`rounded-md px-3.5 py-2 text-[13px] font-medium transition-all duration-200 ${
+                    active
+                      ? 'bg-flare-500 text-white shadow-flare'
+                      : 'bg-white text-ink-600 ring-1 ring-inset ring-paper-line hover:ring-ink-950'
+                  }`}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -92,13 +129,13 @@ export function MatchResults({
       </div>
 
       {matches.length === 0 && (
-        <p className="mt-10 rounded-2xl bg-white px-6 py-10 text-center text-sm text-ink-400 ring-1 ring-inset ring-paper-line">
+        <p className="mt-10 rounded-lg bg-white px-6 py-10 text-center text-sm text-ink-400 ring-1 ring-inset ring-paper-line">
           Nothing in this market matches yet. Try a different region or budget.
         </p>
       )}
 
       <p className="mt-10 text-center text-xs text-ink-400">
-        Free to browse. Contacting needs a membership; clubs never pay.
+        Matching is part of your membership. Clubs and athletes are never charged.
       </p>
     </div>
   );

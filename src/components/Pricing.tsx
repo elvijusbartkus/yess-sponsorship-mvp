@@ -25,7 +25,7 @@ export function Pricing({ onBack }: { onBack: () => void }) {
 
       <div className="mt-12 space-y-4">
         {/* Side one: sport. */}
-        <section className="rounded-3xl bg-white p-7 ring-1 ring-inset ring-paper-line sm:p-8">
+        <section className="rounded-lg bg-white p-7 ring-1 ring-inset ring-paper-line sm:p-8">
           <div className="flex flex-wrap items-baseline justify-between gap-4">
             <div>
               <p className="eyebrow text-ink-400">Clubs &amp; athletes</p>
@@ -40,7 +40,7 @@ export function Pricing({ onBack }: { onBack: () => void }) {
         </section>
 
         {/* Side two: sponsors — one payer, two lines. */}
-        <section className="overflow-hidden rounded-3xl bg-ink-950 text-white">
+        <section className="overflow-hidden rounded-lg bg-ink-950 text-white">
           <div className="flare-rule h-2" />
           <div className="p-7 sm:p-8">
             <p className="eyebrow text-flare-400">Sponsors</p>

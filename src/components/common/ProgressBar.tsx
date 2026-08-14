@@ -19,7 +19,7 @@ export function ProgressBar({ current, total }: { current: number; total: number
         {Array.from({ length: total }).map((_, i) => (
           <div
             key={i}
-            className={`h-1 flex-1 rounded-full transition-all duration-300 ${
+            className={`h-1 flex-1 rounded-sm transition-all duration-300 ${
               i <= current ? 'bg-flare-500' : 'bg-paper-line'
             }`}
           />

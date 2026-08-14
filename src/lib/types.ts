@@ -114,6 +114,12 @@ export interface SponsorAnswers {
   /** 'any' = no preference. */
   wants: ActivationType | 'any';
   priority?: Priority;
+  /**
+   * Free text from an "Other — write your own" field. Never feeds scoring
+   * (the engine only understands the fixed buckets above) — shown back to the
+   * sponsor and surfaced as context, not a matching input.
+   */
+  note?: string;
 }
 
 /**
@@ -179,6 +185,34 @@ export interface ProfileDraft {
   /** Categorised form of `activation`, so it can be matched on. */
   activationTypes: ActivationType[];
   dealRange: [number, number];
+  /** Free text from an "Other — write your own" field. Display only. */
+  note?: string;
+}
+
+/**
+ * A demo-grade signature, not a legal one — typed name plus an explicit
+ * checkbox, timestamped. Gates the campaign and deliverables tools, which is
+ * the whole point of it existing: nothing downstream pretends a deal is real
+ * until both sides have actually agreed terms.
+ */
+export interface ContractRecord {
+  dealValue: number;
+  sponsorSignatory: string;
+  clubSignatory: string;
+  signedAt: string;
+}
+
+/**
+ * One tracked activation item. This is the half of the platform that actually
+ * fights leakage: a sponsor with a dashboard of posted/not-posted deliverables
+ * and reach numbers has a reason to keep the deal on-platform, because that
+ * record is what they show internally to justify the spend.
+ */
+export interface Deliverable {
+  id: string;
+  label: string;
+  done: boolean;
+  reachNumber?: number;
 }
 
 export interface ClubSeed {

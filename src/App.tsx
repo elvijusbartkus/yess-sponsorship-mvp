@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Landing } from './components/Landing';
 import { QuizFunnel } from './components/Quiz/QuizFunnel';
 import { MatchResults } from './components/Matches/MatchResults';
 import { MatchDetail } from './components/Matches/MatchDetail';
 import { DealRoom } from './components/Deal/DealRoom';
+import { ContractSign } from './components/Deal/ContractSign';
+import { DeliverablesTracker } from './components/Deal/DeliverablesTracker';
 import { MatchingScreen } from './components/Matches/MatchingScreen';
 import { SponsorSignup } from './components/Onboarding/SponsorSignup';
 import { MembershipGate } from './components/Membership/MembershipGate';
@@ -14,6 +17,7 @@ import { BrowseList } from './components/Browse/BrowseList';
 import { createProfile, fetchMatches, fetchProfiles } from './lib/api';
 import type {
   ActivationType,
+  ContractRecord,
   Match,
   Priority,
   ProfileDraft,
@@ -25,36 +29,78 @@ type Screen =
   | 'landing'
   | 'pricing'
   | 'sponsor-signup'
+  | 'membership'
   | 'quiz'
   | 'matching'
   | 'results'
   | 'detail'
-  | 'membership'
   | 'deal'
+  | 'contract'
+  | 'deliverables'
   | 'club-builder'
   | 'club-live'
   | 'browse';
 
+/** Which side of the marketplace a screen belongs to — shown in the header so
+ * nobody has to guess whether they're looking at the sponsor or the club side. */
+type Role = 'sponsor' | 'club' | null;
+
+const ROLE_BY_SCREEN: Record<Screen, Role> = {
+  landing: null,
+  pricing: null,
+  browse: null,
+  'sponsor-signup': 'sponsor',
+  membership: 'sponsor',
+  quiz: 'sponsor',
+  matching: 'sponsor',
+  results: 'sponsor',
+  detail: 'sponsor',
+  deal: 'sponsor',
+  contract: 'sponsor',
+  deliverables: 'sponsor',
+  'club-builder': 'club',
+  'club-live': 'club',
+};
+
+function RoleBadge({ role }: { role: Role }) {
+  if (!role) return null;
+  const isSponsor = role === 'sponsor';
+  return (
+    <span
+      className={`rounded-md px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide ${
+        isSponsor ? 'bg-flare-50 text-flare-700' : 'bg-gain-50 text-gain-700'
+      }`}
+    >
+      {isSponsor ? 'Sponsor view' : 'Club & athlete view'}
+    </span>
+  );
+}
+
 function Header({
+  role,
   onHome,
   onPricing,
   onBrowse,
 }: {
+  role: Role;
   onHome: () => void;
   onPricing: () => void;
   onBrowse: () => void;
 }) {
   return (
     <header className="sticky top-0 z-20 border-b border-paper-line bg-paper/85 backdrop-blur-md">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
-        <button onClick={onHome} className="group flex items-center gap-2.5">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-ink-950 font-display text-sm font-bold text-flare-500 transition-colors group-hover:bg-flare-500 group-hover:text-white">
-            S
-          </span>
-          <span className="font-display text-[15px] font-bold tracking-tight text-ink-950">
-            Sponsorship Marketplace
-          </span>
-        </button>
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4">
+        <div className="flex items-center gap-3">
+          <button onClick={onHome} className="group flex items-center gap-2.5">
+            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-ink-950 font-display text-sm font-bold text-flare-500 transition-colors group-hover:bg-flare-500 group-hover:text-white">
+              S
+            </span>
+            <span className="font-display text-[15px] font-bold tracking-tight text-ink-950">
+              Sponsorship Marketplace
+            </span>
+          </button>
+          <RoleBadge role={role} />
+        </div>
         <div className="flex items-center gap-5">
           <button
             onClick={onBrowse}
@@ -77,12 +123,12 @@ function Header({
 function ErrorBanner({ message, onRetry }: { message: string; onRetry: () => void }) {
   return (
     <div className="mx-auto w-full max-w-3xl px-5 py-16">
-      <div className="rounded-3xl bg-white p-8 ring-1 ring-inset ring-paper-line">
+      <div className="rounded-lg bg-white p-8 ring-1 ring-inset ring-paper-line">
         <h2 className="display text-3xl text-ink-950">Couldn't reach the marketplace</h2>
         <p className="mt-3 text-[15px] leading-relaxed text-ink-500">{message}</p>
         <button
           onClick={onRetry}
-          className="mt-6 rounded-full bg-ink-950 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-flare-500"
+          className="mt-6 rounded-md bg-ink-950 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-flare-500"
         >
           Try again
         </button>
@@ -96,6 +142,8 @@ export default function App() {
   const [answers, setAnswers] = useState<SponsorAnswers | null>(null);
   const [matches, setMatches] = useState<Match[]>([]);
   const [selected, setSelected] = useState<Match | null>(null);
+  const [dealValue, setDealValue] = useState(0);
+  const [contract, setContract] = useState<ContractRecord | null>(null);
   const [clubDraft, setClubDraft] = useState<ProfileDraft | null>(null);
   const [account, setAccount] = useState<SponsorAccount | null>(null);
   const [poolSize, setPoolSize] = useState(0);
@@ -155,6 +203,7 @@ export default function App() {
     setClubDraft(null);
     setMatches([]);
     setError(null);
+    setContract(null);
     setScreen('landing');
   }
 
@@ -166,14 +215,14 @@ export default function App() {
       .catch((e: Error) => setError(e.message));
   }
 
-  return (
-    <div className="flex min-h-dvh flex-col">
-      <Header onHome={goHome} onPricing={() => setScreen('pricing')} onBrowse={() => setScreen('browse')} />
-
-      <main className="flex flex-1 flex-col">
-        {screen === 'landing' && (
+  function renderScreen() {
+    switch (screen) {
+      case 'landing':
+        return (
           <Landing
-            onSponsorStart={() => setScreen(account ? 'quiz' : 'sponsor-signup')}
+            onSponsorStart={() =>
+              setScreen(account?.membershipActive ? 'quiz' : account ? 'membership' : 'sponsor-signup')
+            }
             onClubStart={() => {
               setClubDraft(null);
               setScreen('club-builder');
@@ -181,31 +230,47 @@ export default function App() {
             onPricing={() => setScreen('pricing')}
             onBrowse={() => setScreen('browse')}
           />
-        )}
+        );
 
-        {screen === 'pricing' && <Pricing onBack={() => setScreen('landing')} />}
+      case 'pricing':
+        return <Pricing onBack={() => setScreen('landing')} />;
 
-        {screen === 'browse' && <BrowseList onBack={goHome} />}
+      case 'browse':
+        return <BrowseList onBack={goHome} />;
 
-        {screen === 'sponsor-signup' && (
+      case 'sponsor-signup':
+        return (
           <SponsorSignup
             onComplete={(next) => {
               setAccount(next);
-              setScreen('quiz');
+              setScreen('membership');
             }}
             onCancel={() => setScreen('landing')}
           />
-        )}
+        );
 
-        {screen === 'quiz' && (
+      case 'membership':
+        return (
+          <MembershipGate
+            onBack={() => setScreen('sponsor-signup')}
+            onStart={() => {
+              setAccount((current) => (current ? { ...current, membershipActive: true } : current));
+              setScreen('quiz');
+            }}
+          />
+        );
+
+      case 'quiz':
+        return (
           <QuizFunnel
             onComplete={runSponsor}
             presetCountry={account?.country}
-            onCancel={() => setScreen(account ? 'sponsor-signup' : 'landing')}
+            onCancel={() => setScreen(account ? 'membership' : 'landing')}
           />
-        )}
+        );
 
-        {screen === 'matching' && (
+      case 'matching':
+        return (
           <MatchingScreen
             poolSize={poolSize}
             onDone={() => {
@@ -213,77 +278,113 @@ export default function App() {
               showResultsWhenBothReady();
             }}
           />
-        )}
+        );
 
-        {screen === 'results' &&
-          answers &&
-          (error ? (
-            <ErrorBanner message={error} onRetry={() => runSponsor(answers)} />
-          ) : (
-            <MatchResults
-              matches={matches}
-              answers={answers}
-              onSelect={(match) => {
-                setSelected(match);
-                setScreen('detail');
-              }}
-              onRestart={goHome}
-              onPriorityChange={(priority: Priority) => refine({ priority })}
-              onWantsChange={(wants: ActivationType | 'any') => refine({ wants })}
-            />
-          ))}
+      case 'results':
+        if (!answers) return null;
+        if (error) return <ErrorBanner message={error} onRetry={() => runSponsor(answers)} />;
+        return (
+          <MatchResults
+            matches={matches}
+            answers={answers}
+            onSelect={(match) => {
+              setSelected(match);
+              setScreen('detail');
+            }}
+            onRestart={goHome}
+            onPriorityChange={(priority: Priority) => refine({ priority })}
+            onWantsChange={(wants: ActivationType | 'any') => refine({ wants })}
+            onNoteChange={(note) => refine({ note })}
+          />
+        );
 
-        {screen === 'detail' && selected && (
+      case 'detail':
+        if (!selected) return null;
+        return (
           <MatchDetail
             match={selected}
             onBack={() => setScreen('results')}
             onOpenDeal={() => setScreen('deal')}
-            membershipActive={account?.membershipActive ?? false}
-            onRequireMembership={() => setScreen('membership')}
           />
-        )}
+        );
 
-        {screen === 'membership' && selected && (
-          <MembershipGate
-            profile={selected.profile}
-            onBack={() => setScreen('detail')}
-            onStart={() => {
-              // Straight to the deal room: the gate and the commission screen
-              // are the two money moments, and nothing useful sits between
-              // them. Saves two clicks in a sixty-second demo.
-              setAccount((current) =>
-                current ? { ...current, membershipActive: true } : current,
-              );
-              setScreen('deal');
-            }}
-          />
-        )}
-
-        {screen === 'deal' && selected && answers && (
+      case 'deal':
+        if (!selected || !answers) return null;
+        return (
           <DealRoom
             match={selected}
             answers={answers}
-            sponsorName={account?.company ?? 'Your company'}
             onBack={() => setScreen('detail')}
+            onAgree={(value) => {
+              setDealValue(value);
+              setScreen('contract');
+            }}
+          />
+        );
+
+      case 'contract':
+        if (!selected) return null;
+        return (
+          <ContractSign
+            match={selected}
+            sponsorName={account?.company ?? 'Your company'}
+            dealValue={dealValue}
+            onBack={() => setScreen('deal')}
+            onSigned={(record) => {
+              setContract(record);
+              setScreen('deliverables');
+            }}
+          />
+        );
+
+      case 'deliverables':
+        if (!selected || !contract) return null;
+        return (
+          <DeliverablesTracker
+            match={selected}
+            sponsorName={account?.company ?? 'Your company'}
+            contract={contract}
+            onBack={() => setScreen('contract')}
             onHome={() => setScreen('results')}
           />
-        )}
+        );
 
-        {screen === 'club-builder' && (
-          <ProfileBuilder
-            initial={clubDraft ?? undefined}
-            onCancel={goHome}
-            onComplete={publishProfile}
-          />
-        )}
+      case 'club-builder':
+        return (
+          <ProfileBuilder initial={clubDraft ?? undefined} onCancel={goHome} onComplete={publishProfile} />
+        );
 
-        {screen === 'club-live' && clubDraft && (
-          <LiveProfile
-            draft={clubDraft}
-            onEdit={() => setScreen('club-builder')}
-            onHome={goHome}
-          />
-        )}
+      case 'club-live':
+        if (!clubDraft) return null;
+        return <LiveProfile draft={clubDraft} onEdit={() => setScreen('club-builder')} onHome={goHome} />;
+
+      default:
+        return null;
+    }
+  }
+
+  return (
+    <div className="flex min-h-dvh flex-col">
+      <Header
+        role={ROLE_BY_SCREEN[screen]}
+        onHome={goHome}
+        onPricing={() => setScreen('pricing')}
+        onBrowse={() => setScreen('browse')}
+      />
+
+      <main className="flex flex-1 flex-col">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={screen}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            className="flex flex-1 flex-col"
+          >
+            {renderScreen()}
+          </motion.div>
+        </AnimatePresence>
       </main>
     </div>
   );

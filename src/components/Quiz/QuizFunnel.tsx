@@ -26,6 +26,12 @@ interface Draft {
   region?: Region | 'National';
   wants?: ActivationType | 'any';
   priority?: Priority;
+  note?: string;
+}
+
+/** Appends free text from an "Other" field without losing what came before. */
+function addNote(existing: string | undefined, text: string): string {
+  return existing ? `${existing} · ${text}` : text;
 }
 
 export function QuizFunnel({
@@ -64,6 +70,7 @@ export function QuizFunnel({
       region: next.region!,
       wants: next.wants ?? 'any',
       priority: next.priority,
+      note: next.note,
     });
   }
 
@@ -87,6 +94,15 @@ export function QuizFunnel({
             options={budgetBands.map((b) => ({ value: b.id, label: b.label }))}
             selected={draft.budgetBand?.id}
             onSelect={(id) => advance({ budgetBand: budgetBands.find((b) => b.id === id)! })}
+            otherPlaceholder="e.g. flexible, depends on the deal"
+            onOther={(text) =>
+              advance({
+                // No band fits a written-in answer — default to the middle
+                // band rather than guessing a number from free text.
+                budgetBand: draft.budgetBand ?? budgetBands[1],
+                note: addNote(draft.note, `Budget: ${text}`),
+              })
+            }
           />
         );
       case 'demographic':
@@ -97,6 +113,10 @@ export function QuizFunnel({
             options={demographicOptions}
             selected={draft.demographic}
             onSelect={(demographic) => advance({ demographic })}
+            otherPlaceholder="e.g. students, new parents…"
+            onOther={(text) =>
+              advance({ demographic: 'all', note: addNote(draft.note, `Audience: ${text}`) })
+            }
           />
         );
       case 'region': {
@@ -123,6 +143,13 @@ export function QuizFunnel({
             options={options}
             selected={draft.region}
             onSelect={(region) => advance({ region })}
+            otherPlaceholder="e.g. a specific neighbourhood or region"
+            onOther={(text) =>
+              advance({
+                region: nationalIsPlausible ? 'National' : cities[0],
+                note: addNote(draft.note, `Location: ${text}`),
+              })
+            }
           />
         );
       }

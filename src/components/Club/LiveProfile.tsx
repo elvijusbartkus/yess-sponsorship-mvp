@@ -46,7 +46,7 @@ export function LiveProfile({
       <p className="mt-5 text-lg text-ink-500">Free to list. You keep the full deal.</p>
 
       {/* Exactly what a sponsor sees — same card language as their side. */}
-      <div className="mt-10 rounded-3xl bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-7">
+      <div className="mt-10 rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-7">
         <div className="flex flex-wrap items-center gap-2">
           <h2 className="display text-2xl leading-tight text-ink-950">{draft.name}</h2>
           <Badge tone="muted">Self-reported</Badge>
@@ -104,14 +104,14 @@ export function LiveProfile({
             {leadMatches.map(({ lead, score, reasons }) => (
               <div
                 key={lead.id}
-                className="rounded-2xl bg-white p-5 ring-1 ring-inset ring-paper-line"
+                className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="font-display text-lg font-medium text-ink-950">{lead.label}</p>
                     <p className="mt-0.5 text-sm text-ink-500">{lead.blurb}</p>
                   </div>
-                  <div className="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-xl bg-ink-950">
+                  <div className="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-md bg-ink-950">
                     <span className="display text-base leading-none text-flare-500">{score}</span>
                   </div>
                 </div>

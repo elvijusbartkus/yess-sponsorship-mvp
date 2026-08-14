@@ -1,49 +1,32 @@
 import { CorroboratedBadge } from '../common/Badge';
+import { formatEur } from '../../lib/taxRules';
 import { COUNTRY_LABEL } from '../../lib/matching';
 import type { Match } from '../../lib/types';
 
-/** Big number in an accent ring — the eye should land here first. */
-function ScoreRing({ score, lead }: { score: number; lead: boolean }) {
-  const circumference = 2 * Math.PI * 26;
-  const offset = circumference * (1 - score / 100);
+/** A number alone means nothing without a word for it — this is the fix. */
+function fitLabel(score: number): { text: string; tone: string } {
+  if (score >= 80) return { text: 'Strong fit', tone: 'text-gain-600' };
+  if (score >= 55) return { text: 'Good fit', tone: 'text-flare-600' };
+  return { text: 'Possible fit', tone: 'text-ink-400' };
+}
 
+function CardStat({
+  label,
+  value,
+  lead,
+}: {
+  label: string;
+  value: string;
+  lead: boolean;
+}) {
   return (
-    <div className="relative h-16 w-16 shrink-0">
-      <svg viewBox="0 0 60 60" className="h-full w-full -rotate-90">
-        <circle
-          cx="30"
-          cy="30"
-          r="26"
-          fill="none"
-          strokeWidth="4"
-          className={lead ? 'stroke-white/25' : 'stroke-paper-line'}
-        />
-        <circle
-          cx="30"
-          cy="30"
-          r="26"
-          fill="none"
-          strokeWidth="4"
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
-          className="stroke-flare-500 transition-all duration-500"
-        />
-      </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span
-          className={`display text-xl leading-none ${lead ? 'text-white' : 'text-ink-950'}`}
-        >
-          {score}
-        </span>
-        <span
-          className={`text-[8px] font-semibold uppercase tracking-[0.12em] ${
-            lead ? 'text-white/50' : 'text-ink-400'
-          }`}
-        >
-          fit
-        </span>
-      </div>
+    <div>
+      <p className={`text-[11px] uppercase tracking-wide ${lead ? 'text-ink-400' : 'text-ink-400'}`}>
+        {label}
+      </p>
+      <p className={`mt-0.5 font-display text-base font-medium ${lead ? 'text-white' : 'text-ink-950'}`}>
+        {value}
+      </p>
     </div>
   );
 }
@@ -58,11 +41,12 @@ export function MatchCard({
   lead?: boolean;
 }) {
   const { profile } = match;
+  const fit = fitLabel(match.score);
 
   return (
     <button
       onClick={onSelect}
-      className={`group relative w-full overflow-hidden rounded-3xl p-6 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-lift sm:p-7 ${
+      className={`group relative w-full overflow-hidden rounded-lg p-6 text-left transition-all duration-200 hover:-translate-y-1 hover:shadow-lift sm:p-7 ${
         lead
           ? 'bg-ink-950 text-white shadow-lift'
           : 'bg-white ring-1 ring-inset ring-paper-line hover:ring-ink-950'
@@ -71,43 +55,60 @@ export function MatchCard({
       {lead && (
         <>
           <div className="flare-rule absolute inset-x-0 top-0 h-1.5" />
-          <span className="eyebrow absolute right-6 top-6 rounded-full bg-flare-500 px-2.5 py-1 text-white">
+          <span className="eyebrow absolute right-6 top-6 rounded-md bg-flare-500 px-2.5 py-1 text-white">
             Best match
           </span>
         </>
       )}
 
-      <div className={`flex items-start gap-5 ${lead ? 'mt-6' : ''}`}>
+      <div className={`flex items-start justify-between gap-4 ${lead ? 'mt-6' : ''}`}>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
-            <h3
-              className={`display text-2xl leading-tight ${lead ? 'text-white' : 'text-ink-950'}`}
-            >
+            <h3 className={`display text-2xl leading-tight ${lead ? 'text-white' : 'text-ink-950'}`}>
               {profile.name}
             </h3>
             <CorroboratedBadge corroborated={match.corroboratedBadge} />
           </div>
           <p className={`mt-1.5 text-sm ${lead ? 'text-ink-300' : 'text-ink-500'}`}>
-            {profile.sport} · {profile.region}, {COUNTRY_LABEL[profile.country]}
+            {profile.type === 'club' ? 'Club' : 'Athlete'} · {profile.sport}
           </p>
         </div>
-        <ScoreRing score={match.score} lead={lead} />
+
+        <div className="shrink-0 text-right">
+          <p className={`display text-3xl leading-none tabular-nums ${lead ? 'text-flare-400' : 'text-ink-950'}`}>
+            {match.score}
+          </p>
+          <p className={`mt-1 text-[11px] font-medium ${lead ? 'text-white/70' : fit.tone}`}>
+            {fit.text}
+          </p>
+        </div>
       </div>
 
-      {/* One big number. */}
-      <div className="mt-6">
-        <span
-          className={`display text-5xl leading-none tabular-nums ${
-            lead ? 'text-white' : 'text-ink-950'
-          }`}
-        >
-          {profile.audienceSize.toLocaleString('en-US')}
-        </span>
-        <span className={`ml-2 text-sm ${lead ? 'text-ink-300' : 'text-ink-500'}`}>reached</span>
+      {/* Always three concrete facts — never just one big vanity number. */}
+      <div
+        className={`mt-6 grid grid-cols-3 gap-4 border-t pt-5 ${
+          lead ? 'border-white/10' : 'border-paper-line'
+        }`}
+      >
+        <CardStat
+          label="Reached"
+          value={profile.audienceSize.toLocaleString('en-US')}
+          lead={lead}
+        />
+        <CardStat
+          label="Where"
+          value={`${profile.region}, ${COUNTRY_LABEL[profile.country]}`}
+          lead={lead}
+        />
+        <CardStat
+          label="Typical deal"
+          value={`${formatEur(profile.dealRange[0])}–${formatEur(profile.dealRange[1])}`}
+          lead={lead}
+        />
       </div>
 
       {match.reasons[0] && (
-        <p className={`mt-4 text-[15px] leading-snug ${lead ? 'text-ink-200' : 'text-ink-700'}`}>
+        <p className={`mt-5 text-[15px] leading-snug ${lead ? 'text-ink-200' : 'text-ink-700'}`}>
           {match.reasons[0]}
         </p>
       )}
@@ -117,7 +118,6 @@ export function MatchCard({
           {match.caution}
         </p>
       )}
-
     </button>
   );
 }
