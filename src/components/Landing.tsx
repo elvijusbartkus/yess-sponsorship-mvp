@@ -1,13 +1,5 @@
 import { ArrowRight, Search, Handshake, FileCheck2 } from 'lucide-react';
-import { profiles } from '../data/profiles';
-import { COUNTRY_LABEL } from '../lib/matching';
 import { clubPlan, launchPromo, membershipPlan } from '../data/pricing';
-import type { Country } from '../lib/types';
-
-const byCountry = profiles.reduce<Record<Country, number>>(
-  (acc, p) => ({ ...acc, [p.country]: (acc[p.country] ?? 0) + 1 }),
-  { EE: 0, LV: 0, LT: 0 },
-);
 
 function DoorCard({
   eyebrow,
@@ -40,6 +32,7 @@ function DoorCard({
         {body}
       </p>
 
+      {/* The CTA says exactly what clicking it does, not a vague tagline. */}
       <span className="mt-6 inline-flex items-center gap-2 font-display text-base font-medium text-white">
         {cta}
         <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1.5" />
@@ -95,32 +88,21 @@ export function Landing({
         </p>
       </div>
 
-      {/* Real proof, not a claim — this is the actual seed data on the
-          platform right now, not an invented testimonial or demand figure. */}
-      <div className="animate-rise mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-ink-500">
-        <span className="font-medium text-ink-950">{profiles.length} clubs & athletes already listed</span>
-        <span className="hidden h-1 w-1 rounded-full bg-ink-300 sm:inline-block" />
-        <span>
-          {byCountry.EE} {COUNTRY_LABEL.EE} · {byCountry.LT} {COUNTRY_LABEL.LT} · {byCountry.LV}{' '}
-          {COUNTRY_LABEL.LV}
-        </span>
-      </div>
-
-      <div className="mt-9 grid gap-4 sm:grid-cols-2">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2">
         <DoorCard
           tone="ink"
           eyebrow="For businesses"
           title="Back sport"
-          body="Three questions. See who reaches your customers."
-          cta="Find my matches"
+          cta="Click here to see who reaches your customers"
+          body="Answer three questions about your budget and audience."
           onClick={onSponsorStart}
         />
         <DoorCard
           tone="flare"
           eyebrow="For clubs & athletes"
           title="Get funded"
-          body="Free profile. Sponsors find you."
-          cta="Get discovered"
+          cta="Click here to list your profile"
+          body="Sponsors find you. Keep your other sponsors and agents — this isn't exclusive."
           onClick={onClubStart}
         />
       </div>
@@ -141,11 +123,21 @@ export function Landing({
               body="One dashboard for the deal, the contract, and what actually got delivered."
             />
           </div>
+          <button
+            onClick={onSponsorStart}
+            className="mt-6 inline-flex items-center gap-1.5 font-display text-sm font-medium text-flare-600 hover:text-flare-500"
+          >
+            Start as a sponsor <ArrowRight className="h-3.5 w-3.5" />
+          </button>
         </div>
         <div>
           <p className="eyebrow text-ink-400">How it works for clubs & athletes</p>
           <div className="mt-5 space-y-5">
-            <Step icon={Search} label="Build a free profile" body="Eight quick questions, no cost, ever." />
+            <Step
+              icon={Search}
+              label="Build your profile"
+              body="Eight quick questions — no exclusivity, keep your other sponsors and agents."
+            />
             <Step
               icon={Handshake}
               label="Sponsors find you"
@@ -157,6 +149,12 @@ export function Landing({
               body="Commission is charged to the sponsor, on top — never out of your side."
             />
           </div>
+          <button
+            onClick={onClubStart}
+            className="mt-6 inline-flex items-center gap-1.5 font-display text-sm font-medium text-flare-600 hover:text-flare-500"
+          >
+            Start as a club or athlete <ArrowRight className="h-3.5 w-3.5" />
+          </button>
         </div>
       </section>
 

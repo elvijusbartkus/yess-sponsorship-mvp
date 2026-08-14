@@ -1,14 +1,17 @@
-import { useState } from 'react';
-import { FileCheck } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { FileCheck, Download } from 'lucide-react';
 import { Button } from '../common/Button';
-import { formatEur } from '../../lib/taxRules';
+import { generateContractPdf } from '../../lib/contractPdf';
 import type { Match, ContractRecord } from '../../lib/types';
 
 /**
- * A demo-grade signature, not a legal one — said plainly on the screen. This
- * is the actual line between "proposed" and "real": nothing downstream
- * (deliverables tracking, campaign drafting) unlocks until both names are on
- * this agreement.
+ * A demo-grade signature, not a legal one — said plainly on the page itself
+ * (both on screen and inside the PDF footer). This is the actual line
+ * between "proposed" and "real": nothing downstream (deliverables tracking,
+ * campaign drafting) unlocks until both names are on this agreement.
+ *
+ * The agreement is a real generated PDF, not styled HTML pretending to be
+ * one — it updates live as the signatory names are typed in.
  */
 export function ContractSign({
   match,
@@ -27,8 +30,17 @@ export function ContractSign({
   const [sponsorSignatory, setSponsorSignatory] = useState(sponsorName);
   const [clubSignatory, setClubSignatory] = useState('');
   const [agreed, setAgreed] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
   const ready = sponsorSignatory.trim().length > 1 && clubSignatory.trim().length > 1 && agreed;
+
+  useEffect(() => {
+    const blob = generateContractPdf(match, sponsorSignatory || sponsorName, dealValue);
+    const url = URL.createObjectURL(blob);
+    setPdfUrl(url);
+    return () => URL.revokeObjectURL(url);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [match, sponsorSignatory, dealValue]);
 
   function sign() {
     if (!ready) return;
@@ -51,33 +63,25 @@ export function ContractSign({
         <h1 className="display mt-3 text-[clamp(2.25rem,5.5vw,3.5rem)] leading-[1.02] text-ink-950">
           Sign to make it real.
         </h1>
+        <p className="mt-3 text-[15px] text-ink-500">
+          A real generated agreement — demo-grade, not legally binding, said on the document itself.
+        </p>
       </div>
 
-      <div className="mt-8 rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-5">
-        <p className="eyebrow text-ink-400">Terms</p>
-        <dl className="mt-3 space-y-2.5 text-[15px] text-ink-700">
-          <div className="flex justify-between gap-4">
-            <dt className="text-ink-500">Sponsor</dt>
-            <dd className="font-medium text-ink-950">{sponsorName}</dd>
-          </div>
-          <div className="flex justify-between gap-4">
-            <dt className="text-ink-500">Club / athlete</dt>
-            <dd className="font-medium text-ink-950">{profile.name}</dd>
-          </div>
-          <div className="flex justify-between gap-4">
-            <dt className="text-ink-500">Sponsorship value</dt>
-            <dd className="font-medium text-ink-950">{formatEur(dealValue)}</dd>
-          </div>
-          <div className="flex justify-between gap-4">
-            <dt className="text-ink-500">Activation</dt>
-            <dd className="text-right font-medium text-ink-950">{profile.activation.join(', ')}</dd>
-          </div>
-        </dl>
-        <p className="mt-4 border-t border-paper-line pt-4 text-xs text-ink-400">
-          This is a demo signature for the marketplace flow, not a legally binding contract. A real
-          deployment would generate a downloadable agreement and route it through a proper
-          e-signature provider.
-        </p>
+      <div className="mt-6 overflow-hidden rounded-lg ring-1 ring-inset ring-paper-line">
+        {pdfUrl && (
+          <iframe title="Sponsorship agreement preview" src={pdfUrl} className="h-[420px] w-full bg-white" />
+        )}
+        {pdfUrl && (
+          <a
+            href={pdfUrl}
+            download={`${profile.name.replace(/\s+/g, '-').toLowerCase()}-agreement.pdf`}
+            className="flex items-center gap-1.5 border-t border-paper-line bg-paper-dim px-4 py-2.5 text-sm font-medium text-ink-600 hover:text-ink-950"
+          >
+            <Download className="h-3.5 w-3.5" />
+            Download PDF
+          </a>
+        )}
       </div>
 
       <div className="mt-6 space-y-3">

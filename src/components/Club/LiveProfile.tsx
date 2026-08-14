@@ -50,6 +50,9 @@ export function LiveProfile({
         {launchPromo.active ? ` (first ${launchPromo.clubFreeMonths} month free)` : ''}. You keep
         the full deal.
       </p>
+      <p className="mt-1.5 text-sm text-ink-400">
+        Not exclusive — keep any other sponsors or agents you already work with.
+      </p>
 
       {/* Exactly what a sponsor sees — same card language as their side. */}
       <div className="mt-8 rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-5">
