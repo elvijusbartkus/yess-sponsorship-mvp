@@ -87,8 +87,8 @@ export function scoreWants(answers: SponsorAnswers, profile: Profile): number {
 export function scorePriority(answers: SponsorAnswers, profile: Profile): number {
   if (!answers.priority) return 0;
   switch (answers.priority) {
-    case 'verified-audience':
-      return profile.audienceVerified ? 22 : 0;
+    case 'corroborated-audience':
+      return profile.audienceCorroborated ? 22 : 0;
     case 'value-for-money': {
       // People reached per euro at the entry end of their deal range.
       const perEuro = profile.audienceSize / Math.max(profile.dealRange[0], 1);
@@ -125,7 +125,7 @@ interface Parts {
   budget: number;
   wants: number;
   priority: number;
-  verified: number;
+  corroborated: number;
 }
 
 /**
@@ -193,10 +193,10 @@ function buildReasons(answers: SponsorAnswers, profile: Profile, parts: Parts): 
     });
   }
 
-  if (parts.priority > 0 && answers.priority === 'verified-audience') {
+  if (parts.priority > 0 && answers.priority === 'corroborated-audience') {
     candidates.push({
       weight: 75,
-      text: `Audience of ${profile.audienceSize.toLocaleString('en-US')} is verified at the gate, not self-reported`,
+      text: `Their ${profile.audienceSize.toLocaleString('en-US')} checks out against public data, not just their own claim`,
     });
   } else if (parts.priority > 0 && answers.priority === 'value-for-money') {
     candidates.push({
@@ -214,6 +214,20 @@ function buildReasons(answers: SponsorAnswers, profile: Profile, parts: Parts): 
     .sort((a, b) => b.weight - a.weight)
     .slice(0, 3)
     .map((c) => c.text);
+}
+
+/**
+ * Flags a self-reported figure that public signals don't support. This is the
+ * honest half of the trust model: we say when a number looks inflated rather
+ * than quietly ranking on it.
+ */
+export function consistencyFlag(profile: Profile): string | undefined {
+  const c = profile.corroboration;
+  if (!c) return undefined;
+  if (c.claimedAudience > c.supportedAudience * 1.25) {
+    return `Claims ${c.claimedAudience.toLocaleString('en-US')} but public signals support about ${c.supportedAudience.toLocaleString('en-US')}.`;
+  }
+  return undefined;
 }
 
 /** Say so honestly when a match is weak, rather than dressing it up. */
@@ -249,7 +263,7 @@ export function matchSponsorToProfiles(
         budget: scoreBudget(answers, profile),
         wants: scoreWants(answers, profile),
         priority: scorePriority(answers, profile),
-        verified: profile.audienceVerified ? 5 : 0,
+        corroborated: profile.audienceCorroborated ? 5 : 0,
       };
 
       const raw =
@@ -258,7 +272,7 @@ export function matchSponsorToProfiles(
         parts.budget +
         parts.wants +
         parts.priority +
-        parts.verified;
+        parts.corroborated;
 
       // Clamp, never rescale: a perfect fit must read as a high number.
       // But audience is the point of the whole exercise, so a profile that
@@ -275,7 +289,8 @@ export function matchSponsorToProfiles(
         reasons: buildReasons(answers, profile, parts),
         caution: buildCaution(parts, score),
         taxBenefit: computeTaxBenefit(answers.budget, profile),
-        verifiedBadge: profile.audienceVerified,
+        corroboratedBadge: profile.audienceCorroborated,
+        consistencyFlag: consistencyFlag(profile),
       };
     })
     .filter((m) => m.score > 0)

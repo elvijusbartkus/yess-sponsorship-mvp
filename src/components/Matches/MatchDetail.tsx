@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Badge, VerifiedBadge } from '../common/Badge';
+import { Badge, CorroboratedBadge } from '../common/Badge';
 import { Button } from '../common/Button';
 import { formatEur } from '../../lib/taxRules';
 import { COUNTRY_LABEL } from '../../lib/matching';
@@ -38,7 +38,7 @@ export function MatchDetail({
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="display text-4xl leading-tight text-ink-950 sm:text-5xl">{profile.name}</h1>
-            <VerifiedBadge verified={match.verifiedBadge} />
+            <CorroboratedBadge corroborated={match.corroboratedBadge} />
           </div>
           <p className="mt-2.5 text-sm text-ink-500">
             {profile.type === 'club' ? 'Club' : 'Athlete'} · {profile.sport} · {profile.region},{' '}
@@ -105,6 +105,57 @@ export function MatchDetail({
             <Badge key={d}>{d}</Badge>
           ))}
         </div>
+      </section>
+
+      <section className="mt-10">
+        <h2 className="eyebrow text-ink-400">How we know</h2>
+        {profile.corroboration ? (
+          <div className="mt-3 rounded-2xl bg-white p-5 ring-1 ring-inset ring-paper-line">
+            <p className="text-[15px] leading-relaxed text-ink-700">
+              Their claimed{' '}
+              <span className="font-medium text-ink-950">
+                {profile.corroboration.claimedAudience.toLocaleString('en-US')}
+              </span>{' '}
+              is backed by{' '}
+              <span className="font-medium text-ink-950">
+                {profile.corroboration.socialReach.toLocaleString('en-US')}
+              </span>{' '}
+              public followers,{' '}
+              <span className="font-medium text-ink-950">
+                {profile.corroboration.pressMentions}
+              </span>{' '}
+              press mentions a year and{' '}
+              <span className="font-medium text-ink-950">
+                {profile.corroboration.existingSponsors}
+              </span>{' '}
+              existing sponsor{profile.corroboration.existingSponsors === 1 ? '' : 's'}.
+            </p>
+            {match.consistencyFlag && (
+              <p className="mt-3 rounded-xl bg-flare-50 px-4 py-3 text-sm text-flare-700">
+                {match.consistencyFlag}
+              </p>
+            )}
+            <ul className="mt-4 space-y-1.5">
+              {profile.corroboration.sources.map((source) => (
+                <li key={source} className="flex items-start gap-2 text-[13px] text-ink-500">
+                  <span className="mt-1.5 inline-block h-1 w-1 shrink-0 rounded-full bg-ink-300" />
+                  {source}
+                </li>
+              ))}
+            </ul>
+            {profile.corroboration.lastCheckedAt && (
+              <p className="mt-3 text-xs text-ink-400">
+                Last checked {profile.corroboration.lastCheckedAt.slice(0, 10)}. We corroborate
+                against public data — we do not count people through gates.
+              </p>
+            )}
+          </div>
+        ) : (
+          <p className="mt-3 rounded-2xl bg-paper-dim px-5 py-4 text-[15px] text-ink-600">
+            Self-reported by the club. Nothing here has been checked against public data yet, so
+            treat the audience figure as their own estimate.
+          </p>
+        )}
       </section>
 
       <section className="mt-10">

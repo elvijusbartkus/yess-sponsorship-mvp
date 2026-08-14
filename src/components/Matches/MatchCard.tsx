@@ -1,4 +1,4 @@
-import { Badge, VerifiedBadge } from '../common/Badge';
+import { Badge, CorroboratedBadge } from '../common/Badge';
 import { formatEur } from '../../lib/taxRules';
 import { COUNTRY_LABEL } from '../../lib/matching';
 import type { Match } from '../../lib/types';
@@ -86,7 +86,7 @@ export function MatchCard({
             >
               {profile.name}
             </h3>
-            <VerifiedBadge verified={match.verifiedBadge} />
+            <CorroboratedBadge corroborated={match.corroboratedBadge} />
           </div>
           <p className={`mt-1.5 text-sm ${lead ? 'text-ink-300' : 'text-ink-500'}`}>
             {profile.sport} · {profile.region}, {COUNTRY_LABEL[profile.country]}
@@ -140,6 +140,12 @@ export function MatchCard({
       {match.caution && (
         <p className={`mt-2 text-[13px] italic ${lead ? 'text-ink-400' : 'text-ink-400'}`}>
           {match.caution}
+        </p>
+      )}
+
+      {match.consistencyFlag && (
+        <p className={`mt-2 text-[13px] ${lead ? 'text-flare-300' : 'text-flare-700'}`}>
+          ⚠ {match.consistencyFlag}
         </p>
       )}
 

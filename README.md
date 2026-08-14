@@ -16,12 +16,21 @@ Implements `docs/BUILD_FIXES.md` (spec v3).
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173
-npm test         # 19 matching + tax unit tests
-npm run build    # typecheck + production build
+npm run dev:all   # API on :8787 + web on :5173
+npm test          # 42 unit tests
+npm run build     # typecheck + production build
 ```
 
-No backend, no API keys, no network calls — nothing to fail on stage.
+`npm run dev:all` runs both halves. To run them separately: `npm run server`
+and `npm run dev`. Vite proxies `/api` to the backend, so nothing needs
+configuring in dev.
+
+### Optional: LLM match reasoning
+
+Copy `.env.example` to `.env` and set `ANTHROPIC_API_KEY` to have Claude write
+the "why we matched you" lines. **Without a key the app runs on template
+reasons and everything else is identical** — the key is read server-side only
+and never reaches the browser.
 
 ## Two flows, both real
 
@@ -54,6 +63,11 @@ neither flow needs typing during a demo.
 ## Architecture
 
 ```
+server/
+  index.ts          Express API
+  db.ts             SQLite schema + seed (profiles live in a real table)
+  reasoning.ts      LLM match-reason text, with template fallback
+  enrich.ts         real public-source corroboration lookup
 src/
   data/
     profiles.ts       8 seed clubs/athletes across EE, LV, LT
@@ -71,8 +85,25 @@ src/
     Matches/          MatchResults, MatchCard, MatchDetail
     Club/             ProfileBuilder, LiveProfile
     common/           Button, Badge, ProgressBar
+  lib/api.ts          frontend HTTP client
   App.tsx             state machine across both flows
 ```
+
+### API
+
+| Endpoint | Purpose |
+|---|---|
+| `GET /api/health` | profile count, whether LLM reasoning is on |
+| `GET /api/profiles` | all clubs/athletes from the database |
+| `POST /api/match` | sponsor answers → ranked, explained matches |
+| `POST /api/profiles` | club/athlete self-registers (writes a row) |
+| `POST /api/profiles/:id/enrich` | corroborate against a real public source |
+
+**Ranking is computed server-side and deterministically, from the database.**
+The LLM is invited afterwards, and only to rewrite the explanation text — it
+cannot reorder matches, change a score, or invent a tax figure. If the call
+fails, times out, refuses, or returns unusable JSON, that match silently keeps
+its template reasons. There are tests asserting exactly this.
 
 ## Matching
 
@@ -85,7 +116,7 @@ Deterministic, no model. Raw points, clamped at 100 — never rescaled.
 | Budget | 20 | band overlaps `dealRange` 20, near miss 9 |
 | Goal | 10 | mapped per goal, 3 floor |
 | Priority (Q6) | 22 | optional; weighted to actually reorder, not just nudge |
-| Verified | 5 | small trust bonus |
+| Corroborated | 5 | small trust bonus |
 
 **Weak matches are forced low.** A profile whose audience does not overlap the
 target is capped at 45 regardless of how well everything else scores, and an
@@ -143,8 +174,42 @@ differentiator" and opens on the unused billion, while `BUILD_FIXES.md` says not
 to over-index on tax. The build follows BUILD_FIXES. The pitch deck still needs
 reconciling to match.
 
+## Data trust — corroboration, not check-in
+
+**There is no check-in / gate-attendance system, and building one is explicitly
+out of scope** — it is a different product. Trust here comes from data that
+already exists in public:
+
+- **Corroborated** — the audience figure lines up with public follower counts,
+  press coverage, and existing sponsor relationships we could check.
+- **Self-reported** — club-entered only, nothing checked yet.
+
+Where a self-reported figure materially exceeds what public signals support,
+the card says so rather than quietly ranking on the inflated number.
+
+`POST /api/profiles/:id/enrich` performs a **real, key-free network call** to
+the Wikipedia REST API, records what it found with a timestamp, and writes the
+provenance back to the database — so the badge is demonstrably not theatre.
+
+**Honest scope note:** Instagram and Facebook follower counts are not readable
+without platform credentials and app review, so no code here pretends to scrape
+them. Existence and coverage are corroborated for real; live follower counts
+need Meta Graph API access granted by each club, which is a business step and
+is left as roadmap rather than faked.
+
+## Deployment
+
+Not deployed — that needs accounts and credentials this repo doesn't have.
+What's ready:
+
+- **Frontend** → Vercel/Netlify. Build `npm run build`, output `dist/`. Set
+  `VITE_API_URL` to the deployed API's `/api` base.
+- **Backend** → Railway/Render/Fly. Start `npx tsx server/index.ts`. Set
+  `ANTHROPIC_API_KEY` (optional) and `DATABASE_PATH` to a persistent volume.
+  SQLite needs a mounted disk; on a platform without one, swap `server/db.ts`
+  for Postgres — the queries are plain SQL and the interface is four functions.
+
 ## Out of scope, on purpose
 
-No backend, auth, payments, or check-in capture. The "Verified audience" badge is
-a boolean on seed data that visualizes the trust layer without building it.
-Demand figures on the club side are labelled illustrative.
+No auth, no payments, no check-in capture. Demand figures on the club side are
+labelled illustrative.

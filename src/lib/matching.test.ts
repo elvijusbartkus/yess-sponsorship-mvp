@@ -102,8 +102,8 @@ describe('the optional priority question visibly re-ranks', () => {
   };
 
   it('puts a verified profile top when the sponsor asks for verified audience', () => {
-    const verified = matchSponsorToProfiles({ ...base, priority: 'verified-audience' }, profiles);
-    expect(verified[0].profile.audienceVerified).toBe(true);
+    const verified = matchSponsorToProfiles({ ...base, priority: 'corroborated-audience' }, profiles);
+    expect(verified[0].profile.audienceCorroborated).toBe(true);
   });
 
   it('produces a different ranking for each priority, not just different scores', () => {
@@ -113,8 +113,8 @@ describe('the optional priority question visibly re-ranks', () => {
         .join();
 
     // If these came out identical the question would be theatre.
-    expect(order('verified-audience')).not.toBe(order('value-for-money'));
-    expect(order('verified-audience')).not.toBe(order('local-story'));
+    expect(order('corroborated-audience')).not.toBe(order('value-for-money'));
+    expect(order('corroborated-audience')).not.toBe(order('local-story'));
   });
 
   it('promotes a small local club when the sponsor wants a local story', () => {

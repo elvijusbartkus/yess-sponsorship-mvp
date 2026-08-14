@@ -10,7 +10,7 @@ const draft = clubSeeds[0].draft; // Tartu football club, €2k–10k
 describe('self-listed profiles', () => {
   it('never claims verification or tax status the club has not proven', () => {
     const profile = profileFromDraft(draft, 0);
-    expect(profile.audienceVerified).toBe(false);
+    expect(profile.audienceCorroborated).toBe(false);
     expect(profile.taxStatus.hasSponsorshipStatus).toBe(false);
     expect(computeTaxBenefit(5000, profile).applies).toBe(false);
     expect(computeTaxBenefit(5000, profile).taxSaved).toBe(0);

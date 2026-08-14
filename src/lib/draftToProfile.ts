@@ -8,7 +8,8 @@ import type { Profile, ProfileDraft } from './types';
  * flatteringly:
  *  - demographics default to the 'all' wildcard, because we did not ask who
  *    they reach and must not invent a segment for them
- *  - audienceVerified is false — this is self-reported by definition
+ *  - audienceCorroborated is false — nothing has been checked against public
+ *    data yet, so the profile is self-reported by definition
  *  - tax status is 'none', since recipient status is a legal fact we would have
  *    to check, not something a club can claim in a signup form
  */
@@ -22,7 +23,8 @@ export function profileFromDraft(draft: ProfileDraft, index: number): Profile {
     region: draft.region,
     isNational: false,
     audienceSize: draft.audienceSize + draft.instagramFollowers,
-    audienceVerified: false,
+    audienceCorroborated: false,
+    corroboration: null,
     demographics: ['all'],
     reach: {
       matchAttendance: draft.type === 'club' ? draft.audienceSize : 0,

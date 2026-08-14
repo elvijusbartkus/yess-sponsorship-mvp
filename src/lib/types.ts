@@ -35,6 +35,26 @@ export type TaxBenefit =
   | { kind: 'allowance'; corporateTaxRate: number }
   | { kind: 'none' };
 
+/**
+ * How an audience figure is backed. Deliberately NOT gate attendance — trust
+ * comes from data that already exists in public, not from us capturing it.
+ */
+export interface Corroboration {
+  /** Public follower counts we could actually read. */
+  socialReach: number;
+  /** Count of media coverage found. */
+  pressMentions: number;
+  /** Existing sponsor relationships, as a credibility signal. */
+  existingSponsors: number;
+  /** Self-reported figure vs. what public signals support. */
+  claimedAudience: number;
+  supportedAudience: number;
+  /** ISO date of the last check, or null if never checked. */
+  lastCheckedAt: string | null;
+  /** Where the numbers came from. */
+  sources: string[];
+}
+
 export interface Profile {
   id: string;
   name: string;
@@ -45,8 +65,12 @@ export interface Profile {
   /** National reach WITHIN its own country. */
   isNational: boolean;
   audienceSize: number;
-  /** true = verified via the trust layer, false = self-reported */
-  audienceVerified: boolean;
+  /**
+   * true = audience figures corroborated against public data we could check.
+   * false = club-entered only, not yet corroborated.
+   */
+  audienceCorroborated: boolean;
+  corroboration: Corroboration | null;
   demographics: Demographic[];
   reach: {
     matchAttendance: number;
@@ -77,7 +101,7 @@ export interface BudgetBand {
 }
 
 /** Optional 6th question — re-weights the ranking so the matching visibly responds. */
-export type Priority = 'verified-audience' | 'value-for-money' | 'local-story';
+export type Priority = 'corroborated-audience' | 'value-for-money' | 'local-story';
 
 export interface SponsorAnswers {
   budgetBand: BudgetBand;
@@ -117,7 +141,11 @@ export interface Match {
   /** Honest note when the fit is only adjacent, shown on weaker matches. */
   caution?: string;
   taxBenefit: MatchTaxBenefit;
-  verifiedBadge: boolean;
+  corroboratedBadge: boolean;
+  /** Set when the self-reported figure materially exceeds public signals. */
+  consistencyFlag?: string;
+  /** true when the reason text came from the LLM rather than templates. */
+  reasonsFromModel?: boolean;
 }
 
 export interface Persona {

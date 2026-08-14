@@ -31,7 +31,7 @@ export const personas: Persona[] = [
       demographic: '18-34',
       region: 'National',
       wants: 'content',
-      priority: 'verified-audience',
+      priority: 'corroborated-audience',
     },
   },
   {
@@ -45,7 +45,7 @@ export const personas: Persona[] = [
       demographic: '18-34',
       region: 'National',
       wants: 'visibility',
-      priority: 'verified-audience',
+      priority: 'corroborated-audience',
     },
   },
 ];
