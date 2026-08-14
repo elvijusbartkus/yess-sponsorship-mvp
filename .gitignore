@@ -25,3 +25,4 @@ dist-ssr
 # SQLite database directory (repo root only — an unanchored 'data/' would
 # also swallow src/data/, which is source code).
 /data/
+.vercel

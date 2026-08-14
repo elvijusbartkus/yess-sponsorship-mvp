@@ -34,6 +34,79 @@ function addNote(existing: string | undefined, text: string): string {
   return existing ? `${existing} · ${text}` : text;
 }
 
+/**
+ * Just an entry box, not a wall of city tiles — a sponsor knows where they
+ * operate better than a fixed list can offer it back to them. A typed name
+ * that matches a known city still scores on that exact city; anything else
+ * falls back to the country's nearest bucket and keeps the typed text as
+ * context rather than guessing a city from it.
+ */
+function LocationStep({
+  title,
+  subtitle,
+  cities,
+  nationalIsPlausible,
+  onSubmit,
+}: {
+  title: string;
+  subtitle: string;
+  cities: Region[];
+  nationalIsPlausible: boolean;
+  onSubmit: (region: Region | 'National', note?: string) => void;
+}) {
+  const [text, setText] = useState('');
+  const [nationwide, setNationwide] = useState(false);
+
+  function submit() {
+    if (nationwide) {
+      onSubmit('National');
+      return;
+    }
+    const typed = text.trim();
+    if (!typed) return;
+    const matchedCity = cities.find((c) => c.toLowerCase() === typed.toLowerCase());
+    onSubmit(matchedCity ?? cities[0], matchedCity ? undefined : `Location: ${typed}`);
+  }
+
+  return (
+    <div className="animate-rise">
+      <h2 className="display text-4xl leading-[1.05] text-ink-950 sm:text-5xl">{title}</h2>
+      <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-500">{subtitle}</p>
+
+      <input
+        autoFocus
+        disabled={nationwide}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && submit()}
+        placeholder="e.g. Tallinn, Tartu…"
+        className="mt-9 w-full rounded-lg bg-white px-5 py-4 font-display text-xl text-ink-950 ring-1 ring-inset ring-paper-line placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-flare-500 disabled:opacity-40"
+      />
+
+      {nationalIsPlausible && (
+        <label className="mt-3 flex items-center gap-2.5 text-sm text-ink-600">
+          <input
+            type="checkbox"
+            checked={nationwide}
+            onChange={(e) => setNationwide(e.target.checked)}
+            className="h-4 w-4 rounded-sm border-paper-line accent-flare-500"
+          />
+          Nationwide — no specific city
+        </label>
+      )}
+
+      <Button
+        size="lg"
+        className="mt-5"
+        disabled={!nationwide && !text.trim()}
+        onClick={submit}
+      >
+        Continue
+      </Button>
+    </div>
+  );
+}
+
 export function QuizFunnel({
   onComplete,
   presetCountry,
@@ -124,32 +197,13 @@ export function QuizFunnel({
         // Conditional on the budget answer: a national campaign isn't a real
         // option at the smallest band, so we don't offer it there.
         const nationalIsPlausible = (draft.budgetBand?.max ?? 0) > 2000;
-        const options: { value: Region | 'National'; label: string; hint?: string }[] = [
-          ...cities.map((city) => ({ value: city as Region | 'National', label: city })),
-          ...(nationalIsPlausible
-            ? [
-                {
-                  value: 'National' as Region | 'National',
-                  label: 'Nationally',
-                  hint: 'Country-wide visibility',
-                },
-              ]
-            : []),
-        ];
         return (
-          <QuizStep
+          <LocationStep
             title={current.title}
             subtitle={current.subtitle}
-            options={options}
-            selected={draft.region}
-            onSelect={(region) => advance({ region })}
-            otherPlaceholder="e.g. a specific neighbourhood or region"
-            onOther={(text) =>
-              advance({
-                region: nationalIsPlausible ? 'National' : cities[0],
-                note: addNote(draft.note, `Location: ${text}`),
-              })
-            }
+            cities={cities}
+            nationalIsPlausible={nationalIsPlausible}
+            onSubmit={(region, note) => advance({ region, note: note ? addNote(draft.note, note) : draft.note })}
           />
         );
       }

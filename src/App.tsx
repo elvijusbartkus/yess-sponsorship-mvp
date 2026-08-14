@@ -9,7 +9,6 @@ import { ContractSign } from './components/Deal/ContractSign';
 import { DeliverablesTracker } from './components/Deal/DeliverablesTracker';
 import { MatchingScreen } from './components/Matches/MatchingScreen';
 import { SponsorSignup } from './components/Onboarding/SponsorSignup';
-import { MembershipGate } from './components/Membership/MembershipGate';
 import { Pricing } from './components/Pricing';
 import { ProfileBuilder } from './components/Club/ProfileBuilder';
 import { LiveProfile } from './components/Club/LiveProfile';
@@ -29,7 +28,6 @@ type Screen =
   | 'landing'
   | 'pricing'
   | 'sponsor-signup'
-  | 'membership'
   | 'quiz'
   | 'matching'
   | 'results'
@@ -50,7 +48,6 @@ const ROLE_BY_SCREEN: Record<Screen, Role> = {
   pricing: null,
   browse: null,
   'sponsor-signup': 'sponsor',
-  membership: 'sponsor',
   quiz: 'sponsor',
   matching: 'sponsor',
   results: 'sponsor',
@@ -220,9 +217,7 @@ export default function App() {
       case 'landing':
         return (
           <Landing
-            onSponsorStart={() =>
-              setScreen(account?.membershipActive ? 'quiz' : account ? 'membership' : 'sponsor-signup')
-            }
+            onSponsorStart={() => setScreen(account?.membershipActive ? 'quiz' : 'sponsor-signup')}
             onClubStart={() => {
               setClubDraft(null);
               setScreen('club-builder');
@@ -243,20 +238,9 @@ export default function App() {
           <SponsorSignup
             onComplete={(next) => {
               setAccount(next);
-              setScreen('membership');
-            }}
-            onCancel={() => setScreen('landing')}
-          />
-        );
-
-      case 'membership':
-        return (
-          <MembershipGate
-            onBack={() => setScreen('sponsor-signup')}
-            onStart={() => {
-              setAccount((current) => (current ? { ...current, membershipActive: true } : current));
               setScreen('quiz');
             }}
+            onCancel={() => setScreen('landing')}
           />
         );
 
@@ -265,7 +249,7 @@ export default function App() {
           <QuizFunnel
             onComplete={runSponsor}
             presetCountry={account?.country}
-            onCancel={() => setScreen(account ? 'membership' : 'landing')}
+            onCancel={() => setScreen(account ? 'sponsor-signup' : 'landing')}
           />
         );
 

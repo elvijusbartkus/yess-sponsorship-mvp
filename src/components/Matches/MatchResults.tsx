@@ -67,7 +67,7 @@ export function MatchResults({
             {!otherOpen ? (
               <button
                 onClick={() => setOtherOpen(true)}
-                className="rounded-md border border-dashed border-paper-line px-3.5 py-2 text-[13px] font-medium text-ink-500 transition-colors hover:border-ink-950 hover:text-ink-950"
+                className="rounded-md bg-white px-3.5 py-2 text-[13px] font-medium text-ink-500 ring-1 ring-inset ring-paper-line transition-colors hover:text-ink-950 hover:ring-ink-950"
               >
                 Something else
               </button>
@@ -84,7 +84,7 @@ export function MatchResults({
                     }
                   }}
                   placeholder="Write it in…"
-                  className="w-40 rounded-md border border-dashed border-paper-line bg-white px-2.5 py-1.5 text-[13px] text-ink-950 placeholder:text-ink-300 focus:outline-none focus:border-flare-500"
+                  className="w-40 rounded-md bg-white px-2.5 py-1.5 text-[13px] text-ink-950 ring-1 ring-inset ring-flare-500 placeholder:text-ink-300 focus:outline-none"
                 />
               </span>
             )}
@@ -135,7 +135,7 @@ export function MatchResults({
       )}
 
       <p className="mt-10 text-center text-xs text-ink-400">
-        Matching is part of your membership. Clubs and athletes are never charged.
+        Matching is part of your membership.
       </p>
     </div>
   );

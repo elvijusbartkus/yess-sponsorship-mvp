@@ -5,6 +5,7 @@ import { formatEur } from '../../lib/taxRules';
 import { COUNTRY_LABEL, matchProfileToSponsorLeads } from '../../lib/matching';
 import { profileFromDraft } from '../../lib/draftToProfile';
 import { sponsorLeads } from '../../data/sponsorLeads';
+import { clubPlan, launchPromo } from '../../data/pricing';
 import type { ProfileDraft } from '../../lib/types';
 
 export function LiveProfile({
@@ -43,7 +44,12 @@ export function LiveProfile({
         find you now.
       </h1>
 
-      <p className="mt-5 text-lg text-ink-500">Free to list. You keep the full deal.</p>
+      <p className="mt-5 text-lg text-ink-500">
+        {clubPlan.currency}
+        {clubPlan.priceMonthly}/month
+        {launchPromo.active ? ` (first ${launchPromo.clubFreeMonths} month free)` : ''}. You keep
+        the full deal.
+      </p>
 
       {/* Exactly what a sponsor sees — same card language as their side. */}
       <div className="mt-10 rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-7">

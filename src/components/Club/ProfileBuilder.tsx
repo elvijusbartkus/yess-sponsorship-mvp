@@ -346,7 +346,7 @@ export function ProfileBuilder({
                   }
                 }}
                 placeholder="Something else you can offer…"
-                className="min-w-0 flex-1 rounded-lg border border-dashed border-paper-line bg-white px-4 py-2.5 text-sm text-ink-950 placeholder:text-ink-300 focus:outline-none focus:border-flare-500"
+                className="min-w-0 flex-1 rounded-lg bg-white px-4 py-2.5 text-sm text-ink-950 ring-1 ring-inset ring-paper-line placeholder:text-ink-300 focus:outline-none focus:ring-2 focus:ring-flare-500"
               />
               <button
                 disabled={!customActivation.trim()}

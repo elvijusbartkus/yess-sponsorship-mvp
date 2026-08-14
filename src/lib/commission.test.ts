@@ -1,25 +1,20 @@
 import { describe, expect, it } from 'vitest';
-import { COMMISSION_THRESHOLD, computeCommission, exampleDealValue } from './commission';
+import { computeCommission, exampleDealValue } from './commission';
 import { profiles } from '../data/profiles';
 
 const byId = (id: string) => profiles.find((p) => p.id === id)!;
 
-describe('commission tiers', () => {
-  it('charges 10% on a small deal', () => {
-    const c = computeCommission(8000);
-    expect(c.rateLabel).toBe('10%');
-    expect(c.amount).toBe(800);
+describe('commission is flat, not tiered', () => {
+  it('charges 2% standard rate regardless of deal size', () => {
+    expect(computeCommission(8000).rateLabel).toBe('2%');
+    expect(computeCommission(8000).amount).toBe(160);
+    expect(computeCommission(300000).rateLabel).toBe('2%');
   });
 
-  it('charges 2% on a large deal', () => {
-    const c = computeCommission(30000);
-    expect(c.rateLabel).toBe('2%');
-    expect(c.amount).toBe(600);
-  });
-
-  it('treats the threshold itself as a small deal', () => {
-    expect(computeCommission(COMMISSION_THRESHOLD).rateLabel).toBe('10%');
-    expect(computeCommission(COMMISSION_THRESHOLD + 1).rateLabel).toBe('2%');
+  it('charges 1% during the launch promo', () => {
+    const c = computeCommission(8000, true);
+    expect(c.rateLabel).toBe('1%');
+    expect(c.amount).toBe(80);
   });
 });
 

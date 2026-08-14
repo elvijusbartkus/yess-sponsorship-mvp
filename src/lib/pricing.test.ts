@@ -1,24 +1,25 @@
 import { describe, expect, it } from 'vitest';
-import { commissionTiers, membershipPlan } from '../data/pricing';
-import { computeCommission, COMMISSION_THRESHOLD } from './commission';
+import { clubPlan, commission, membershipPlan } from '../data/pricing';
+import { computeCommission } from './commission';
 
 /**
- * The money model appears on four screens (signup note, membership gate, deal
- * room, pricing page). These lock them to one source of truth so the demo can
+ * The money model appears on several screens (signup, deal room, contract,
+ * pricing page). These lock them to one source of truth so the demo can
  * never quote two different numbers for the same thing.
  */
 describe('the money model is stated consistently', () => {
-  it('pricing tiers are the same values the deal room charges', () => {
-    expect(commissionTiers.threshold).toBe(COMMISSION_THRESHOLD);
-    expect(computeCommission(commissionTiers.threshold).rate).toBe(commissionTiers.small);
-    expect(computeCommission(commissionTiers.threshold + 1).rate).toBe(commissionTiers.large);
+  it('commission is flat and matches the deal room', () => {
+    expect(computeCommission(8000).rate).toBe(commission.standard);
+    expect(computeCommission(300000).rate).toBe(commission.standard);
+    expect(computeCommission(8000, true).rate).toBe(commission.launch);
   });
 
-  it('annual membership is cheaper than paying monthly', () => {
+  it('annual membership is cheaper than paying monthly, for both plans', () => {
     expect(membershipPlan.priceAnnual).toBeLessThan(membershipPlan.priceMonthly * 12);
+    expect(clubPlan.priceAnnual).toBeLessThan(clubPlan.priceMonthly * 12);
   });
 
-  it('the free tier stops short of contacting anyone', () => {
+  it('the sponsor free tier stops short of contacting anyone', () => {
     const free = membershipPlan.freeTier.join(' ').toLowerCase();
     expect(free).not.toMatch(/contact|message|reach out|close/);
     expect(membershipPlan.includes.join(' ').toLowerCase()).toMatch(/contact/);
@@ -31,7 +32,7 @@ describe('the money model is stated consistently', () => {
     const sponsorPays = dealValue + amount;
     expect(clubReceives).toBe(dealValue);
     expect(sponsorPays).toBeGreaterThan(clubReceives);
-    expect(amount).toBe(800);
+    expect(amount).toBe(160);
   });
 });
 

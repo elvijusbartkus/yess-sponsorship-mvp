@@ -1,27 +1,23 @@
 import type { Profile } from './types';
 
-/** Deals at or below this take the small-deal rate. */
-export const COMMISSION_THRESHOLD = 10000;
-export const SMALL_DEAL_RATE = 0.1;
-export const LARGE_DEAL_RATE = 0.02;
+/** Flat, not tiered — the same rate regardless of deal size. */
+export const COMMISSION_RATE = 0.02;
+
+/** Launch-window rate. See `launchPromo` in `src/data/pricing.ts` for the full offer. */
+export const LAUNCH_PROMO_COMMISSION_RATE = 0.01;
 
 export interface Commission {
   rate: number;
-  /** '10%' / '2%' */
+  /** '2%' / '1%' */
   rateLabel: string;
-  tierLabel: string;
   amount: number;
 }
 
-export function computeCommission(dealValue: number): Commission {
-  const isLarge = dealValue > COMMISSION_THRESHOLD;
-  const rate = isLarge ? LARGE_DEAL_RATE : SMALL_DEAL_RATE;
+export function computeCommission(dealValue: number, promoActive = false): Commission {
+  const rate = promoActive ? LAUNCH_PROMO_COMMISSION_RATE : COMMISSION_RATE;
   return {
     rate,
     rateLabel: `${rate * 100}%`,
-    tierLabel: isLarge
-      ? `deals over €${COMMISSION_THRESHOLD.toLocaleString('en-US')}`
-      : `deals up to €${COMMISSION_THRESHOLD.toLocaleString('en-US')}`,
     amount: dealValue * rate,
   };
 }

@@ -1,6 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Badge, CorroboratedBadge } from '../common/Badge';
 import { Button } from '../common/Button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { formatEur } from '../../lib/taxRules';
 import { COUNTRY_LABEL } from '../../lib/matching';
 import { fetchProfiles } from '../../lib/api';
@@ -19,7 +26,8 @@ const TYPE_FILTERS: { value: 'all' | 'club' | 'athlete'; label: string }[] = [
   { value: 'athlete', label: 'Athletes only' },
 ];
 
-function FilterRow<T extends string>({
+/** Two compact selects instead of a wall of pill buttons. */
+function FilterSelect<T extends string>({
   options,
   value,
   onChange,
@@ -29,21 +37,18 @@ function FilterRow<T extends string>({
   onChange: (v: T) => void;
 }) {
   return (
-    <div className="flex flex-wrap gap-2">
-      {options.map((opt) => (
-        <button
-          key={opt.value}
-          onClick={() => onChange(opt.value)}
-          className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-            value === opt.value
-              ? 'bg-ink-950 text-white'
-              : 'bg-white text-ink-600 ring-1 ring-inset ring-paper-line hover:ring-ink-950'
-          }`}
-        >
-          {opt.label}
-        </button>
-      ))}
-    </div>
+    <Select value={value} onValueChange={(v) => onChange(v as T)}>
+      <SelectTrigger className="w-full sm:w-52">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        {options.map((opt) => (
+          <SelectItem key={opt.value} value={opt.value}>
+            {opt.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }
 
@@ -215,9 +220,9 @@ export function BrowseList({ onBack }: { onBack: () => void }) {
         athlete is a sponsor membership feature.
       </p>
 
-      <div className="mt-8 space-y-3">
-        <FilterRow options={COUNTRY_FILTERS} value={country} onChange={setCountry} />
-        <FilterRow options={TYPE_FILTERS} value={type} onChange={setType} />
+      <div className="mt-8 flex flex-col gap-2.5 sm:flex-row">
+        <FilterSelect options={COUNTRY_FILTERS} value={country} onChange={setCountry} />
+        <FilterSelect options={TYPE_FILTERS} value={type} onChange={setType} />
       </div>
 
       {error && <p className="mt-8 text-sm text-flare-700">{error}</p>}

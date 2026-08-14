@@ -1,6 +1,7 @@
 import { ArrowRight, Search, Handshake, FileCheck2 } from 'lucide-react';
 import { profiles } from '../data/profiles';
 import { COUNTRY_LABEL } from '../lib/matching';
+import { clubPlan, launchPromo, membershipPlan } from '../data/pricing';
 import type { Country } from '../lib/types';
 
 const byCountry = profiles.reduce<Record<Country, number>>(
@@ -164,7 +165,9 @@ export function Landing({
           onClick={onPricing}
           className="font-display text-[15px] font-medium text-ink-500 transition-colors hover:text-flare-500"
         >
-          Clubs free · Sponsors €49/mo + commission on close →
+          Clubs {clubPlan.currency}
+          {clubPlan.priceMonthly}/mo · Sponsors {membershipPlan.currency}
+          {membershipPlan.priceMonthly}/mo{launchPromo.active ? ' · launch offer live' : ''} →
         </button>
         <button
           onClick={onBrowse}

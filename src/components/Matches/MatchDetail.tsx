@@ -15,6 +15,11 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
+/**
+ * Trimmed to what a sponsor actually needs to decide: is this a fit, what do
+ * they get, what's a normal deal size here. Proposing a deal is the primary
+ * action — it doesn't wait behind a fake "message sent" step first.
+ */
 export function MatchDetail({
   match,
   onBack,
@@ -24,7 +29,7 @@ export function MatchDetail({
   onBack: () => void;
   onOpenDeal: () => void;
 }) {
-  const [connected, setConnected] = useState(false);
+  const [contacted, setContacted] = useState(false);
   const { profile, taxBenefit } = match;
 
   return (
@@ -85,20 +90,16 @@ export function MatchDetail({
           <Stat label="Facebook" value={profile.reach.facebookFans.toLocaleString('en-US')} />
           <Stat label="Press / yr" value={String(profile.reach.pressMentions)} />
         </div>
-        <div className="mt-3 flex flex-wrap gap-1.5">
+        <div className="mt-3 flex flex-wrap items-center gap-1.5">
           {profile.demographics.map((d) => (
             <Badge key={d}>{d}</Badge>
           ))}
+          <span className="text-xs text-ink-400">
+            {profile.corroboration
+              ? `Backed by ${profile.corroboration.socialReach.toLocaleString('en-US')} public followers.`
+              : 'Self-reported — not yet checked against public data.'}
+          </span>
         </div>
-      </section>
-
-      <section className="mt-10">
-        <h2 className="eyebrow text-ink-400">How we know</h2>
-        <p className="mt-3 text-[15px] leading-relaxed text-ink-700">
-          {profile.corroboration
-            ? `Claimed ${profile.corroboration.claimedAudience.toLocaleString('en-US')}, backed by ${profile.corroboration.socialReach.toLocaleString('en-US')} public followers and ${profile.corroboration.pressMentions} press mentions a year.`
-            : 'Self-reported by the club — not yet checked against public data.'}
-        </p>
         {match.consistencyFlag && (
           <p className="mt-2 text-[13px] text-flare-700">{match.consistencyFlag}</p>
         )}
@@ -131,41 +132,25 @@ export function MatchDetail({
           <p className="mt-1.5 font-display text-lg font-medium text-ink-950">
             {profile.currentSponsors.length ? profile.currentSponsors.join(', ') : 'None yet'}
           </p>
+          {taxBenefit.applies && (
+            <p className="mt-2 text-xs text-flare-700">{taxBenefit.tag}</p>
+          )}
         </div>
       </section>
 
-      <section className="mt-8">
-        <h2 className="eyebrow text-ink-400">Tax</h2>
-        <p
-          className={`mt-2 text-[15px] ${taxBenefit.applies ? 'text-flare-700' : 'text-ink-500'}`}
-        >
-          {taxBenefit.line}
-        </p>
-      </section>
-
       <div className="mt-12 border-t border-paper-line pt-8">
-        {connected ? (
-          <div className="rounded-lg bg-gain-50 px-6 py-5 ring-1 ring-inset ring-gain-100">
-            <p className="font-display text-xl font-bold tracking-tight text-gain-700">
-              Request sent to {profile.name}
-            </p>
-            <p className="mt-1 text-sm text-gain-600">
-              They typically respond within 48 hours. Nothing is charged for connecting.
-            </p>
-            <div className="mt-5">
-              <Button onClick={onOpenDeal}>
-                Propose a deal <ArrowRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <div className="flex flex-wrap items-center gap-3">
-            <Button size="lg" onClick={() => setConnected(true)}>
-              Contact {profile.name}
+        <div className="flex flex-wrap items-center gap-3">
+          <Button size="lg" onClick={onOpenDeal}>
+            Propose a deal <ArrowRight className="h-4 w-4" />
+          </Button>
+          {!contacted ? (
+            <Button variant="secondary" onClick={() => setContacted(true)}>
+              Contact {profile.name} first
             </Button>
-            <span className="text-xs text-ink-400">{profile.name} is never charged.</span>
-          </div>
-        )}
+          ) : (
+            <span className="text-xs text-gain-700">Message sent to {profile.name}.</span>
+          )}
+        </div>
       </div>
     </div>
   );

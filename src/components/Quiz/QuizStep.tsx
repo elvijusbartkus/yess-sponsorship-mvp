@@ -89,16 +89,16 @@ export function QuizStep<T extends string>({
       </div>
 
       {onOther && (
-        <div className="mt-3">
+        <div className="mt-2.5">
           {!otherOpen ? (
             <button
               onClick={() => setOtherOpen(true)}
-              className="rounded-lg border border-dashed border-paper-line px-5 py-3 text-sm font-medium text-ink-500 transition-colors hover:border-ink-950 hover:text-ink-950"
+              className="w-full rounded-lg bg-white px-5 py-4 text-left font-display text-lg font-medium text-ink-500 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:text-ink-950 hover:shadow-lift hover:ring-ink-950 sm:w-auto"
             >
               Something else — write your own
             </button>
           ) : (
-            <div className="animate-rise flex flex-wrap items-center gap-2 rounded-lg border border-dashed border-paper-line p-3">
+            <div className="animate-rise flex flex-wrap items-center gap-2 rounded-lg bg-white p-3 ring-1 ring-inset ring-flare-500">
               <input
                 autoFocus
                 value={otherText}
