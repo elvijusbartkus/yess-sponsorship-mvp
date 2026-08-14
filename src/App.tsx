@@ -17,8 +17,10 @@ import { BrowseList } from './components/Browse/BrowseList';
 import { createProfile, fetchMatches, fetchProfiles } from './lib/api';
 import type {
   ActivationType,
+  ClubSeed,
   ContractRecord,
   Match,
+  Persona,
   Priority,
   ProfileDraft,
   SponsorAccount,
@@ -229,6 +231,21 @@ export default function App() {
       .catch((e: Error) => setError(e.message));
   }
 
+  /** One-click demo runs — skip typing on stage, go straight to the payoff screen. */
+  function tryPersona(persona: Persona) {
+    setAccount({
+      company: persona.label,
+      email: 'demo@sponsorship-marketplace.example',
+      country: persona.answers.country,
+      membershipActive: false,
+    });
+    runSponsor(persona.answers);
+  }
+
+  function tryClubSeed(seed: ClubSeed) {
+    publishProfile(seed.draft);
+  }
+
   function renderScreen() {
     switch (screen) {
       case 'landing':
@@ -241,6 +258,8 @@ export default function App() {
             }}
             onPricing={() => setScreen('pricing')}
             onBrowse={() => setScreen('browse')}
+            onTryPersona={tryPersona}
+            onTryClubSeed={tryClubSeed}
           />
         );
 

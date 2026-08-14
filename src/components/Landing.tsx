@@ -9,8 +9,12 @@ import {
   Rocket,
   Building2,
   Trophy,
+  Play,
 } from 'lucide-react';
 import { clubPlan, commission, launchPromo, membershipPlan } from '../data/pricing';
+import { personas } from '../data/personas';
+import { clubSeeds } from '../data/clubFlow';
+import type { ClubSeed, Persona } from '../lib/types';
 
 function DoorCard({
   eyebrow,
@@ -98,11 +102,15 @@ export function Landing({
   onClubStart,
   onPricing,
   onBrowse,
+  onTryPersona,
+  onTryClubSeed,
 }: {
   onSponsorStart: () => void;
   onClubStart: () => void;
   onPricing: () => void;
   onBrowse: () => void;
+  onTryPersona: (persona: Persona) => void;
+  onTryClubSeed: (seed: ClubSeed) => void;
 }) {
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 py-10 sm:py-10">
@@ -137,41 +145,56 @@ export function Landing({
         />
       </div>
 
+      {/* DEMO SHORTCUTS — one click, no typing, for live walkthroughs. */}
+      <div className="mt-4 rounded-lg bg-paper-dim p-4">
+        <p className="flex items-center gap-1.5 text-xs font-medium text-ink-500">
+          <Play className="h-3.5 w-3.5" />
+          Demo shortcuts — skip the typing
+        </p>
+        <div className="mt-2.5 flex flex-wrap gap-2">
+          {personas.map((persona) => (
+            <button
+              key={persona.id}
+              onClick={() => onTryPersona(persona)}
+              className="rounded-md bg-white px-3 py-1.5 text-[13px] font-medium text-ink-700 ring-1 ring-inset ring-paper-line transition-colors hover:ring-ink-950"
+            >
+              {persona.label}
+            </button>
+          ))}
+          {clubSeeds.map((seed) => (
+            <button
+              key={seed.id}
+              onClick={() => onTryClubSeed(seed)}
+              className="rounded-md bg-flare-50 px-3 py-1.5 text-[13px] font-medium text-flare-700 ring-1 ring-inset ring-flare-100 transition-colors hover:ring-flare-500"
+            >
+              {seed.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* PROBLEM */}
-      <section className="mt-12 border-t border-paper-line pt-10">
+      <section className="mt-9 border-t border-paper-line pt-8">
         <SectionEyebrow>The problem</SectionEyebrow>
-        <h2 className="display mt-4 max-w-2xl text-3xl leading-[1.05] text-ink-950 sm:text-4xl">
+        <h2 className="display mt-3 max-w-2xl text-2xl leading-[1.1] text-ink-950 sm:text-3xl">
           Sport has an audience. It has no market.
         </h2>
-        <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+        <ul className="mt-5 grid gap-3 sm:grid-cols-3">
           {[
-            {
-              icon: AlertTriangle,
-              text: 'Local clubs and individual athletes reach real, loyal audiences — but have no way to package or price that reach for a business.',
-            },
-            {
-              icon: AlertTriangle,
-              text: "Sponsors who'd back them can't find them, can't evaluate the numbers, and can't trust a self-reported claim over a coffee chat.",
-            },
-            {
-              icon: AlertTriangle,
-              text: "When a deal does happen, it's a handshake and a WhatsApp thread — no contract, no proof anything was delivered.",
-            },
-            {
-              icon: AlertTriangle,
-              text: "Money that would go to grassroots sport goes to ad platforms instead, because ad platforms are easier to buy from.",
-            },
-          ].map((item) => (
-            <li key={item.text} className="flex items-start gap-3 rounded-lg bg-white p-4 ring-1 ring-inset ring-paper-line">
-              <item.icon className="mt-0.5 h-4 w-4 shrink-0 text-flare-500" />
-              <span className="text-[14px] leading-relaxed text-ink-700">{item.text}</span>
+            'Clubs and athletes reach real audiences but can\'t package or price that reach.',
+            'Sponsors can\'t find them, can\'t evaluate the numbers, can\'t trust a claim over coffee.',
+            'A deal that happens is a handshake and a WhatsApp thread — no contract, no proof.',
+          ].map((text) => (
+            <li key={text} className="flex items-start gap-2.5 rounded-lg bg-white p-3.5 ring-1 ring-inset ring-paper-line">
+              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-flare-500" />
+              <span className="text-[13px] leading-relaxed text-ink-700">{text}</span>
             </li>
           ))}
         </ul>
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="mt-12 grid gap-8 border-t border-paper-line pt-10 sm:grid-cols-2">
+      <section className="mt-9 grid gap-8 border-t border-paper-line pt-8 sm:grid-cols-2">
         <div>
           <p className="eyebrow text-ink-400">How it works for sponsors</p>
           <div className="mt-5 space-y-5">
@@ -223,13 +246,13 @@ export function Landing({
       </section>
 
       {/* THE MARKETING / JUSTIFICATION LAYER — the core differentiator */}
-      <section className="mt-12 overflow-hidden rounded-lg bg-ink-950 p-6 text-white sm:p-8">
+      <section className="mt-9 overflow-hidden rounded-lg bg-ink-950 p-5 text-white sm:p-6">
         <div className="flare-rule h-1.5 w-10" />
-        <p className="eyebrow mt-4 text-flare-400">Why we're not just a directory</p>
-        <h2 className="display mt-3 max-w-2xl text-3xl leading-[1.05] text-white sm:text-4xl">
+        <p className="eyebrow mt-3 text-flare-400">Why we're not just a directory</p>
+        <h2 className="display mt-2.5 max-w-2xl text-2xl leading-[1.1] text-white sm:text-3xl">
           We don't just introduce you. We run the marketing and prove it happened.
         </h2>
-        <div className="mt-7 grid gap-6 sm:grid-cols-2">
+        <div className="mt-6 grid gap-5 sm:grid-cols-2">
           <div className="flex items-start gap-3.5">
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-white/10 text-flare-400">
               <Megaphone className="h-4.5 w-4.5" />
@@ -237,8 +260,8 @@ export function Landing({
             <div>
               <p className="font-display text-[15px] font-medium text-white">We draft the campaign</p>
               <p className="mt-1 text-[13px] leading-relaxed text-ink-300">
-                Clubs and athletes are training, not marketers. A launch post and story caption get
-                generated for every signed deal, so the sponsorship actually gets announced.
+                A launch post and story caption get generated for every signed deal — clubs and
+                athletes are training, not marketers.
               </p>
             </div>
           </div>
@@ -251,120 +274,78 @@ export function Landing({
                 We prove it, deliverable by deliverable
               </p>
               <p className="mt-1 text-[13px] leading-relaxed text-ink-300">
-                Every activation item is tracked — posted or not, reach logged — so the sponsor has
-                a real record to justify the spend internally, and to renew against next season
-                instead of a deal that just quietly lapses.
+                Every activation item is tracked — posted or not, reach logged — a real record to
+                justify the spend and renew against, instead of a deal that quietly lapses.
               </p>
             </div>
           </div>
         </div>
-        <p className="mt-6 max-w-2xl text-[13px] leading-relaxed text-ink-400">
-          This is the part that keeps a deal on the platform. Once a sponsor and a club have met,
-          it's easy to just text each other next year — unless staying gives the sponsor something
-          they'd lose by leaving: a dashboard instead of a dozen WhatsApp threads, an invoice
-          instead of a bank transfer, and proof instead of a promise.
-        </p>
       </section>
 
       {/* WHO ARE OUR USERS */}
-      <section className="mt-12 border-t border-paper-line pt-10">
+      <section className="mt-9 border-t border-paper-line pt-8">
         <SectionEyebrow>Who we're building for</SectionEyebrow>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          <div className="rounded-lg bg-white p-4 ring-1 ring-inset ring-paper-line">
             <div className="flex items-center gap-2.5">
               <Building2 className="h-5 w-5 text-flare-500" />
               <p className="font-display text-lg font-medium text-ink-950">Sponsors</p>
             </div>
-            <p className="mt-3 text-[14px] leading-relaxed text-ink-700">
-              Local and regional businesses — gyms, retailers, banks, breweries, insurers — who
-              want their name in front of a specific local audience, not a national ad platform.
-              Typically €500–€50,000 sponsorship budgets, no dedicated marketing team to go hunting
-              for grassroots partners themselves.
+            <p className="mt-2.5 text-[13px] leading-relaxed text-ink-700">
+              Local and regional businesses — gyms, retailers, banks, breweries — with €500–€50,000
+              budgets and no marketing team to go hunting for grassroots partners themselves.
             </p>
           </div>
-          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+          <div className="rounded-lg bg-white p-4 ring-1 ring-inset ring-paper-line">
             <div className="flex items-center gap-2.5">
               <Trophy className="h-5 w-5 text-flare-500" />
               <p className="font-display text-lg font-medium text-ink-950">Clubs & athletes</p>
             </div>
-            <p className="mt-3 text-[14px] leading-relaxed text-ink-700">
-              Amateur and semi-pro clubs, youth academies, and individual athletes across the
-              Baltics with a real local following but no sales function — a coach, a volunteer, or
-              the athlete themselves fielding sponsorship conversations in their spare time.
+            <p className="mt-2.5 text-[13px] leading-relaxed text-ink-700">
+              Amateur and semi-pro clubs, academies, and individual athletes with a real local
+              following but no sales function — a coach or the athlete fielding sponsorship asks.
             </p>
           </div>
         </div>
       </section>
 
-      {/* MARKET SIZE */}
-      <section className="mt-12 border-t border-paper-line pt-10">
-        <SectionEyebrow>Market size</SectionEyebrow>
-        <h2 className="display mt-4 max-w-2xl text-3xl leading-[1.05] text-ink-950 sm:text-4xl">
-          The opportunity
-        </h2>
-        <p className="mt-2 text-sm text-ink-400">
-          Placeholders — replace with sourced figures before presenting.
-        </p>
-        <div className="mt-6 grid gap-4 sm:grid-cols-3">
-          <MarketStat
-            label="TAM"
-            value="€[__]M"
-            note="Total sports sponsorship spend across Estonia, Latvia and Lithuania."
-          />
-          <MarketStat
-            label="SAM"
-            value="€[__]M"
-            note="Spend realistically addressable by small/mid clubs and individual athletes — excludes top-tier stadium and league naming rights."
-          />
-          <MarketStat
-            label="SOM"
-            value="€[__]M"
-            note="Realistic 3-year capture target at current commission rates."
-          />
-        </div>
-      </section>
-
-      {/* GO TO MARKET */}
-      <section className="mt-12 border-t border-paper-line pt-10">
-        <SectionEyebrow>Go-to-market</SectionEyebrow>
-        <h2 className="display mt-4 max-w-2xl text-3xl leading-[1.05] text-ink-950 sm:text-4xl">
-          Free first, so the flywheel starts.
-        </h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
-            <div className="flex items-center gap-2.5">
-              <Rocket className="h-5 w-5 text-flare-500" />
-              <p className="font-display text-lg font-medium text-ink-950">Launch offer</p>
-            </div>
-            <ul className="mt-3 space-y-2 text-[14px] leading-relaxed text-ink-700">
-              <li>
-                Clubs & athletes: {clubPlan.currency}
-                {clubPlan.priceMonthly}/mo after a free first {launchPromo.clubFreeMonths} month —
-                supply has to be free to grow first.
-              </li>
-              <li>
-                Sponsors: {membershipPlan.currency}
-                {membershipPlan.priceMonthly}/mo after {launchPromo.sponsorFreeMonths} free months,
-                at {Math.round(launchPromo.commissionRate * 100)}% launch commission instead of the
-                standard {Math.round(commission.standard * 100)}%.
-              </li>
-            </ul>
+      {/* MARKET SIZE + GO-TO-MARKET, side by side to keep the page shorter */}
+      <section className="mt-9 grid gap-8 border-t border-paper-line pt-8 sm:grid-cols-2">
+        <div>
+          <SectionEyebrow>Market size</SectionEyebrow>
+          <p className="mt-2 text-xs text-ink-400">Placeholders — replace with sourced figures.</p>
+          <div className="mt-4 grid grid-cols-3 gap-2.5">
+            <MarketStat label="TAM" value="€[__]M" note="Baltic sports sponsorship spend." />
+            <MarketStat label="SAM" value="€[__]M" note="Addressable by small/mid clubs & athletes." />
+            <MarketStat label="SOM" value="€[__]M" note="3-year capture target." />
           </div>
-          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
-            <div className="flex items-center gap-2.5">
-              <BarChart3 className="h-5 w-5 text-flare-500" />
-              <p className="font-display text-lg font-medium text-ink-950">Rollout</p>
+        </div>
+        <div>
+          <SectionEyebrow>Go-to-market</SectionEyebrow>
+          <div className="mt-4 space-y-3">
+            <div className="flex items-start gap-2.5 rounded-lg bg-white p-3.5 ring-1 ring-inset ring-paper-line">
+              <Rocket className="mt-0.5 h-4 w-4 shrink-0 text-flare-500" />
+              <p className="text-[13px] leading-relaxed text-ink-700">
+                Clubs free first {launchPromo.clubFreeMonths} month, sponsors free first{' '}
+                {launchPromo.sponsorFreeMonths} months at {Math.round(launchPromo.commissionRate * 100)}%
+                commission — then {clubPlan.currency}
+                {clubPlan.priceMonthly}/{membershipPlan.currency}
+                {membershipPlan.priceMonthly} per month and {Math.round(commission.standard * 100)}%
+                flat.
+              </p>
             </div>
-            <p className="mt-3 text-[14px] leading-relaxed text-ink-700">
-              Estonia first — the entry market, and where the pitch is happening. Lithuania and
-              Latvia follow as an explicit second run, using the tax-relief angle already live in
-              Lithuania's 200% deduction as the wedge.
-            </p>
+            <div className="flex items-start gap-2.5 rounded-lg bg-white p-3.5 ring-1 ring-inset ring-paper-line">
+              <BarChart3 className="mt-0.5 h-4 w-4 shrink-0 text-flare-500" />
+              <p className="text-[13px] leading-relaxed text-ink-700">
+                Estonia first, then Lithuania and Latvia — using Lithuania's 200% tax deduction as
+                the wedge for the second run.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-paper-line pt-8">
+      <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-paper-line pt-6">
         <button
           onClick={onPricing}
           className="font-display text-[15px] font-medium text-ink-500 transition-colors hover:text-flare-500"

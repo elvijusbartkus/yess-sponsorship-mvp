@@ -3,6 +3,19 @@ import type { ContractRecord, Match } from './types';
 import { formatEur } from './taxRules';
 
 /**
+ * jsPDF's built-in fonts (Helvetica etc.) only cover WinAnsi encoding, which
+ * is missing several Baltic letters that show up in real club and athlete
+ * names — š, ž, č, ā, ē, ī, ū, ģ, ķ, ļ, ņ, ė and their capitals render as
+ * missing glyphs otherwise. Rather than embed a custom Unicode font just for
+ * this, decompose to NFD and strip the combining marks (š → s, ā → a, ė → e),
+ * which is legible and correct for a legal-document context — the on-screen
+ * UI elsewhere keeps the real diacritics, this only affects the PDF text.
+ */
+function pdfSafe(text: string): string {
+  return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+/**
  * A real, generated PDF — not a screenshot of a webpage pretending to be a
  * document. Structure follows the standard five things any sponsorship
  * contract needs to cover: what's being sponsored, how it's funded, what's
@@ -25,7 +38,7 @@ export function generateContractPdf(
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(11);
     doc.setTextColor(80, 80, 90);
-    doc.text(text.toUpperCase(), margin, y);
+    doc.text(pdfSafe(text).toUpperCase(), margin, y);
     y += 16;
   };
 
@@ -33,7 +46,7 @@ export function generateContractPdf(
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(11);
     doc.setTextColor(20, 20, 24);
-    const lines = doc.splitTextToSize(text, width);
+    const lines = doc.splitTextToSize(pdfSafe(text), width);
     doc.text(lines, margin, y);
     y += lines.length * 15 + 14;
   };
