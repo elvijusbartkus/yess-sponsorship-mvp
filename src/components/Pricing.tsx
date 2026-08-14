@@ -29,7 +29,7 @@ export function Pricing({ onBack }: { onBack: () => void }) {
       </div>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2">
-        <section className="rounded-xl bg-white p-5 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card sm:p-6">
+        <section className="rounded-xl bg-white p-5 ring-1 ring-inset ring-paper-line sm:p-6">
           <p className="eyebrow text-ink-400">Clubs &amp; athletes</p>
           <p className="mt-2">
             <span className="display text-5xl leading-none tabular-nums text-ink-950">
@@ -48,7 +48,7 @@ export function Pricing({ onBack }: { onBack: () => void }) {
           </p>
         </section>
 
-        <section className="overflow-hidden rounded-xl bg-ink-950 text-white ring-hairline-dark transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift">
+        <section className="overflow-hidden rounded-xl bg-ink-950 text-white ring-hairline-dark">
           <div className="p-5 sm:p-6">
             <p className="eyebrow text-flare-400">Sponsors</p>
             <p className="mt-2">
@@ -70,7 +70,7 @@ export function Pricing({ onBack }: { onBack: () => void }) {
         </section>
       </div>
 
-      <section className="mt-4 rounded-xl bg-white p-5 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card sm:p-6">
+      <section className="mt-4 rounded-xl bg-white p-5 ring-1 ring-inset ring-paper-line sm:p-6">
         <p className="eyebrow text-ink-400">On every closed deal</p>
         <p className="mt-2">
           <span className="display text-5xl leading-none tabular-nums text-ink-950">

@@ -113,7 +113,7 @@ export function LiveProfile({
             {leadMatches.map(({ lead, score, reasons }) => (
               <div
                 key={lead.id}
-                className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card"
+                className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>

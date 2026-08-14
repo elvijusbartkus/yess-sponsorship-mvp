@@ -83,7 +83,7 @@ export function MembershipDialog({
 
         <button
           onClick={onStart}
-          className="mt-6 w-full rounded-lg bg-[radial-gradient(circle_at_30%_20%,theme(colors.flare.400),theme(colors.flare.600)_75%)] py-3 text-center font-display text-base font-medium text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-glow"
+          className="mt-6 w-full rounded-lg bg-flare-500 py-3 text-center font-display text-base font-medium text-white transition-colors hover:bg-flare-400"
         >
           Start membership
         </button>

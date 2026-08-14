@@ -70,7 +70,7 @@ function SocialPostCard({
   return (
     <div className="overflow-hidden rounded-xl bg-white ring-1 ring-inset ring-paper-line">
       <div className="flex items-center gap-3 p-4">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_25%,theme(colors.flare.400),theme(colors.flare.600)_75%)] text-sm font-semibold text-white">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-flare-500 text-sm font-semibold text-white">
           {initials(name)}
         </div>
         <div className="min-w-0 flex-1">

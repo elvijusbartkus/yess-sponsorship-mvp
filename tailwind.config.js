@@ -70,7 +70,6 @@ export default {
         card: '0 1px 2px rgba(15,15,17,0.03), 0 2px 8px -2px rgba(15,15,17,0.05)',
         lift: '0 24px 48px -16px rgba(15,15,17,0.14), 0 8px 16px -8px rgba(15,15,17,0.07)',
         flare: '0 24px 48px -16px rgba(37,84,224,0.32)',
-        glow: '0 0 0 1px rgba(37,84,224,0.15), 0 12px 32px -8px rgba(37,84,224,0.28)',
       },
       fontFamily: {
         // Syne: the "striking display font" — geometric, confident, and

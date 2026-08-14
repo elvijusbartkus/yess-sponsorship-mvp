@@ -34,7 +34,7 @@ function DoorCard({
       className={`group relative flex h-full flex-col overflow-hidden rounded-lg p-5 text-left transition-all duration-200 hover:-translate-y-1.5 sm:p-6 ${
         ink
           ? 'bg-ink-950 text-white ring-1 ring-inset ring-white/10 hover:shadow-lift'
-          : 'bg-[radial-gradient(circle_at_25%_15%,theme(colors.flare.400),theme(colors.flare.600)_75%)] text-white hover:shadow-glow'
+          : 'bg-flare-500 text-white hover:shadow-flare'
       }`}
     >
       <p className={`eyebrow ${ink ? 'text-flare-400' : 'text-white/70'}`}>{eyebrow}</p>
@@ -65,8 +65,8 @@ function Step({
 }) {
   return (
     <div className="flex items-start gap-3.5">
-      <div className="icon-glow h-9 w-9">
-        <Icon className="h-4.5 w-4.5" strokeWidth={2.25} />
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-paper-dim text-ink-950">
+        <Icon className="h-4.5 w-4.5" />
       </div>
       <div>
         <p className="font-display text-[15px] font-medium text-ink-950">{label}</p>
@@ -87,7 +87,7 @@ function SectionEyebrow({ children }: { children: string }) {
 
 function MarketStat({ label, value, note }: { label: string; value: string; note: string }) {
   return (
-    <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card">
+    <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
       <p className="eyebrow text-ink-400">{label}</p>
       <p className="display mt-2 text-4xl leading-none tracking-tightest text-ink-950">{value}</p>
       <p className="mt-2 text-[13px] leading-snug text-ink-500">{note}</p>
@@ -262,35 +262,33 @@ export function Landing({
           Three sides. One broken market.
         </h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-3">
-          <div className="group rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card">
-            <div className="icon-glow h-10 w-10">
-              <Trophy className="h-5 w-5" strokeWidth={2.25} />
+          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+            <div className="flex items-center gap-2.5">
+              <Trophy className="h-5 w-5 text-flare-500" />
+              <p className="font-display text-lg font-medium text-ink-950">Clubs & athletes</p>
             </div>
-            <p className="mt-3 font-display text-lg font-medium text-ink-950">Clubs & athletes</p>
-            <p className="mt-2 text-[13px] leading-relaxed text-ink-700">
+            <p className="mt-2.5 text-[13px] leading-relaxed text-ink-700">
               2,900+ registered clubs, 240,000+ participants. Need money.
             </p>
           </div>
-          <div className="group rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card">
-            <div className="icon-glow h-10 w-10">
-              <Building2 className="h-5 w-5" strokeWidth={2.25} />
+          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+            <div className="flex items-center gap-2.5">
+              <Building2 className="h-5 w-5 text-flare-500" />
+              <p className="font-display text-lg font-medium text-ink-950">Businesses</p>
             </div>
-            <p className="mt-3 font-display text-lg font-medium text-ink-950">Businesses</p>
-            <p className="mt-2 text-[13px] leading-relaxed text-ink-700">
+            <p className="mt-2.5 text-[13px] leading-relaxed text-ink-700">
               Thousands of local firms, €500–50k to spend, no one to spend it on.
             </p>
           </div>
-          <div className="group rounded-lg bg-ink-950 p-5 ring-hairline-dark transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift sm:col-span-3 sm:flex sm:items-center sm:gap-6">
-            <div className="icon-glow-dark h-10 w-10">
-              <Landmark className="h-5 w-5" strokeWidth={2.25} />
+          <div className="rounded-lg bg-ink-950 p-5 ring-hairline-dark sm:col-span-3">
+            <div className="flex items-center gap-2.5">
+              <Landmark className="h-5 w-5 text-flare-400" />
+              <p className="font-display text-lg font-medium text-white">The Committee</p>
             </div>
-            <div className="sm:flex-1">
-              <p className="mt-3 font-display text-lg font-medium text-white sm:mt-0">The Committee</p>
-              <p className="mt-2 text-[13px] leading-relaxed text-white/80">
-                Already centralizes every club via the Sports Register. One lever to onboard all of
-                them.
-              </p>
-            </div>
+            <p className="mt-2.5 max-w-xl text-[13px] leading-relaxed text-white/80">
+              Already centralizes every club via the Sports Register. One lever to onboard all of
+              them.
+            </p>
           </div>
         </div>
       </section>

@@ -8,7 +8,7 @@ import type { Match } from '../../lib/types';
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg bg-white px-4 py-4 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card">
+    <div className="rounded-lg bg-white px-4 py-4 ring-1 ring-inset ring-paper-line">
       <p className="eyebrow text-ink-400">{label}</p>
       <p className="display mt-1.5 text-2xl tabular-nums text-ink-950">{value}</p>
     </div>
@@ -123,14 +123,14 @@ export function MatchDetail({
       </section>
 
       <section className="mt-8 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-lg bg-white px-4 py-4 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card">
+        <div className="rounded-lg bg-white px-4 py-4 ring-1 ring-inset ring-paper-line">
           <p className="eyebrow text-ink-400">Past deals in this range</p>
           <p className="mt-1.5 font-display text-lg font-medium text-ink-950">
             {formatEur(profile.dealRange[0])} – {formatEur(profile.dealRange[1])}
           </p>
           <p className="mt-1 text-xs text-ink-400">A guide, not a price — you propose the real number next.</p>
         </div>
-        <div className="rounded-lg bg-white px-4 py-4 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card">
+        <div className="rounded-lg bg-white px-4 py-4 ring-1 ring-inset ring-paper-line">
           <p className="eyebrow text-ink-400">Current sponsors</p>
           <p className="mt-1.5 font-display text-lg font-medium text-ink-950">
             {profile.currentSponsors.length ? profile.currentSponsors.join(', ') : 'None yet'}

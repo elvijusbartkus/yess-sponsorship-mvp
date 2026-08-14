@@ -64,8 +64,8 @@ export function DeliverablesTracker({
         className="group mt-6 flex w-full items-center justify-between gap-4 overflow-hidden rounded-xl bg-ink-950 p-5 text-left ring-hairline-dark transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lift"
       >
         <div className="flex items-center gap-3.5">
-          <div className="icon-glow-dark h-9 w-9">
-            <Megaphone className="h-4.5 w-4.5" strokeWidth={2.25} />
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-white/10 text-flare-400">
+            <Megaphone className="h-4.5 w-4.5" />
           </div>
           <div>
             <p className="font-display text-[15px] font-medium text-white">Launch the campaign</p>
