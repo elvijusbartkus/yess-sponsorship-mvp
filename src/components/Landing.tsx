@@ -61,7 +61,7 @@ function SectionEyebrow({ children }: { children: string }) {
 function QuoteCard({ quote, name, role }: { quote: string; name: string; role: string }) {
   return (
     <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
-      <p className="text-[15px] leading-relaxed text-ink-800">&ldquo;{quote}&rdquo;</p>
+      <p className="text-[15px] italic leading-relaxed text-ink-800">&ldquo;{quote}&rdquo;</p>
       <p className="mt-4 text-sm font-medium text-ink-950">
         {name} <span className="font-normal text-ink-400">&middot; {role}</span>
       </p>
