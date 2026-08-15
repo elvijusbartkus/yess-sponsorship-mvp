@@ -3,7 +3,6 @@ import {
   Search,
   Handshake,
   FileCheck2,
-  Megaphone,
   BarChart3,
   Rocket,
   Building2,
@@ -142,6 +141,26 @@ export function Landing({
         />
       </div>
 
+      {/* HOW IT WORKS — first section after the CTAs, kept short */}
+      <section className="mt-10 grid gap-4 sm:grid-cols-2">
+        <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+          <p className="eyebrow text-ink-400">For sponsors</p>
+          <div className="mt-4 space-y-4">
+            <Step icon={Search} label="Answer a few questions" body="Budget, audience, region." />
+            <Step icon={Handshake} label="Get scored, ranked matches" body="Real clubs, not a directory." />
+            <Step icon={FileCheck2} label="Propose, sign, track it" body="One dashboard, start to finish." />
+          </div>
+        </div>
+        <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+          <p className="eyebrow text-ink-400">For clubs & athletes</p>
+          <div className="mt-4 space-y-4">
+            <Step icon={Search} label="Build your profile" body="Eight quick questions, no exclusivity." />
+            <Step icon={Handshake} label="Sponsors find you" body="See who'd want you." />
+            <Step icon={FileCheck2} label="Keep the full deal" body="Commission comes from the sponsor." />
+          </div>
+        </div>
+      </section>
+
       {/* PROBLEM */}
       <section className="mt-16 border-t border-paper-line pt-14">
         <SectionEyebrow>The problem</SectionEyebrow>
@@ -164,95 +183,6 @@ export function Landing({
             </li>
           ))}
         </ul>
-      </section>
-
-      {/* HOW IT WORKS */}
-      <section className="mt-16 grid gap-6 border-t border-paper-line pt-14 sm:grid-cols-2">
-        <div className="rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line">
-          <p className="eyebrow text-ink-400">How it works for sponsors</p>
-          <div className="mt-5 space-y-5">
-            <Step icon={Search} label="Answer a few questions" body="Budget, audience, region: three taps." />
-            <Step
-              icon={Handshake}
-              label="Get scored, ranked matches"
-              body="Real clubs and athletes, not a directory to dig through."
-            />
-            <Step
-              icon={FileCheck2}
-              label="Propose a deal, sign, track it"
-              body="One dashboard for the deal, the contract, and what actually got delivered."
-            />
-          </div>
-          <button
-            onClick={onSponsorStart}
-            className="mt-6 inline-flex items-center gap-1.5 font-display text-sm font-medium text-flare-600 hover:text-flare-500"
-          >
-            Start as a sponsor <ArrowRight className="h-3.5 w-3.5" />
-          </button>
-        </div>
-        <div className="rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line">
-          <p className="eyebrow text-ink-400">How it works for clubs & athletes</p>
-          <div className="mt-5 space-y-5">
-            <Step
-              icon={Search}
-              label="Build your profile"
-              body="Eight quick questions, no exclusivity: keep your other sponsors and agents."
-            />
-            <Step
-              icon={Handshake}
-              label="Sponsors find you"
-              body="See exactly which kinds of businesses would want you."
-            />
-            <Step
-              icon={FileCheck2}
-              label="Keep the full deal"
-              body="Commission is charged to the sponsor, on top, never out of your side."
-            />
-          </div>
-          <button
-            onClick={onClubStart}
-            className="mt-6 inline-flex items-center gap-1.5 font-display text-sm font-medium text-flare-600 hover:text-flare-500"
-          >
-            Start as a club or athlete <ArrowRight className="h-3.5 w-3.5" />
-          </button>
-        </div>
-      </section>
-
-      {/* THE MARKETING / JUSTIFICATION LAYER — the core differentiator */}
-      <section className="mt-16 overflow-hidden rounded-xl bg-ink-950 p-6 text-white ring-hairline-dark sm:p-8">
-        <div className="flare-rule h-1.5 w-10" />
-        <p className="eyebrow mt-3 text-flare-400">Why we're not just a directory</p>
-        <h2 className="display mt-2.5 max-w-2xl text-2xl leading-[1.1] text-white sm:text-3xl">
-          We don't just introduce you. We run the marketing and prove it happened.
-        </h2>
-        <div className="mt-6 grid gap-5 sm:grid-cols-2">
-          <div className="flex items-start gap-3.5">
-            <div className="icon-glow-dark h-9 w-9">
-              <Megaphone className="h-4.5 w-4.5" strokeWidth={2.25} />
-            </div>
-            <div>
-              <p className="font-display text-[15px] font-medium text-white">We draft the campaign</p>
-              <p className="mt-1 text-[13px] leading-relaxed text-white/80">
-                A launch post and story caption get generated for every signed deal: clubs and
-                athletes are training, not marketers.
-              </p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3.5">
-            <div className="icon-glow-dark h-9 w-9">
-              <FileCheck2 className="h-4.5 w-4.5" strokeWidth={2.25} />
-            </div>
-            <div>
-              <p className="font-display text-[15px] font-medium text-white">
-                We prove it, deliverable by deliverable
-              </p>
-              <p className="mt-1 text-[13px] leading-relaxed text-white/80">
-                Every activation item is tracked, posted or not, reach logged: a real record to
-                justify the spend and renew against, instead of a deal that quietly lapses.
-              </p>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* WHO ARE OUR USERS */}
@@ -293,47 +223,47 @@ export function Landing({
         </div>
       </section>
 
-      {/* MARKET SIZE + GO-TO-MARKET, side by side to keep the page shorter */}
-      <section className="mt-16 grid gap-8 border-t border-paper-line pt-14 sm:grid-cols-2">
-        <div>
-          <SectionEyebrow>Market size</SectionEyebrow>
-          <div className="mt-4 grid grid-cols-3 gap-2.5">
-            <MarketStat label="TAM" value="€25M" note="Private money into Estonian sport a year." />
-            <MarketStat
-              label="SAM"
-              value="€8M"
-              note="The middle of the pyramid, where matching is broken."
-            />
-            <MarketStat label="SOM" value="€47k/yr" note="Realistic Year 1 revenue." />
-          </div>
+      {/* MARKET SIZE */}
+      <section className="mt-16 border-t border-paper-line pt-14">
+        <SectionEyebrow>Market size</SectionEyebrow>
+        <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
+          <MarketStat label="TAM" value="€25M" note="Private money into Estonian sport a year." />
+          <MarketStat
+            label="SAM"
+            value="€8M"
+            note="The middle of the pyramid, where matching is broken."
+          />
+          <MarketStat label="SOM" value="€47k/yr" note="Realistic Year 1 revenue." />
         </div>
-        <div>
-          <SectionEyebrow>Go-to-market</SectionEyebrow>
-          <div className="mt-4 space-y-3">
-            <div className="flex items-start gap-2.5 rounded-lg bg-white p-3.5 ring-1 ring-inset ring-paper-line">
-              <Handshake className="mt-0.5 h-4 w-4 shrink-0 text-flare-500" />
-              <p className="text-[13px] leading-relaxed text-ink-700">
-                The Committee's own sponsor relationships open doors, then direct outreach to
-                businesses sitting on unused sponsorship budget.
-              </p>
-            </div>
-            <div className="flex items-start gap-2.5 rounded-lg bg-white p-3.5 ring-1 ring-inset ring-paper-line">
-              <Rocket className="mt-0.5 h-4 w-4 shrink-0 text-flare-500" />
-              <p className="text-[13px] leading-relaxed text-ink-700">
-                Clubs free first {firstPeriodFree.clubMonths} month, sponsors free first{' '}
-                {firstPeriodFree.sponsorMonths} months, every new signup. Then {clubPlan.currency}
-                {clubPlan.priceMonthly}/{membershipPlan.currency}
-                {membershipPlan.priceMonthly} per month and {Math.round(commission.standard * 100)}%
-                flat, every deal.
-              </p>
-            </div>
-            <div className="flex items-start gap-2.5 rounded-lg bg-white p-3.5 ring-1 ring-inset ring-paper-line">
-              <BarChart3 className="mt-0.5 h-4 w-4 shrink-0 text-flare-500" />
-              <p className="text-[13px] leading-relaxed text-ink-700">
-                Estonia first, then Lithuania and Latvia, using Lithuania's 200% tax deduction as
-                the wedge for the second run.
-              </p>
-            </div>
+      </section>
+
+      {/* GO-TO-MARKET, same card treatment and width as market size above */}
+      <section className="mt-8">
+        <SectionEyebrow>Go-to-market</SectionEyebrow>
+        <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
+          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+            <Handshake className="h-4 w-4 text-flare-500" />
+            <p className="mt-2 text-[13px] leading-relaxed text-ink-700">
+              The Committee's own sponsor relationships open doors, then direct outreach to
+              businesses sitting on unused sponsorship budget.
+            </p>
+          </div>
+          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+            <Rocket className="h-4 w-4 text-flare-500" />
+            <p className="mt-2 text-[13px] leading-relaxed text-ink-700">
+              Clubs free first {firstPeriodFree.clubMonths} month, sponsors free first{' '}
+              {firstPeriodFree.sponsorMonths} months, every new signup. Then {clubPlan.currency}
+              {clubPlan.priceMonthly}/{membershipPlan.currency}
+              {membershipPlan.priceMonthly} per month and {Math.round(commission.standard * 100)}%
+              flat, every deal.
+            </p>
+          </div>
+          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+            <BarChart3 className="h-4 w-4 text-flare-500" />
+            <p className="mt-2 text-[13px] leading-relaxed text-ink-700">
+              Estonia first, then Lithuania and Latvia, using Lithuania's 200% tax deduction as the
+              wedge for the second run.
+            </p>
           </div>
         </div>
       </section>
