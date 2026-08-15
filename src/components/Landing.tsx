@@ -122,7 +122,7 @@ export function Landing({
         <DoorCard
           tone="ink"
           eyebrow="For businesses"
-          title="Back sport"
+          title="Get matched"
           cta="See your matches"
           body="Answer three questions about your budget and audience."
           onClick={onSponsorStart}
@@ -165,22 +165,17 @@ export function Landing({
         <h2 className="display mt-3 max-w-2xl text-3xl leading-[1.1] text-ink-950 sm:text-4xl">
           Private sport money never reaches the clubs and athletes that need it.
         </h2>
-        <ul className="mt-6 space-y-3">
-          {[
-            '€500M in Estonian sport. Business gives €50M. Grassroots sees almost none.',
-            'SPLISS: 50-65% of sporting success comes straight from money invested.',
-            "A business wants to back sport but doesn't know which club.",
-            "A club needs €5,000 but doesn't know who'd pay.",
-          ].map((text) => (
-            <li
-              key={text}
-              className="flex items-center gap-4 rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line"
-            >
-              <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-flare-500" />
-              <span className="text-xl leading-snug text-ink-800 sm:text-2xl">{text}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-6 max-w-3xl space-y-4">
+          <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
+            €500M moves through Estonian sport a year. Business gives{' '}
+            <span className="text-flare-500">€25M</span> of it, and grassroots sees almost none.
+            SPLISS research ties 50 to 65% of sporting success straight to money invested.
+          </p>
+          <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
+            A business wants to back sport but doesn't know which club. A club needs €5,000 but
+            doesn't know who'd pay.
+          </p>
+        </div>
       </section>
 
       {/* MARKET SIZE */}
@@ -190,7 +185,7 @@ export function Landing({
           <MarketStat label="TAM" value="€25M" note="Private money into Estonian sport a year." />
           <MarketStat
             label="SAM"
-            value="€8M"
+            value="€10M"
             note="The middle of the pyramid, where matching is broken."
           />
           <MarketStat label="SOM" value="€47k/yr" note="Realistic Year 1 revenue." />
