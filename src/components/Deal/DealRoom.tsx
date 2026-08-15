@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Button } from '../common/Button';
 import { formatEur } from '../../lib/taxRules';
 import { computeCommission, exampleDealValue } from '../../lib/commission';
-import { launchPromo } from '../../data/pricing';
 import type { Match, SponsorAnswers } from '../../lib/types';
 
 /**
@@ -31,7 +30,7 @@ export function DealRoom({
   const suggested = exampleDealValue(profile, answers.budget);
   const [dealValue, setDealValue] = useState(suggested);
   const [raw, setRaw] = useState(String(suggested));
-  const commission = computeCommission(dealValue, launchPromo.active);
+  const commission = computeCommission(dealValue);
 
   const suggestions = [...new Set([profile.dealRange[0], suggested, profile.dealRange[1]])].sort(
     (a, b) => a - b,
@@ -104,8 +103,7 @@ export function DealRoom({
           {/* Lettering kept small and quiet — a fee line, not the headline. */}
           <div className="flex items-baseline justify-between gap-4 py-5">
             <span className="text-xs text-ink-400">
-              Our commission ({commission.rateLabel}
-              {launchPromo.active ? ' · launch rate' : ''})
+              Our commission ({commission.rateLabel})
             </span>
             <span className="text-sm tabular-nums text-white/80">
               {formatEur(commission.amount)}

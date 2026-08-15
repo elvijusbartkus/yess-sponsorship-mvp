@@ -10,7 +10,7 @@ import {
   Trophy,
   Landmark,
 } from 'lucide-react';
-import { clubPlan, commission, launchPromo, membershipPlan } from '../data/pricing';
+import { clubPlan, commission, firstPeriodFree, membershipPlan } from '../data/pricing';
 
 function DoorCard({
   eyebrow,
@@ -320,12 +320,11 @@ export function Landing({
             <div className="flex items-start gap-2.5 rounded-lg bg-white p-3.5 ring-1 ring-inset ring-paper-line">
               <Rocket className="mt-0.5 h-4 w-4 shrink-0 text-flare-500" />
               <p className="text-[13px] leading-relaxed text-ink-700">
-                Clubs free first {launchPromo.clubFreeMonths} month, sponsors free first{' '}
-                {launchPromo.sponsorFreeMonths} months at {Math.round(launchPromo.commissionRate * 100)}%
-                commission, then {clubPlan.currency}
+                Clubs free first {firstPeriodFree.clubMonths} month, sponsors free first{' '}
+                {firstPeriodFree.sponsorMonths} months, every new signup. Then {clubPlan.currency}
                 {clubPlan.priceMonthly}/{membershipPlan.currency}
                 {membershipPlan.priceMonthly} per month and {Math.round(commission.standard * 100)}%
-                flat.
+                flat, every deal.
               </p>
             </div>
             <div className="flex items-start gap-2.5 rounded-lg bg-white p-3.5 ring-1 ring-inset ring-paper-line">
@@ -346,7 +345,7 @@ export function Landing({
         >
           Clubs {clubPlan.currency}
           {clubPlan.priceMonthly}/mo · Sponsors {membershipPlan.currency}
-          {membershipPlan.priceMonthly}/mo{launchPromo.active ? ' · launch offer live' : ''} →
+          {membershipPlan.priceMonthly}/mo · first period free →
         </button>
         <button
           onClick={onBrowse}

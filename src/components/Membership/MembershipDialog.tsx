@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { launchPromo, membershipPlan } from '../../data/pricing';
+import { firstPeriodFree, membershipPlan } from '../../data/pricing';
 
 /**
  * Shown only at the moment it matters — pressing Contact or Propose a deal —
@@ -66,11 +66,9 @@ export function MembershipDialog({
           </span>
           <span className="ml-1.5 text-sm text-ink-400">/ {billing === 'monthly' ? 'mo' : 'yr'}</span>
         </p>
-        {launchPromo.active && (
-          <p className="mt-1.5 text-[13px] font-medium text-flare-400">
-            First {launchPromo.sponsorFreeMonths} months free, launch offer.
-          </p>
-        )}
+        <p className="mt-1.5 text-[13px] font-medium text-flare-400">
+          First {firstPeriodFree.sponsorMonths} months free.
+        </p>
 
         <ul className="mt-5 space-y-2 border-t border-white/10 pt-4">
           {membershipPlan.includes.map((item) => (

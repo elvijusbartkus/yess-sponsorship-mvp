@@ -5,7 +5,7 @@ import { formatEur } from '../../lib/taxRules';
 import { COUNTRY_LABEL, matchProfileToSponsorLeads } from '../../lib/matching';
 import { profileFromDraft } from '../../lib/draftToProfile';
 import { sponsorLeads } from '../../data/sponsorLeads';
-import { clubPlan, launchPromo } from '../../data/pricing';
+import { clubPlan, firstPeriodFree } from '../../data/pricing';
 import type { ProfileDraft } from '../../lib/types';
 
 export function LiveProfile({
@@ -47,7 +47,7 @@ export function LiveProfile({
       <p className="mt-5 text-lg text-ink-500">
         {clubPlan.currency}
         {clubPlan.priceMonthly}/month
-        {launchPromo.active ? ` (first ${launchPromo.clubFreeMonths} month free)` : ''}. You keep
+        {' '}(first {firstPeriodFree.clubMonths} month free). You keep
         the full deal.
       </p>
       <p className="mt-1.5 text-sm text-ink-400">

@@ -11,7 +11,6 @@ describe('the money model is stated consistently', () => {
   it('commission is flat and matches the deal room', () => {
     expect(computeCommission(8000).rate).toBe(commission.standard);
     expect(computeCommission(300000).rate).toBe(commission.standard);
-    expect(computeCommission(8000, true).rate).toBe(commission.launch);
   });
 
   it('annual membership is cheaper than paying monthly, for both plans', () => {

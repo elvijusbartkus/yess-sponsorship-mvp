@@ -1,11 +1,12 @@
 import { Button } from './common/Button';
-import { clubPlan, commission, launchPromo, membershipPlan } from '../data/pricing';
+import { clubPlan, commission, firstPeriodFree, membershipPlan } from '../data/pricing';
 
 /**
  * Two sides of the table, each with a membership plus the shared commission
  * line. Both sides pay now — the earlier "clubs are always free" model has
  * been replaced with a small membership fee for clubs and athletes too,
- * offset by a free first month at launch.
+ * offset by a free first period for every new account, permanently, not
+ * just at launch.
  */
 export function Pricing({ onBack }: { onBack: () => void }) {
   const pct = (rate: number) => `${Math.round(rate * 100)}%`;
@@ -19,13 +20,10 @@ export function Pricing({ onBack }: { onBack: () => void }) {
           <br />
           <span className="text-flare-500">One flat commission.</span>
         </h1>
-        {launchPromo.active && (
-          <p className="eyebrow mt-4 inline-block rounded-md bg-flare-500 px-2.5 py-1 text-white">
-            Launch offer: clubs get {launchPromo.clubFreeMonths} month free, sponsors get{' '}
-            {launchPromo.sponsorFreeMonths} months free at {pct(launchPromo.commissionRate)}{' '}
-            commission
-          </p>
-        )}
+        <p className="eyebrow mt-4 inline-block rounded-md bg-flare-500 px-2.5 py-1 text-white">
+          First period free: clubs get {firstPeriodFree.clubMonths} month free, sponsors get{' '}
+          {firstPeriodFree.sponsorMonths} months free
+        </p>
       </div>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2">
@@ -81,9 +79,6 @@ export function Pricing({ onBack }: { onBack: () => void }) {
         <p className="mt-3 text-[15px] leading-relaxed text-ink-700">
           One rate, no size tiers: {pct(commission.standard)} on any deal, charged to the sponsor.
           Nothing on a deal that never closes.
-          {launchPromo.active && (
-            <> During the launch window it's {pct(launchPromo.commissionRate)}.</>
-          )}
         </p>
       </section>
 

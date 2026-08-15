@@ -1,4 +1,4 @@
-import { COMMISSION_RATE, LAUNCH_PROMO_COMMISSION_RATE } from '../lib/commission';
+import { COMMISSION_RATE } from '../lib/commission';
 
 /**
  * One source of truth for the money. The signup screen, the deal room, the
@@ -45,22 +45,16 @@ export const clubPlan = {
 } as const;
 
 export const commission = {
-  /** Standard rate once the launch offer ends. Flat — no size tiers. */
+  /** Flat, no size tiers, never discounted. */
   standard: COMMISSION_RATE,
-  /** Rate during the launch window. */
-  launch: LAUNCH_PROMO_COMMISSION_RATE,
 } as const;
 
 /**
- * The go-to-market offer: cheaper (or free) for the first stretch, so early
- * clubs and sponsors aren't paying full price before the marketplace has
- * proven itself to them.
+ * Every new account's first subscription period is free — a permanent
+ * acquisition policy, not a time-limited launch promo. Applies the same way
+ * to the 1,000th sponsor as the 1st.
  */
-export const launchPromo = {
-  active: true,
-  clubFreeMonths: 1,
-  sponsorFreeMonths: 2,
-  commissionRate: LAUNCH_PROMO_COMMISSION_RATE,
+export const firstPeriodFree = {
+  clubMonths: 1,
+  sponsorMonths: 2,
 } as const;
-
-export const clubPromise = `${clubPlan.currency}${clubPlan.priceMonthly}/month (or ${clubPlan.currency}${clubPlan.priceAnnual}/year) to list, be matched, and be contacted — the first ${launchPromo.clubFreeMonths} month free at launch. The club receives the full agreed sponsorship; commission is charged on top, to the sponsor.`;

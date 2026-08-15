@@ -1,24 +1,20 @@
 import type { Profile } from './types';
 
-/** Flat, not tiered — the same rate regardless of deal size. */
+/** Flat, not tiered, and never discounted — the same 2% on every deal, always. */
 export const COMMISSION_RATE = 0.02;
-
-/** Launch-window rate. See `launchPromo` in `src/data/pricing.ts` for the full offer. */
-export const LAUNCH_PROMO_COMMISSION_RATE = 0.01;
 
 export interface Commission {
   rate: number;
-  /** '2%' / '1%' */
+  /** '2%' */
   rateLabel: string;
   amount: number;
 }
 
-export function computeCommission(dealValue: number, promoActive = false): Commission {
-  const rate = promoActive ? LAUNCH_PROMO_COMMISSION_RATE : COMMISSION_RATE;
+export function computeCommission(dealValue: number): Commission {
   return {
-    rate,
-    rateLabel: `${rate * 100}%`,
-    amount: dealValue * rate,
+    rate: COMMISSION_RATE,
+    rateLabel: `${COMMISSION_RATE * 100}%`,
+    amount: dealValue * COMMISSION_RATE,
   };
 }
 

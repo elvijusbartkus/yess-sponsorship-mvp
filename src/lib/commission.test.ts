@@ -4,17 +4,11 @@ import { profiles } from '../data/profiles';
 
 const byId = (id: string) => profiles.find((p) => p.id === id)!;
 
-describe('commission is flat, not tiered', () => {
-  it('charges 2% standard rate regardless of deal size', () => {
+describe('commission is flat, not tiered, and never discounted', () => {
+  it('charges 2% regardless of deal size', () => {
     expect(computeCommission(8000).rateLabel).toBe('2%');
     expect(computeCommission(8000).amount).toBe(160);
     expect(computeCommission(300000).rateLabel).toBe('2%');
-  });
-
-  it('charges 1% during the launch promo', () => {
-    const c = computeCommission(8000, true);
-    expect(c.rateLabel).toBe('1%');
-    expect(c.amount).toBe(80);
   });
 });
 
