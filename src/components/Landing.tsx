@@ -146,6 +146,18 @@ export function Landing({
         </div>
       </section>
 
+      {/* SOLUTION — one sentence, same card treatment as the problem
+          section, positioned right underneath it. */}
+      <section className="mt-16 border-t border-paper-line pt-14">
+        <SectionEyebrow>The solution</SectionEyebrow>
+        <div className="mt-6 rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line sm:p-6">
+          <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
+            <span className="display text-flare-500">Matspo is the market</span> that matches
+            them, then runs the campaign and proves it happened.
+          </p>
+        </div>
+      </section>
+
       {/* MARKET SIZE */}
       <section className="mt-16 border-t border-paper-line pt-14">
         <SectionEyebrow>Market size</SectionEyebrow>
@@ -172,12 +184,10 @@ export function Landing({
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
             <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
               <span className="display text-flare-500">
-                {firstPeriodFree.clubMonths} month free
-              </span>{' '}
-              for clubs, <span className="display text-flare-500">
                 {firstPeriodFree.sponsorMonths} months free
               </span>{' '}
-              for sponsors.
+              for sponsors to contact and close deals. Clubs list, match, and get contacted for
+              free, always.
             </p>
           </div>
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
