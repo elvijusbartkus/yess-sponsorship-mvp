@@ -89,7 +89,7 @@ export function Landing({
         <h1 className="display mt-4 text-[clamp(2.25rem,5.5vw,3.75rem)] leading-[0.95] text-ink-950">
           There's private money for sport.
           <br />
-          <span className="text-flare-500">We're the market between them.</span>
+          <span className="text-flare-500">We're the market it's been missing.</span>
         </h1>
         <p className="mt-4 max-w-xl text-lg font-medium leading-snug text-ink-700 sm:text-xl">
           We match Baltic clubs and athletes with the businesses that want their audience. Then we
@@ -156,7 +156,7 @@ export function Landing({
             value="€10M"
             note="The middle of the pyramid, where matching is broken."
           />
-          <MarketStat label="SOM" value="€47k/yr" note="Realistic Year 1 revenue." />
+          <MarketStat label="SOM" value="€80k/yr" note="Realistic Year 1 revenue." />
         </div>
       </section>
 
