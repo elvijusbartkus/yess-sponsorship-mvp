@@ -165,16 +165,23 @@ export function Landing({
         <h2 className="display mt-3 max-w-2xl text-3xl leading-[1.1] text-ink-950 sm:text-4xl">
           Private sport money never reaches the clubs and athletes that need it.
         </h2>
-        <div className="mt-6 max-w-3xl space-y-4">
-          <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
-            €500M moves through Estonian sport a year. Business gives{' '}
-            <span className="text-flare-500">€25M</span> of it, and grassroots sees almost none.
-            SPLISS research ties 50 to 65% of sporting success straight to money invested.
-          </p>
-          <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
-            A business wants to back sport but doesn't know which club. A club needs €5,000 but
-            doesn't know who'd pay.
-          </p>
+        <div className="mt-6 max-w-2xl overflow-hidden rounded-xl bg-white ring-1 ring-inset ring-paper-line">
+          <div className="divide-y divide-paper-line">
+            <p className="p-5 text-xl leading-snug text-ink-800 sm:p-6 sm:text-2xl">
+              <span className="display text-flare-500">€500M</span> a year in Estonian sport.
+              Business gives just <span className="display text-flare-500">€25M</span>, and
+              grassroots sees almost none of it.
+            </p>
+            <p className="p-5 text-xl leading-snug text-ink-800 sm:p-6 sm:text-2xl">
+              <span className="display text-flare-500">50–65%</span> of sporting success is
+              bought, not trained.{' '}
+              <span className="text-sm font-normal text-ink-400">(SPLISS research)</span>
+            </p>
+            <p className="p-5 text-xl leading-snug text-ink-800 sm:p-6 sm:text-2xl">
+              A club needs <span className="display text-flare-500">€5,000</span>. A business has
+              it to give. They never meet.
+            </p>
+          </div>
         </div>
       </section>
 
