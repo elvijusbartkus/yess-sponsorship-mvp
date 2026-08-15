@@ -1,5 +1,5 @@
 import { ArrowRight } from 'lucide-react';
-import { clubPlan, membershipPlan } from '../data/pricing';
+import { clubPlan, commission, firstPeriodFree, membershipPlan } from '../data/pricing';
 
 function DoorCard({
   eyebrow,
@@ -171,26 +171,33 @@ export function Landing({
         <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
             <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
-              <span className="display text-flare-500">Free to try.</span> First period free for
-              everyone.
+              <span className="display text-flare-500">
+                {firstPeriodFree.clubMonths} month free
+              </span>{' '}
+              for clubs, <span className="display text-flare-500">
+                {firstPeriodFree.sponsorMonths} months free
+              </span>{' '}
+              for sponsors.
             </p>
           </div>
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
             <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
-              <span className="display text-flare-500">Sponsors stay</span> for the campaign and
-              the proof.
+              <span className="display text-flare-500">
+                {Math.round(commission.standard * 100)}% flat commission,
+              </span>{' '}
+              only on a closed deal.
             </p>
           </div>
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
             <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
-              <span className="display text-flare-500">Clubs join</span> because it's free and
-              sponsors come to them.
+              <span className="display text-flare-500">2,900+ clubs, 240,000+ participants</span>{' '}
+              already registered.
             </p>
           </div>
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
             <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
               <span className="display text-flare-500">One Committee partnership</span> onboards
-              every club.
+              all of them through the Sports Register.
             </p>
           </div>
         </div>
