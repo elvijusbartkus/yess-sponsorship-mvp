@@ -111,7 +111,7 @@ export function Landing({
         <h1 className="display mt-5 text-[clamp(2.75rem,6.5vw,4.75rem)] leading-[0.95] text-ink-950">
           There's private money for sport.
           <br />
-          <span className="text-flare-500">It just never arrives.</span>
+          <span className="text-flare-500">We're the market between money and sport.</span>
         </h1>
         <p className="mt-5 max-w-xl text-xl font-medium leading-snug text-ink-700 sm:text-2xl">
           We match Baltic clubs and athletes with the businesses that want their audience. Then we

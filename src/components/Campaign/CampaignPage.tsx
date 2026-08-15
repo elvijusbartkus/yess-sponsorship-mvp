@@ -250,15 +250,18 @@ export function CampaignPage({
             </p>
           </section>
 
-          <section className="mt-4 rounded-xl bg-ink-950 p-5 ring-hairline-dark">
+          <section className="mt-4 overflow-hidden rounded-xl bg-ink-950 p-6 ring-1 ring-inset ring-flare-500/30 sm:p-7">
             <p className="eyebrow text-flare-400">Managed delivery, paid</p>
-            <p className="mt-2 text-[13px] leading-relaxed text-white/80">
-              Want someone making sure it actually gets posted, and the deal renews? A rep checks
-              in monthly (Standard) or weekly (Premium), priced per deal.
+            <h3 className="display mt-2 text-2xl leading-tight text-white sm:text-3xl">
+              Make sure it actually delivers.
+            </h3>
+            <p className="mt-2.5 max-w-md text-[15px] leading-relaxed text-white/80">
+              A rep checks in monthly (Standard) or weekly (Premium) so the campaign stays on
+              track and the deal renews. Priced per deal.
             </p>
             <button
               onClick={() => setManagedDialogOpen(true)}
-              className="mt-4 font-display text-sm font-medium text-flare-400 hover:text-flare-300"
+              className="mt-5 inline-flex items-center gap-2 rounded-md bg-flare-500 px-5 py-2.5 font-display text-sm font-medium text-white transition-colors hover:bg-flare-400"
             >
               Add managed delivery →
             </button>
