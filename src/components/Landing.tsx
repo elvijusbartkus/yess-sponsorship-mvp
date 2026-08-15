@@ -165,19 +165,23 @@ export function Landing({
         <h2 className="display mt-3 max-w-2xl text-3xl leading-[1.1] text-ink-950 sm:text-4xl">
           Private sport money never reaches the clubs and athletes that need it.
         </h2>
-        <div className="mt-6 max-w-2xl overflow-hidden rounded-xl bg-white ring-1 ring-inset ring-paper-line">
-          <div className="divide-y divide-paper-line">
-            <p className="p-5 text-xl leading-snug text-ink-800 sm:p-6 sm:text-2xl">
+        <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
+          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+            <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
               <span className="display text-flare-500">€500M</span> a year in Estonian sport.
-              Business gives just <span className="display text-flare-500">€25M</span>, and
-              grassroots sees almost none of it.
+              Business gives just <span className="display text-flare-500">€25M</span>, grassroots
+              sees almost none.
             </p>
-            <p className="p-5 text-xl leading-snug text-ink-800 sm:p-6 sm:text-2xl">
+          </div>
+          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+            <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
               <span className="display text-flare-500">50–65%</span> of sporting success is
-              bought, not trained.{' '}
-              <span className="text-sm font-normal text-ink-400">(SPLISS research)</span>
+              bought, not trained.
             </p>
-            <p className="p-5 text-xl leading-snug text-ink-800 sm:p-6 sm:text-2xl">
+            <p className="mt-2 text-sm text-ink-400">SPLISS research</p>
+          </div>
+          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+            <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
               A club needs <span className="display text-flare-500">€5,000</span>. A business has
               it to give. They never meet.
             </p>
