@@ -178,17 +178,17 @@ export function Landing({
         </h2>
         <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
           <QuoteCard
-            quote="We have sponsors right here in town who'd back us if they knew we existed. Matspo is the first place that actually puts us in front of them."
+            quote="We have sponsors right here in town who'd back us if they knew we existed. Something like Matspo would finally put us in front of them."
             name="Henrikas G."
             role="Sporting director, FK Garliava"
           />
           <QuoteCard
-            quote="Some weeks I spend more time chasing sponsors in Instagram DMs than I spend training. This is the first tool that just shows me who's actually looking."
+            quote="Some weeks I spend more time chasing sponsors in Instagram DMs than I spend training. A tool that just showed me who's actually looking would save me hours."
             name="Daniel Š."
             role="Lithuanian national volleyball player"
           />
           <QuoteCard
-            quote="I want to put money into local sport, I just never knew which club actually needed it or what I'd get for it. This makes that obvious."
+            quote="I want to put money into local sport, I just never know which club actually needs it or what I'd get for it. Something like this would finally make that obvious."
             name="Šarūnas J."
             role="Construction business owner"
           />
