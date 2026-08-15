@@ -113,8 +113,8 @@ export function Landing({
           <br />
           <span className="text-flare-500">It just never arrives.</span>
         </h1>
-        <p className="mt-4 max-w-xl text-lg leading-snug text-ink-500">
-          We match Baltic clubs and athletes with the businesses that want their audience, then
+        <p className="mt-5 max-w-xl text-xl font-medium leading-snug text-ink-700 sm:text-2xl">
+          We match Baltic clubs and athletes with the businesses that want their audience. Then we
           run the campaign and prove it happened.
         </p>
       </div>
