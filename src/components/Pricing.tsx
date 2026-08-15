@@ -40,7 +40,24 @@ export function Pricing({ onBack }: { onBack: () => void }) {
             or {clubPlan.currency}
             {clubPlan.priceAnnual}/year
           </p>
-          <p className="mt-5 border-t border-paper-line pt-5 text-[15px] leading-relaxed text-ink-700">
+          <div className="mt-5 border-t border-paper-line pt-5">
+            <p className="text-[13px] font-medium text-gain-700">Free, always</p>
+            <ul className="mt-1.5 space-y-1 text-[13px] leading-relaxed text-ink-700">
+              {clubPlan.freeTier.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+            <p className="mt-3 text-[13px] font-medium text-ink-950">
+              {clubPlan.currency}
+              {clubPlan.priceMonthly}/mo once you're closing a deal
+            </p>
+            <ul className="mt-1.5 space-y-1 text-[13px] leading-relaxed text-ink-700">
+              {clubPlan.includes.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <p className="mt-4 text-[13px] leading-relaxed text-ink-500">
             You receive the full agreed sponsorship. Commission is charged on top, to the sponsor.
             It never comes out of your side.
           </p>

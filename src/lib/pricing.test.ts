@@ -24,6 +24,13 @@ describe('the money model is stated consistently', () => {
     expect(membershipPlan.includes.join(' ').toLowerCase()).toMatch(/contact/);
   });
 
+  it('the club free tier covers listing and matching, not deal tooling', () => {
+    const free = clubPlan.freeTier.join(' ').toLowerCase();
+    expect(free).toMatch(/list|profile|match/);
+    expect(free).not.toMatch(/deal support|deliverable|campaign/);
+    expect(clubPlan.includes.join(' ').toLowerCase()).toMatch(/deal support|deliverable/);
+  });
+
   it('commission is charged on top, so the club receives the full deal value', () => {
     const dealValue = 8000;
     const { amount } = computeCommission(dealValue);

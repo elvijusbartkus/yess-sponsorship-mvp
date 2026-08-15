@@ -45,13 +45,15 @@ export function LiveProfile({
       </h1>
 
       <p className="mt-5 text-lg text-ink-500">
-        {clubPlan.currency}
-        {clubPlan.priceMonthly}/month
-        {' '}(first {firstPeriodFree.clubMonths} month free). You keep
-        the full deal.
+        <span className="font-medium text-ink-950">Listing and matching are free.</span> You keep
+        the full deal, commission comes from the sponsor.
       </p>
       <p className="mt-1.5 text-sm text-ink-400">
         Not exclusive: keep any other sponsors or agents you already work with.
+      </p>
+      <p className="mt-1.5 text-sm text-ink-400">
+        Once you're closing a deal, deal support and deliverables tools are {clubPlan.currency}
+        {clubPlan.priceMonthly}/month (first {firstPeriodFree.clubMonths} month free).
       </p>
 
       {/* Exactly what a sponsor sees — same card language as their side. */}

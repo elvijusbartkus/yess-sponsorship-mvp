@@ -26,22 +26,23 @@ export const membershipPlan = {
 } as const;
 
 /**
- * Clubs and athletes now pay too — a deliberate reversal of the original
- * "always free" model. The price is well below a single typical sponsorship
- * and includes the tools (deal support, deliverables tracking) that make the
- * platform worth staying on.
+ * Listing, matching, and being contacted stay free for clubs and athletes,
+ * same as browsing and matching do for sponsors — the sponsor already pays
+ * to reach out, so charging the club again for the same contact would be
+ * double-billing one action. What clubs and athletes pay for is the tooling
+ * that kicks in once a deal is actually happening: contract support and the
+ * deliverables/campaign tools that keep it from lapsing.
  */
 export const clubPlan = {
   name: 'Club & athlete membership',
   priceMonthly: 9.99,
   priceAnnual: 49,
   currency: '€',
-  includes: [
+  freeTier: [
     'List your profile and be matched with sponsors',
-    'Be contacted directly by interested businesses',
-    'Deal support through to signature',
-    'Deliverables tracker and campaign drafting tools',
+    'Be found and contacted by interested businesses',
   ],
+  includes: ['Deal support through to signature', 'Deliverables tracker and campaign drafting tools'],
 } as const;
 
 export const commission = {
