@@ -255,7 +255,7 @@ export function Landing({
             </p>
           </div>
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
-            <p className="display text-lg text-ink-950">Markas Mejus</p>
+            <p className="display text-lg text-ink-950">Mark Mejus</p>
             <p className="eyebrow mt-1 text-flare-500">Marketing &amp; Sales</p>
             <p className="mt-2 text-sm leading-relaxed text-ink-500">
               Owns getting clubs and sponsors onto the platform.
