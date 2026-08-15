@@ -173,6 +173,9 @@ export function Landing({
           sponsor we've talked to, right before market size. */}
       <section className="mt-16 border-t border-paper-line pt-14">
         <SectionEyebrow>Who we&rsquo;ve talked to</SectionEyebrow>
+        <h2 className="display mt-3 max-w-2xl text-3xl leading-[1.1] text-ink-950 sm:text-4xl">
+          The same gap, from all three sides.
+        </h2>
         <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
           <QuoteCard
             quote="We have sponsors right here in town who'd back us if they knew we existed. Matspo is the first place that actually puts us in front of them."
