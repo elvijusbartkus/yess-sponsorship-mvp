@@ -1,14 +1,4 @@
-import {
-  ArrowRight,
-  Search,
-  Handshake,
-  FileCheck2,
-  BarChart3,
-  Rocket,
-  Building2,
-  Trophy,
-  Landmark,
-} from 'lucide-react';
+import { ArrowRight, Search, Handshake, FileCheck2, BarChart3, Rocket } from 'lucide-react';
 import { clubPlan, commission, firstPeriodFree, membershipPlan } from '../data/pricing';
 
 function DoorCard({
@@ -30,7 +20,7 @@ function DoorCard({
   return (
     <button
       onClick={onClick}
-      className={`group relative flex h-full flex-col overflow-hidden rounded-lg p-5 text-left transition-all duration-200 hover:-translate-y-1.5 sm:p-6 ${
+      className={`group relative flex h-full flex-col overflow-hidden rounded-lg p-6 text-left transition-all duration-200 hover:-translate-y-1.5 sm:p-8 ${
         ink
           ? 'bg-ink-950 text-white ring-1 ring-inset ring-white/10 hover:shadow-lift'
           : 'bg-flare-500 text-white hover:shadow-flare'
@@ -38,14 +28,20 @@ function DoorCard({
     >
       <p className={`eyebrow ${ink ? 'text-flare-400' : 'text-white/70'}`}>{eyebrow}</p>
 
-      <h2 className="display mt-3 text-3xl leading-[1.05] text-white sm:text-4xl">{title}</h2>
+      <h2 className="display mt-3 text-4xl leading-[1.05] text-white sm:text-5xl">{title}</h2>
 
-      <p className="mt-2.5 flex-1 text-[15px] leading-relaxed text-white/80">
+      <p className="mt-3 flex-1 text-[15px] leading-relaxed text-white/80">
         {body}
       </p>
 
-      {/* The CTA says exactly what clicking it does, not a vague tagline. */}
-      <span className="mt-6 inline-flex items-center gap-2 font-display text-base font-medium text-white">
+      {/* A real button shape, not just text with an arrow — this is THE action on the page. */}
+      <span
+        className={`mt-7 inline-flex w-fit items-center gap-2 rounded-md px-5 py-3 font-display text-base font-medium transition-all duration-200 ${
+          ink
+            ? 'bg-white text-ink-950 group-hover:bg-flare-500 group-hover:text-white'
+            : 'bg-ink-950 text-white group-hover:bg-white group-hover:text-ink-950'
+        }`}
+      >
         {cta}
         <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1.5" />
       </span>
@@ -107,7 +103,7 @@ export function Landing({
 }) {
   return (
     <div
-      className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 py-10 sm:py-10"
+      className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 py-14 sm:py-16"
       style={{ zoom: 1.25 }}
     >
       <div className="animate-rise max-w-3xl">
@@ -141,8 +137,10 @@ export function Landing({
         />
       </div>
 
-      {/* HOW IT WORKS — first section after the CTAs, kept short */}
-      <section className="mt-10 grid gap-4 sm:grid-cols-2">
+      {/* HOW IT WORKS — pushed below the fold on purpose: the CTAs above are
+          the main event, this is a step down in visual weight, not competing
+          with them for the first thing a visitor sees. */}
+      <section className="mt-28 grid gap-4 border-t border-paper-line pt-14 sm:grid-cols-2">
         <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
           <p className="eyebrow text-ink-400">For sponsors</p>
           <div className="mt-4 space-y-4">
@@ -183,44 +181,6 @@ export function Landing({
             </li>
           ))}
         </ul>
-      </section>
-
-      {/* WHO ARE OUR USERS */}
-      <section className="mt-16 border-t border-paper-line pt-14">
-        <SectionEyebrow>Who we're building for</SectionEyebrow>
-        <h2 className="display mt-3 max-w-2xl text-2xl leading-[1.1] text-ink-950 sm:text-3xl">
-          Three sides. One broken market.
-        </h2>
-        <div className="mt-5 grid gap-4 sm:grid-cols-3">
-          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
-            <div className="flex items-center gap-2.5">
-              <Trophy className="h-5 w-5 text-flare-500" />
-              <p className="font-display text-lg font-medium text-ink-950">Clubs & athletes</p>
-            </div>
-            <p className="mt-2.5 text-[13px] leading-relaxed text-ink-700">
-              2,900+ registered clubs, 240,000+ participants. Need money.
-            </p>
-          </div>
-          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
-            <div className="flex items-center gap-2.5">
-              <Building2 className="h-5 w-5 text-flare-500" />
-              <p className="font-display text-lg font-medium text-ink-950">Businesses</p>
-            </div>
-            <p className="mt-2.5 text-[13px] leading-relaxed text-ink-700">
-              Thousands of local firms, €500–50k to spend, no one to spend it on.
-            </p>
-          </div>
-          <div className="rounded-lg bg-ink-950 p-5 ring-hairline-dark sm:col-span-3">
-            <div className="flex items-center gap-2.5">
-              <Landmark className="h-5 w-5 text-flare-400" />
-              <p className="font-display text-lg font-medium text-white">The Committee</p>
-            </div>
-            <p className="mt-2.5 max-w-xl text-[13px] leading-relaxed text-white/80">
-              Already centralizes every club via the Sports Register. One lever to onboard all of
-              them.
-            </p>
-          </div>
-        </div>
       </section>
 
       {/* MARKET SIZE */}
