@@ -180,14 +180,13 @@ export function Landing({
         <h2 className="display mt-3 max-w-2xl text-3xl leading-[1.1] text-ink-950 sm:text-4xl">
           Free to start. Built to stick. One partner scales it.
         </h2>
-        <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
+        <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
             <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
               <span className="display text-flare-500">
                 {firstPeriodFree.sponsorMonths} months free
               </span>{' '}
-              for sponsors to contact and close deals. Clubs list, match, and get contacted for
-              free, always.
+              for sponsors. <span className="display text-flare-500">Always free</span> for clubs.
             </p>
           </div>
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
@@ -200,14 +199,8 @@ export function Landing({
           </div>
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
             <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
-              <span className="display text-flare-500">2,900+ clubs, 240,000+ participants</span>{' '}
-              already registered.
-            </p>
-          </div>
-          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
-            <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
-              <span className="display text-flare-500">One Committee partnership</span> onboards
-              all of them through the Sports Register.
+              <span className="display text-flare-500">One Committee partnership</span> reaches
+              every club through the Sports Register.
             </p>
           </div>
         </div>
