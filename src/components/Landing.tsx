@@ -1,5 +1,5 @@
-import { ArrowRight, Search, Handshake, FileCheck2, BarChart3, Rocket } from 'lucide-react';
-import { clubPlan, commission, firstPeriodFree, membershipPlan } from '../data/pricing';
+import { ArrowRight } from 'lucide-react';
+import { clubPlan, firstPeriodFree, membershipPlan } from '../data/pricing';
 
 function DoorCard({
   eyebrow,
@@ -46,28 +46,6 @@ function DoorCard({
         <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1.5" />
       </span>
     </button>
-  );
-}
-
-function Step({
-  icon: Icon,
-  label,
-  body,
-}: {
-  icon: typeof Search;
-  label: string;
-  body: string;
-}) {
-  return (
-    <div className="flex items-start gap-4">
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-paper-dim text-ink-950">
-        <Icon className="h-5 w-5" />
-      </div>
-      <div>
-        <p className="font-display text-lg font-medium text-ink-950">{label}</p>
-        <p className="mt-0.5 text-sm leading-snug text-ink-500">{body}</p>
-      </div>
-    </div>
   );
 }
 
@@ -182,32 +160,41 @@ export function Landing({
         </div>
       </section>
 
-      {/* GO-TO-MARKET, same card treatment and width as market size above */}
-      <section className="mt-8">
+      {/* GO-TO-MARKET — brief on purpose: incentive, why sponsors stick, why
+          clubs join, and the one partnership that scales it. Same punchy
+          card treatment as the problem section, readable in ~30s. */}
+      <section className="mt-16 border-t border-paper-line pt-14">
         <SectionEyebrow>Go-to-market</SectionEyebrow>
-        <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
+        <h2 className="display mt-3 max-w-2xl text-3xl leading-[1.1] text-ink-950 sm:text-4xl">
+          Free to start. Built to stick. One partner scales it.
+        </h2>
+        <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
-            <Handshake className="h-4 w-4 text-flare-500" />
-            <p className="mt-2 text-[13px] leading-relaxed text-ink-700">
-              The Committee's own sponsor relationships open doors, then direct outreach to
-              businesses sitting on unused sponsorship budget.
+            <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
+              <span className="display text-flare-500">{firstPeriodFree.clubMonths} month</span>{' '}
+              free for clubs, <span className="display text-flare-500">
+                {firstPeriodFree.sponsorMonths} months
+              </span>{' '}
+              free for sponsors. Nothing to lose trying it.
             </p>
           </div>
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
-            <Rocket className="h-4 w-4 text-flare-500" />
-            <p className="mt-2 text-[13px] leading-relaxed text-ink-700">
-              Clubs free first {firstPeriodFree.clubMonths} month, sponsors free first{' '}
-              {firstPeriodFree.sponsorMonths} months, every new signup. Then {clubPlan.currency}
-              {clubPlan.priceMonthly}/{membershipPlan.currency}
-              {membershipPlan.priceMonthly} per month and {Math.round(commission.standard * 100)}%
-              flat, every deal.
+            <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
+              Every deal gets a <span className="display text-flare-500">generated campaign</span>{' '}
+              and tracked deliverables. Proof to renew on, so sponsors stay.
             </p>
           </div>
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
-            <BarChart3 className="h-4 w-4 text-flare-500" />
-            <p className="mt-2 text-[13px] leading-relaxed text-ink-700">
-              Estonia first, then Lithuania and Latvia, using Lithuania's 200% tax deduction as the
-              wedge for the second run.
+            <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
+              <span className="display text-flare-500">Free to list.</span> Sponsors come to
+              clubs and athletes, who keep the full deal.
+            </p>
+          </div>
+          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+            <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
+              One partnership with{' '}
+              <span className="display text-flare-500">the Olympic Committee</span> puts every
+              club on the platform through the Sports Register.
             </p>
           </div>
         </div>
@@ -229,34 +216,6 @@ export function Landing({
           Just browsing? See every club & athlete →
         </button>
       </div>
-
-      {/* HOW IT WORKS — the literal last thing on the page: a closing
-          walkthrough rather than competing with the CTAs for first-glance
-          attention. */}
-      <section className="mt-16 border-t border-paper-line pt-14">
-        <SectionEyebrow>How it works</SectionEyebrow>
-        <h2 className="display mt-3 max-w-2xl text-3xl leading-[1.1] text-ink-950 sm:text-4xl">
-          Three taps. Eight questions. One market.
-        </h2>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2">
-          <div className="rounded-xl bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-8">
-            <p className="eyebrow text-ink-400">For sponsors</p>
-            <div className="mt-6 space-y-6">
-              <Step icon={Search} label="Answer a few questions" body="Budget, audience, region." />
-              <Step icon={Handshake} label="Get scored, ranked matches" body="Real clubs, not a directory." />
-              <Step icon={FileCheck2} label="Propose, sign, track it" body="One dashboard, start to finish." />
-            </div>
-          </div>
-          <div className="rounded-xl bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-8">
-            <p className="eyebrow text-ink-400">For clubs & athletes</p>
-            <div className="mt-6 space-y-6">
-              <Step icon={Search} label="Build your profile" body="Eight quick questions, no exclusivity." />
-              <Step icon={Handshake} label="Sponsors find you" body="See who'd want you." />
-              <Step icon={FileCheck2} label="Keep the full deal" body="Commission comes from the sponsor." />
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
