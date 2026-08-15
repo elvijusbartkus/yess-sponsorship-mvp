@@ -58,6 +58,17 @@ function SectionEyebrow({ children }: { children: string }) {
   );
 }
 
+function QuoteCard({ quote, name, role }: { quote: string; name: string; role: string }) {
+  return (
+    <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+      <p className="text-[15px] leading-relaxed text-ink-800">&ldquo;{quote}&rdquo;</p>
+      <p className="mt-4 text-sm font-medium text-ink-950">
+        {name} <span className="font-normal text-ink-400">&middot; {role}</span>
+      </p>
+    </div>
+  );
+}
+
 function MarketStat({ label, value, note }: { label: string; value: string; note: string }) {
   return (
     <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
@@ -155,6 +166,29 @@ export function Landing({
             <span className="display text-flare-500">Matspo is the market</span> that matches
             them, then runs the campaign and proves it happened.
           </p>
+        </div>
+      </section>
+
+      {/* SOCIAL PROOF — one quote each from a club, an athlete, and a
+          sponsor we've talked to, right before market size. */}
+      <section className="mt-16 border-t border-paper-line pt-14">
+        <SectionEyebrow>Who we&rsquo;ve talked to</SectionEyebrow>
+        <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
+          <QuoteCard
+            quote="We have sponsors right here in town who'd back us if they knew we existed. Matspo is the first place that actually puts us in front of them."
+            name="Henrikas G."
+            role="Sporting director, FK Garliava"
+          />
+          <QuoteCard
+            quote="Some weeks I spend more time chasing sponsors in Instagram DMs than I spend training. This is the first tool that just shows me who's actually looking."
+            name="Daniel Š."
+            role="Lithuanian national volleyball player"
+          />
+          <QuoteCard
+            quote="I want to put money into local sport, I just never knew which club actually needed it or what I'd get for it. This makes that obvious."
+            name="Šarūnas J."
+            role="Construction business owner"
+          />
         </div>
       </section>
 
