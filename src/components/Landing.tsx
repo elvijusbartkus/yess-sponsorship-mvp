@@ -184,14 +184,9 @@ export function Landing({
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
             <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
               <span className="display text-flare-500">
-                {firstPeriodFree.sponsorMonths} months free
+                First {firstPeriodFree.clubMonths} month free
               </span>{' '}
-              for sponsors. Clubs list and match free, deal tools from{' '}
-              <span className="display text-flare-500">
-                {clubPlan.currency}
-                {clubPlan.priceMonthly}/mo
-              </span>
-              .
+              for everyone, on everything except commission.
             </p>
           </div>
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">

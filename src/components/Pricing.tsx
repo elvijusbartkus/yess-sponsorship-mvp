@@ -21,8 +21,8 @@ export function Pricing({ onBack }: { onBack: () => void }) {
           <span className="text-flare-500">One flat commission.</span>
         </h1>
         <p className="eyebrow mt-4 inline-block rounded-md bg-flare-500 px-2.5 py-1 text-white">
-          First period free: clubs get {firstPeriodFree.clubMonths} month free, sponsors get{' '}
-          {firstPeriodFree.sponsorMonths} months free
+          First {firstPeriodFree.clubMonths} month free for everyone, on everything except
+          commission
         </p>
       </div>
 

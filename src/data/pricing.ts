@@ -57,5 +57,5 @@ export const commission = {
  */
 export const firstPeriodFree = {
   clubMonths: 1,
-  sponsorMonths: 2,
+  sponsorMonths: 1,
 } as const;
