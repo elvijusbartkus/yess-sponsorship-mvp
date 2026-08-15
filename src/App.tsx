@@ -144,6 +144,8 @@ export default function App() {
   const [poolSize, setPoolSize] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [membershipDialogOpen, setMembershipDialogOpen] = useState(false);
+  const [clubDealToolsUnlocked, setClubDealToolsUnlocked] = useState(false);
+  const [clubMembershipDialogOpen, setClubMembershipDialogOpen] = useState(false);
   const pendingAction = useRef<(() => void) | null>(null);
 
   /**
@@ -211,6 +213,7 @@ export default function App() {
     setMatches([]);
     setError(null);
     setContract(null);
+    setClubDealToolsUnlocked(false);
     setScreen('landing');
   }
 
@@ -358,7 +361,15 @@ export default function App() {
 
       case 'club-live':
         if (!clubDraft) return null;
-        return <LiveProfile draft={clubDraft} onEdit={() => setScreen('club-builder')} onHome={goHome} />;
+        return (
+          <LiveProfile
+            draft={clubDraft}
+            onEdit={() => setScreen('club-builder')}
+            onHome={goHome}
+            dealToolsUnlocked={clubDealToolsUnlocked}
+            onRequestUnlock={() => setClubMembershipDialogOpen(true)}
+          />
+        );
 
       default:
         return null;
@@ -397,6 +408,16 @@ export default function App() {
           setMembershipDialogOpen(false);
           pendingAction.current?.();
           pendingAction.current = null;
+        }}
+      />
+
+      <MembershipDialog
+        role="club"
+        open={clubMembershipDialogOpen}
+        onOpenChange={setClubMembershipDialogOpen}
+        onStart={() => {
+          setClubDealToolsUnlocked(true);
+          setClubMembershipDialogOpen(false);
         }}
       />
     </div>

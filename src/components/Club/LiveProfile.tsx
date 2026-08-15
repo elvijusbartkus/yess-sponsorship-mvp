@@ -1,21 +1,28 @@
 import { useMemo } from 'react';
+import { CheckCircle2, Lock } from 'lucide-react';
 import { Badge } from '../common/Badge';
 import { Button } from '../common/Button';
 import { formatEur } from '../../lib/taxRules';
 import { COUNTRY_LABEL, matchProfileToSponsorLeads } from '../../lib/matching';
 import { profileFromDraft } from '../../lib/draftToProfile';
 import { sponsorLeads } from '../../data/sponsorLeads';
-import { clubPlan, firstPeriodFree } from '../../data/pricing';
+import { clubPlan } from '../../data/pricing';
 import type { ProfileDraft } from '../../lib/types';
 
 export function LiveProfile({
   draft,
   onEdit,
   onHome,
+  dealToolsUnlocked,
+  onRequestUnlock,
 }: {
   draft: ProfileDraft;
   onEdit: () => void;
   onHome: () => void;
+  /** Whether the paid deal-support/deliverables tier is active for this club. */
+  dealToolsUnlocked: boolean;
+  /** Opens the club membership dialog — the actual gate, not just text. */
+  onRequestUnlock: () => void;
 }) {
   // For an athlete the following IS the audience — adding both would double it.
   const totalReach =
@@ -51,10 +58,27 @@ export function LiveProfile({
       <p className="mt-1.5 text-sm text-ink-400">
         Not exclusive: keep any other sponsors or agents you already work with.
       </p>
-      <p className="mt-1.5 text-sm text-ink-400">
-        Once you're closing a deal, deal support and deliverables tools are {clubPlan.currency}
-        {clubPlan.priceMonthly}/month (first {firstPeriodFree.clubMonths} month free).
-      </p>
+
+      {dealToolsUnlocked ? (
+        <div className="mt-4 flex items-center gap-2.5 rounded-lg bg-gain-50 px-4 py-3 text-sm font-medium text-gain-700 ring-1 ring-inset ring-gain-100">
+          <CheckCircle2 className="h-4 w-4 shrink-0" />
+          Deal support and deliverables tools unlocked.
+        </div>
+      ) : (
+        <button
+          onClick={onRequestUnlock}
+          className="mt-4 flex w-full items-center justify-between gap-3 rounded-lg bg-paper-dim px-4 py-3 text-left transition-colors hover:bg-paper-line"
+        >
+          <span className="flex items-center gap-2.5 text-sm text-ink-600">
+            <Lock className="h-4 w-4 shrink-0 text-ink-400" />
+            Deal support &amp; deliverables tools, once you're closing a deal
+          </span>
+          <span className="shrink-0 text-sm font-medium text-flare-600">
+            Unlock, {clubPlan.currency}
+            {clubPlan.priceMonthly}/mo →
+          </span>
+        </button>
+      )}
 
       {/* Exactly what a sponsor sees — same card language as their side. */}
       <div className="mt-8 rounded-xl bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-5">

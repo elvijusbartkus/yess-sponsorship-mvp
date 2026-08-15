@@ -7,25 +7,47 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { firstPeriodFree, membershipPlan } from '../../data/pricing';
+import { clubPlan, firstPeriodFree, membershipPlan } from '../../data/pricing';
+
+/** Sponsor and club membership are the same mechanic (browse/list/match free,
+ * pay to unlock the next step) with different copy and pricing — one dialog,
+ * parameterized by role, instead of two near-identical components. */
+const COPY = {
+  sponsor: {
+    title: 'Contact clubs & close deals',
+    description: 'Matching stays free. This is what unlocks reaching out.',
+    plan: membershipPlan,
+    freeMonths: firstPeriodFree.sponsorMonths,
+  },
+  club: {
+    title: 'Unlock deal tools',
+    description: "Listing and matching stay free. This is what unlocks once you're closing a deal.",
+    plan: clubPlan,
+    freeMonths: firstPeriodFree.clubMonths,
+  },
+} as const;
 
 /**
- * Shown only at the moment it matters — pressing Contact or Propose a deal —
- * never proactively. Browsing and matching stay fully free; this is the one
- * screen where the sponsor decides whether to pay to act, so the CTA gets
- * the one accent color the rest of the app spends carefully.
+ * Shown only at the moment it matters — pressing Contact/Propose a deal for
+ * sponsors, or unlocking deal tools for clubs — never proactively. Browsing,
+ * listing, and matching stay fully free; this is the one screen where either
+ * side decides whether to pay to act, so the CTA gets the one accent color
+ * the rest of the app spends carefully.
  */
 export function MembershipDialog({
   open,
   onOpenChange,
   onStart,
+  role = 'sponsor',
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onStart: () => void;
+  role?: 'sponsor' | 'club';
 }) {
   const [billing, setBilling] = useState<'monthly' | 'annual'>('monthly');
-  const price = billing === 'monthly' ? membershipPlan.priceMonthly : membershipPlan.priceAnnual;
+  const { title, description, plan, freeMonths } = COPY[role];
+  const price = billing === 'monthly' ? plan.priceMonthly : plan.priceAnnual;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -33,11 +55,9 @@ export function MembershipDialog({
         <DialogHeader>
           <p className="eyebrow text-ink-400">Membership</p>
           <DialogTitle className="display mt-1 text-2xl leading-tight text-white">
-            Contact clubs & close deals
+            {title}
           </DialogTitle>
-          <DialogDescription className="mt-1 text-sm text-ink-400">
-            Matching stays free. This is what unlocks reaching out.
-          </DialogDescription>
+          <DialogDescription className="mt-1 text-sm text-ink-400">{description}</DialogDescription>
         </DialogHeader>
 
         <div className="mt-5 inline-flex w-fit items-center gap-1 rounded-md bg-white/5 p-1">
@@ -61,17 +81,17 @@ export function MembershipDialog({
 
         <p className="mt-4">
           <span className="display text-4xl leading-none tabular-nums text-white">
-            {membershipPlan.currency}
+            {plan.currency}
             {price}
           </span>
           <span className="ml-1.5 text-sm text-ink-400">/ {billing === 'monthly' ? 'mo' : 'yr'}</span>
         </p>
         <p className="mt-1.5 text-[13px] font-medium text-flare-400">
-          First {firstPeriodFree.sponsorMonths} months free.
+          First {freeMonths} {freeMonths === 1 ? 'month' : 'months'} free.
         </p>
 
         <ul className="mt-5 space-y-2 border-t border-white/10 pt-4">
-          {membershipPlan.includes.map((item) => (
+          {plan.includes.map((item) => (
             <li key={item} className="flex items-start gap-2.5 text-[13px] leading-relaxed text-white/80">
               <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-flare-400" />
               {item}
