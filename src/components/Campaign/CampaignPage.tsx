@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Check, Copy, Heart, MessageCircle, Phone, RefreshCw, Send } from 'lucide-react';
+import { Camera, Check, Copy, Phone, RefreshCw } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -14,15 +14,6 @@ import type { Campaign } from '../../lib/campaignTemplate';
 import type { Match } from '../../lib/types';
 
 type Voice = 'club' | 'sponsor';
-
-function initials(name: string) {
-  return name
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase())
-    .join('');
-}
 
 function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
@@ -58,96 +49,31 @@ function RegenerateButton({ onClick, busy }: { onClick: () => void; busy: boolea
   );
 }
 
-/** Looks like a real social post — avatar, image area, copy, action icons — not a paragraph. */
-function SocialPostCard({
-  name,
-  handle,
-  imageHint,
-  post,
+/** A plain text block for one piece of generated copy — no fake social-media
+ * chrome (avatars, like icons), since this is a suggestion, not a mockup of
+ * a real post. */
+function CopyBlock({
+  label,
+  text,
   onRegenerate,
   regenerating,
 }: {
-  name: string;
-  handle: string;
-  imageHint: string;
-  post: string;
+  label: string;
+  text: string;
   onRegenerate: () => void;
   regenerating: boolean;
 }) {
   return (
-    <div className="overflow-hidden rounded-xl bg-white ring-1 ring-inset ring-paper-line">
-      <div className="flex items-center gap-3 p-4">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-flare-500 text-sm font-semibold text-white">
-          {initials(name)}
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className="truncate font-display text-sm font-medium text-ink-950">{name}</p>
-          <p className="truncate text-[12px] text-ink-400">{handle}</p>
-        </div>
-      </div>
-
-      <div className="flex aspect-[4/3] items-center justify-center bg-paper-dim px-6 text-center">
-        <p className="text-[12px] leading-relaxed text-ink-300">{imageHint}</p>
-      </div>
-
-      <div className="p-4">
-        <p className="text-[14px] leading-relaxed text-ink-800">{post}</p>
-      </div>
-
-      <div className="flex items-center justify-between border-t border-paper-line px-4 py-3">
-        <div className="flex items-center gap-4 text-ink-300">
-          <Heart className="h-[18px] w-[18px]" />
-          <MessageCircle className="h-[18px] w-[18px]" />
-          <Send className="h-[18px] w-[18px]" />
-        </div>
-        <div className="flex items-center gap-4">
+    <div className="rounded-lg bg-white p-4 ring-1 ring-inset ring-paper-line">
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-[11px] font-medium uppercase tracking-wide text-ink-400">{label}</p>
+        <div className="flex items-center gap-3">
           <RegenerateButton onClick={onRegenerate} busy={regenerating} />
-          <CopyButton text={post} />
+          <CopyButton text={text} />
         </div>
       </div>
+      <p className="mt-2 text-[15px] leading-relaxed text-ink-800">{text}</p>
     </div>
-  );
-}
-
-/** A vertical story frame with the caption overlaid, like a real Instagram/LinkedIn story. */
-function StoryFrame({
-  story,
-  tag,
-  onRegenerate,
-  regenerating,
-}: {
-  story: string;
-  tag: string;
-  onRegenerate: () => void;
-  regenerating: boolean;
-}) {
-  return (
-    <div className="flex flex-col">
-      <p className="mb-2.5 text-[11px] font-medium uppercase tracking-wide text-ink-400">Story</p>
-      <div className="relative aspect-[9/16] w-full max-w-[220px] overflow-hidden rounded-xl bg-gradient-to-br from-ink-950 via-ink-900 to-flare-700 ring-hairline-dark">
-        <p className="absolute left-4 top-4 text-[11px] font-medium uppercase tracking-wide text-white/60">
-          {tag}
-        </p>
-        <p className="absolute inset-x-4 bottom-5 font-display text-lg font-medium leading-snug text-white">
-          {story}
-        </p>
-      </div>
-      <div className="mt-3 flex items-center gap-4">
-        <RegenerateButton onClick={onRegenerate} busy={regenerating} />
-        <CopyButton text={story} />
-      </div>
-    </div>
-  );
-}
-
-function ChecklistRow({ label }: { label: string }) {
-  return (
-    <li className="flex items-center justify-between rounded-md border border-paper-line px-4 py-3">
-      <span className="text-[14px] text-ink-950">{label}</span>
-      <span className="text-[11px] font-medium uppercase tracking-wide text-gain-600">
-        Generated ✓
-      </span>
-    </li>
   );
 }
 
@@ -291,53 +217,45 @@ export function CampaignPage({
             ))}
           </div>
 
-          <div className="mt-5 grid gap-6 sm:grid-cols-[1.4fr_1fr]">
-            <SocialPostCard
-              name={voice === 'club' ? profile.name : sponsorName}
-              handle={voice === 'club' ? `${profile.sport} · ${profile.region}` : 'Sponsor'}
-              imageHint={profile.imageHint}
-              post={active?.post ?? 'Could not draft. Try regenerate.'}
+          {/* A suggestion, not a mockup: what to shoot, in plain words. */}
+          <div className="mt-5 flex items-start gap-3 rounded-lg bg-paper-dim p-4">
+            <Camera className="mt-0.5 h-4 w-4 shrink-0 text-ink-400" />
+            <div>
+              <p className="text-[11px] font-medium uppercase tracking-wide text-ink-400">
+                What to photograph
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-ink-700">{profile.imageHint}</p>
+            </div>
+          </div>
+
+          <div className="mt-4 space-y-3">
+            <CopyBlock
+              label="Post copy"
+              text={active?.post ?? 'Could not draft. Try regenerate.'}
               onRegenerate={load}
               regenerating={voice === 'club' && regenerating}
             />
-            <StoryFrame
-              story={active?.story ?? ''}
-              tag={`${sponsorName} × ${profile.name}`}
+            <CopyBlock
+              label="Story copy"
+              text={active?.story ?? ''}
               onRegenerate={load}
               regenerating={voice === 'club' && regenerating}
             />
           </div>
 
-          <p className="mt-3 text-[12px] text-ink-400">
-            {clubCampaign?.fromModel
-              ? 'Drafted just now for this sponsorship.'
-              : 'Drafted from a template. Connect a model key for live copy.'}
-          </p>
-
           <section className="mt-9 rounded-xl bg-white p-5 ring-1 ring-inset ring-paper-line">
             <p className="eyebrow text-ink-400">Included, free</p>
-            <ul className="mt-3 space-y-2">
-              <ChecklistRow label="Launch post" />
-              <ChecklistRow label="Story caption" />
-            </ul>
+            <p className="mt-2 text-[13px] leading-relaxed text-ink-700">
+              This post and story are generated for every signed deal, instantly, at no cost.
+            </p>
           </section>
 
           <section className="mt-4 rounded-xl bg-ink-950 p-5 ring-hairline-dark">
             <p className="eyebrow text-flare-400">Managed delivery, paid</p>
             <p className="mt-2 text-[13px] leading-relaxed text-white/80">
-              A rep makes sure the content actually goes out and the deal renews. This is what{' '}
-              {profile.name} can't do themselves.
+              Want someone making sure it actually gets posted, and the deal renews? A rep checks
+              in monthly (Standard) or weekly (Premium), priced per deal.
             </p>
-            <div className="mt-3.5 space-y-2">
-              <div className="rounded-lg bg-white/5 p-3.5">
-                <p className="text-[13px] font-medium text-white">Standard</p>
-                <p className="mt-0.5 text-[12px] text-white/70">Monthly check-in.</p>
-              </div>
-              <div className="rounded-lg bg-white/5 p-3.5">
-                <p className="text-[13px] font-medium text-white">Premium</p>
-                <p className="mt-0.5 text-[12px] text-white/70">Weekly call, dedicated rep.</p>
-              </div>
-            </div>
             <button
               onClick={() => setManagedDialogOpen(true)}
               className="mt-4 font-display text-sm font-medium text-flare-400 hover:text-flare-300"

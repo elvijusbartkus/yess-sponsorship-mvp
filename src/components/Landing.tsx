@@ -213,8 +213,26 @@ export function Landing({
         </div>
       </section>
 
-      {/* HOW IT WORKS — moved to the bottom and enlarged: a closing walkthrough
-          rather than competing with the CTAs for first-glance attention. */}
+      <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-paper-line pt-6">
+        <button
+          onClick={onPricing}
+          className="font-display text-[15px] font-medium text-ink-500 transition-colors hover:text-flare-500"
+        >
+          Clubs {clubPlan.currency}
+          {clubPlan.priceMonthly}/mo · Sponsors {membershipPlan.currency}
+          {membershipPlan.priceMonthly}/mo · first period free →
+        </button>
+        <button
+          onClick={onBrowse}
+          className="font-display text-[15px] font-medium text-ink-500 transition-colors hover:text-flare-500"
+        >
+          Just browsing? See every club & athlete →
+        </button>
+      </div>
+
+      {/* HOW IT WORKS — the literal last thing on the page: a closing
+          walkthrough rather than competing with the CTAs for first-glance
+          attention. */}
       <section className="mt-16 border-t border-paper-line pt-14">
         <SectionEyebrow>How it works</SectionEyebrow>
         <h2 className="display mt-3 max-w-2xl text-3xl leading-[1.1] text-ink-950 sm:text-4xl">
@@ -239,23 +257,6 @@ export function Landing({
           </div>
         </div>
       </section>
-
-      <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-paper-line pt-6">
-        <button
-          onClick={onPricing}
-          className="font-display text-[15px] font-medium text-ink-500 transition-colors hover:text-flare-500"
-        >
-          Clubs {clubPlan.currency}
-          {clubPlan.priceMonthly}/mo · Sponsors {membershipPlan.currency}
-          {membershipPlan.priceMonthly}/mo · first period free →
-        </button>
-        <button
-          onClick={onBrowse}
-          className="font-display text-[15px] font-medium text-ink-500 transition-colors hover:text-flare-500"
-        >
-          Just browsing? See every club & athlete →
-        </button>
-      </div>
     </div>
   );
 }
