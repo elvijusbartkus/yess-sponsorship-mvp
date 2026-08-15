@@ -206,6 +206,34 @@ export function Landing({
         </div>
       </section>
 
+      {/* TEAM — three short beats, no photos, right after GTM. */}
+      <section className="mt-16 border-t border-paper-line pt-14">
+        <SectionEyebrow>Team</SectionEyebrow>
+        <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
+          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+            <p className="display text-lg text-ink-950">Elvijus Bartkus</p>
+            <p className="eyebrow mt-1 text-flare-500">CPO</p>
+            <p className="mt-2 text-sm leading-relaxed text-ink-500">
+              Owns the product: the matching engine and the marketplace itself.
+            </p>
+          </div>
+          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+            <p className="display text-lg text-ink-950">Markas Mejus</p>
+            <p className="eyebrow mt-1 text-flare-500">Marketing &amp; Sales</p>
+            <p className="mt-2 text-sm leading-relaxed text-ink-500">
+              Owns getting clubs and sponsors onto the platform.
+            </p>
+          </div>
+          <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
+            <p className="display text-lg text-ink-950">Faustas Razminas</p>
+            <p className="eyebrow mt-1 text-flare-500">CFO</p>
+            <p className="mt-2 text-sm leading-relaxed text-ink-500">
+              Owns the money: pricing, commission, the numbers behind it.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-paper-line pt-6">
         <button
           onClick={onPricing}
