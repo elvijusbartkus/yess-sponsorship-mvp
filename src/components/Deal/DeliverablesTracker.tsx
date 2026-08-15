@@ -54,7 +54,7 @@ export function DeliverablesTracker({
           {profile.name} campaign tracker
         </h1>
         <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-500">
-          What was promised, what's actually posted, and the reach it got — the record you show
+          What was promised, what's actually posted, and the reach it got: the record you show
           internally to justify the spend, still here at renewal time.
         </p>
       </div>
@@ -70,7 +70,7 @@ export function DeliverablesTracker({
           <div>
             <p className="font-display text-[15px] font-medium text-white">Launch the campaign</p>
             <p className="mt-0.5 text-[13px] leading-snug text-white/80">
-              We draft the post and story for this deal — see it generated.
+              We draft the post and story for this deal. See it generated.
             </p>
           </div>
         </div>

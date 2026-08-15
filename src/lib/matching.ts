@@ -150,7 +150,7 @@ function buildReasons(answers: SponsorAnswers, profile: Profile, parts: Parts): 
   } else if (parts.demographic > 0) {
     candidates.push({
       weight: 40,
-      text: `${profile.demographics.map((d) => DEMOGRAPHIC_LABEL[d]).join(' and ')} audience — adjacent to your ${DEMOGRAPHIC_LABEL[answers.demographic]} target, not a direct hit`,
+      text: `${profile.demographics.map((d) => DEMOGRAPHIC_LABEL[d]).join(' and ')} audience, adjacent to your ${DEMOGRAPHIC_LABEL[answers.demographic]} target, not a direct hit`,
     });
   }
 
@@ -179,7 +179,7 @@ function buildReasons(answers: SponsorAnswers, profile: Profile, parts: Parts): 
   } else if (parts.budget === 9) {
     candidates.push({
       weight: 35,
-      text: `Usually €${profile.dealRange[0].toLocaleString('en-US')}–€${profile.dealRange[1].toLocaleString('en-US')} — close to your budget, likely negotiable`,
+      text: `Usually €${profile.dealRange[0].toLocaleString('en-US')}–€${profile.dealRange[1].toLocaleString('en-US')}, close to your budget, likely negotiable`,
     });
   }
 
@@ -206,7 +206,7 @@ function buildReasons(answers: SponsorAnswers, profile: Profile, parts: Parts): 
   } else if (parts.priority > 0 && answers.priority === 'local-story') {
     candidates.push({
       weight: 75,
-      text: `A genuine ${profile.region} story — ${profile.results.split(';')[0].toLowerCase()}`,
+      text: `A genuine ${profile.region} story: ${profile.results.split(';')[0].toLowerCase()}`,
     });
   }
 
@@ -233,10 +233,10 @@ export function consistencyFlag(profile: Profile): string | undefined {
 /** Say so honestly when a match is weak, rather than dressing it up. */
 function buildCaution(parts: Parts, score: number): string | undefined {
   if (parts.demographic === 0) {
-    return 'Audience does not overlap your target — included only because the other factors fit.';
+    return 'Audience does not overlap your target, included only because the other factors fit.';
   }
   if (parts.demographic <= 16 && score < 55) {
-    return 'Adjacent audience rather than a direct match — worth a look, not a first call.';
+    return 'Adjacent audience rather than a direct match, worth a look, not a first call.';
   }
   if (parts.budget === 0) {
     return 'Their typical deal size sits outside your budget band.';

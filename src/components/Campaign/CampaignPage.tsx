@@ -205,11 +205,13 @@ export function CampaignPage({
 
       <div className="mt-6 animate-rise">
         <p className="eyebrow text-flare-600">Campaign</p>
-        <h1 className="display mt-3 text-[clamp(1.75rem,4.5vw,2.75rem)] leading-[1.05] text-ink-950">
-          {sponsorName} × {profile.name} — launch kit
+        <h1 className="display mt-3 text-[clamp(2.25rem,5.5vw,3.5rem)] leading-[0.98] text-ink-950">
+          {sponsorName} × {profile.name}
+          <br />
+          <span className="text-flare-500">launch kit.</span>
         </h1>
         <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-500">
-          Generated for this deal. Clubs are training, not marketing — so we do it.
+          Generated for this deal. Clubs are training, not marketing, so we do it.
         </p>
       </div>
 
@@ -239,7 +241,7 @@ export function CampaignPage({
               name={voice === 'club' ? profile.name : sponsorName}
               handle={voice === 'club' ? `${profile.sport} · ${profile.region}` : 'Sponsor'}
               imageHint={profile.imageHint}
-              post={active?.post ?? 'Could not draft — try regenerate.'}
+              post={active?.post ?? 'Could not draft. Try regenerate.'}
               onRegenerate={load}
               regenerating={voice === 'club' && regenerating}
             />
@@ -254,7 +256,7 @@ export function CampaignPage({
           <p className="mt-3 text-[12px] text-ink-400">
             {clubCampaign?.fromModel
               ? 'Drafted just now for this sponsorship.'
-              : 'Drafted from a template — connect a model key for live copy.'}
+              : 'Drafted from a template. Connect a model key for live copy.'}
           </p>
 
           <section className="mt-9 rounded-xl bg-white p-5 ring-1 ring-inset ring-paper-line">

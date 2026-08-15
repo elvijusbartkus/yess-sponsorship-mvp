@@ -14,7 +14,7 @@ export interface Campaign {
 export function templateCampaign(sponsor: string, profile: Profile): Campaign {
   const who = profile.type === 'club' ? 'the club' : profile.name.split(' ')[0];
   return {
-    post: `${profile.name} is proud to announce ${sponsor} as a partner for the season. Their backing keeps ${profile.sport.toLowerCase()} going in ${profile.region} — and puts ${sponsor} in front of every one of our supporters. Thank you.`,
+    post: `${profile.name} is proud to announce ${sponsor} as a partner for the season. Their backing keeps ${profile.sport.toLowerCase()} going in ${profile.region}, and puts ${sponsor} in front of every one of our supporters. Thank you.`,
     story: `${sponsor} × ${profile.name}. Backing ${who} this season.`,
     fromModel: false,
   };
@@ -24,7 +24,7 @@ export function templateCampaign(sponsor: string, profile: Profile): Campaign {
 export function templateCampaignSponsorVoice(sponsor: string, profile: Profile): Campaign {
   const who = profile.type === 'club' ? profile.name : profile.name.split(' ')[0];
   return {
-    post: `${sponsor} is backing ${who} this season. Real support for ${profile.sport.toLowerCase()} in ${profile.region} — proud to be part of what they're building.`,
+    post: `${sponsor} is backing ${who} this season. Real support for ${profile.sport.toLowerCase()} in ${profile.region}. Proud to be part of what they're building.`,
     story: `We're backing ${who}. ${sponsor} × ${profile.name}.`,
     fromModel: false,
   };

@@ -91,7 +91,7 @@ function LocationStep({
             onChange={(e) => setNationwide(e.target.checked)}
             className="h-4 w-4 rounded-sm border-paper-line accent-flare-500"
           />
-          Nationwide — no specific city
+          Nationwide, no specific city
         </label>
       )}
 

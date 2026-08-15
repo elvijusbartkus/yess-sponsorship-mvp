@@ -95,7 +95,7 @@ export function QuizStep<T extends string>({
               onClick={() => setOtherOpen(true)}
               className="w-full rounded-lg bg-white px-5 py-4 text-left font-display text-lg font-medium text-ink-500 ring-1 ring-inset ring-paper-line transition-all duration-200 hover:-translate-y-0.5 hover:text-ink-950 hover:shadow-lift hover:ring-ink-950 sm:w-auto"
             >
-              Something else — write your own
+              Something else: write your own
             </button>
           ) : (
             <div className="animate-rise flex flex-wrap items-center gap-2 rounded-lg bg-white p-3 ring-1 ring-inset ring-flare-500">

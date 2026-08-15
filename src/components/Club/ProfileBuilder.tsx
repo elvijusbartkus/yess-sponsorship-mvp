@@ -47,7 +47,7 @@ const STEPS: {
   {
     id: 'identity',
     title: () => 'Club or athlete?',
-    subtitle: 'The questions change — sponsors buy the two very differently.',
+    subtitle: 'The questions change: sponsors buy the two very differently.',
   },
   {
     id: 'sport',

@@ -86,7 +86,7 @@ export function MatchDetail({
             value={
               profile.reach.matchAttendance
                 ? profile.reach.matchAttendance.toLocaleString('en-US')
-                : '—'
+                : '-'
             }
           />
           <Stat label="Instagram" value={profile.reach.instagramFollowers.toLocaleString('en-US')} />
@@ -100,7 +100,7 @@ export function MatchDetail({
           <span className="text-xs text-ink-400">
             {profile.corroboration
               ? `Backed by ${profile.corroboration.socialReach.toLocaleString('en-US')} public followers.`
-              : 'Self-reported — not yet checked against public data.'}
+              : 'Self-reported, not yet checked against public data.'}
           </span>
         </div>
         {match.consistencyFlag && (
@@ -128,7 +128,7 @@ export function MatchDetail({
           <p className="mt-1.5 font-display text-lg font-medium text-ink-950">
             {formatEur(profile.dealRange[0])} – {formatEur(profile.dealRange[1])}
           </p>
-          <p className="mt-1 text-xs text-ink-400">A guide, not a price — you propose the real number next.</p>
+          <p className="mt-1 text-xs text-ink-400">A guide, not a price. You propose the real number next.</p>
         </div>
         <div className="rounded-lg bg-white px-4 py-4 ring-1 ring-inset ring-paper-line">
           <p className="eyebrow text-ink-400">Current sponsors</p>

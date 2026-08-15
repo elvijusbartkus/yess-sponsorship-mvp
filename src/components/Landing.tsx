@@ -128,7 +128,7 @@ export function Landing({
           tone="ink"
           eyebrow="For businesses"
           title="Back sport"
-          cta="Click here to see who reaches your customers"
+          cta="See your matches"
           body="Answer three questions about your budget and audience."
           onClick={onSponsorStart}
         />
@@ -136,8 +136,8 @@ export function Landing({
           tone="flare"
           eyebrow="For clubs & athletes"
           title="Get funded"
-          cta="Click here to list your profile"
-          body="Sponsors find you. Keep your other sponsors and agents — this isn't exclusive."
+          cta="List your profile"
+          body="Sponsors find you. Keep your other sponsors and agents, this isn't exclusive."
           onClick={onClubStart}
         />
       </div>
@@ -171,7 +171,7 @@ export function Landing({
         <div className="rounded-lg bg-white p-6 ring-1 ring-inset ring-paper-line">
           <p className="eyebrow text-ink-400">How it works for sponsors</p>
           <div className="mt-5 space-y-5">
-            <Step icon={Search} label="Answer a few questions" body="Budget, audience, region — three taps." />
+            <Step icon={Search} label="Answer a few questions" body="Budget, audience, region: three taps." />
             <Step
               icon={Handshake}
               label="Get scored, ranked matches"
@@ -196,7 +196,7 @@ export function Landing({
             <Step
               icon={Search}
               label="Build your profile"
-              body="Eight quick questions — no exclusivity, keep your other sponsors and agents."
+              body="Eight quick questions, no exclusivity: keep your other sponsors and agents."
             />
             <Step
               icon={Handshake}
@@ -206,7 +206,7 @@ export function Landing({
             <Step
               icon={FileCheck2}
               label="Keep the full deal"
-              body="Commission is charged to the sponsor, on top — never out of your side."
+              body="Commission is charged to the sponsor, on top, never out of your side."
             />
           </div>
           <button
@@ -233,7 +233,7 @@ export function Landing({
             <div>
               <p className="font-display text-[15px] font-medium text-white">We draft the campaign</p>
               <p className="mt-1 text-[13px] leading-relaxed text-white/80">
-                A launch post and story caption get generated for every signed deal — clubs and
+                A launch post and story caption get generated for every signed deal: clubs and
                 athletes are training, not marketers.
               </p>
             </div>
@@ -247,7 +247,7 @@ export function Landing({
                 We prove it, deliverable by deliverable
               </p>
               <p className="mt-1 text-[13px] leading-relaxed text-white/80">
-                Every activation item is tracked — posted or not, reach logged — a real record to
+                Every activation item is tracked, posted or not, reach logged: a real record to
                 justify the spend and renew against, instead of a deal that quietly lapses.
               </p>
             </div>
@@ -311,11 +311,18 @@ export function Landing({
           <SectionEyebrow>Go-to-market</SectionEyebrow>
           <div className="mt-4 space-y-3">
             <div className="flex items-start gap-2.5 rounded-lg bg-white p-3.5 ring-1 ring-inset ring-paper-line">
+              <Handshake className="mt-0.5 h-4 w-4 shrink-0 text-flare-500" />
+              <p className="text-[13px] leading-relaxed text-ink-700">
+                The Committee's own sponsor relationships open doors, then direct outreach to
+                businesses sitting on unused sponsorship budget.
+              </p>
+            </div>
+            <div className="flex items-start gap-2.5 rounded-lg bg-white p-3.5 ring-1 ring-inset ring-paper-line">
               <Rocket className="mt-0.5 h-4 w-4 shrink-0 text-flare-500" />
               <p className="text-[13px] leading-relaxed text-ink-700">
                 Clubs free first {launchPromo.clubFreeMonths} month, sponsors free first{' '}
                 {launchPromo.sponsorFreeMonths} months at {Math.round(launchPromo.commissionRate * 100)}%
-                commission — then {clubPlan.currency}
+                commission, then {clubPlan.currency}
                 {clubPlan.priceMonthly}/{membershipPlan.currency}
                 {membershipPlan.priceMonthly} per month and {Math.round(commission.standard * 100)}%
                 flat.
@@ -324,7 +331,7 @@ export function Landing({
             <div className="flex items-start gap-2.5 rounded-lg bg-white p-3.5 ring-1 ring-inset ring-paper-line">
               <BarChart3 className="mt-0.5 h-4 w-4 shrink-0 text-flare-500" />
               <p className="text-[13px] leading-relaxed text-ink-700">
-                Estonia first, then Lithuania and Latvia — using Lithuania's 200% tax deduction as
+                Estonia first, then Lithuania and Latvia, using Lithuania's 200% tax deduction as
                 the wedge for the second run.
               </p>
             </div>

@@ -123,7 +123,7 @@ function ProfileDetailPanel({ profile, onBack }: { profile: Profile; onBack: () 
               label: 'Matchday',
               value: profile.reach.matchAttendance
                 ? profile.reach.matchAttendance.toLocaleString('en-US')
-                : '—',
+                : '-',
             },
             { label: 'Instagram', value: profile.reach.instagramFollowers.toLocaleString('en-US') },
             { label: 'Facebook', value: profile.reach.facebookFans.toLocaleString('en-US') },
@@ -213,7 +213,7 @@ export function BrowseList({ onBack }: { onBack: () => void }) {
         Every club and athlete on the marketplace.
       </h1>
       <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-500">
-        No quiz, no fit score — just the full list, filterable.
+        No quiz, no fit score: just the full list, filterable.
       </p>
 
       <div className="mt-8 flex flex-col gap-2.5 sm:flex-row">

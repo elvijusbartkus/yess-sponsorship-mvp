@@ -36,7 +36,7 @@ export function MembershipDialog({
             Contact clubs & close deals
           </DialogTitle>
           <DialogDescription className="mt-1 text-sm text-ink-400">
-            Matching stays free — this is what unlocks reaching out.
+            Matching stays free. This is what unlocks reaching out.
           </DialogDescription>
         </DialogHeader>
 

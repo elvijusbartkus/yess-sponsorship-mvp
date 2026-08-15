@@ -1,8 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { FileCheck, Download, Upload, X } from 'lucide-react';
+import { CheckCircle2, FileCheck, Download, Upload, X } from 'lucide-react';
 import { Button } from '../common/Button';
 import { generateContractPdf } from '../../lib/contractPdf';
 import type { Match, ContractRecord } from '../../lib/types';
+
+/** How long the "signed" confirmation holds before moving on, on purpose:
+ * long enough to register as a real moment, short enough not to stall the demo. */
+const CONFIRM_MS = 1400;
 
 /**
  * A demo-grade signature, not a legal one — said plainly on the page itself
@@ -30,10 +34,13 @@ export function ContractSign({
 }) {
   const { profile } = match;
   const [sponsorSignatory, setSponsorSignatory] = useState(sponsorName);
-  const [clubSignatory, setClubSignatory] = useState('');
+  // Athletes sign for themselves; clubs need a real person's name, which
+  // isn't in the data model, so that field starts blank.
+  const [clubSignatory, setClubSignatory] = useState(profile.type === 'athlete' ? profile.name : '');
   const [agreed, setAgreed] = useState(false);
   const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
   const [uploaded, setUploaded] = useState<{ file: File; url: string } | null>(null);
+  const [signed, setSigned] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const ready = sponsorSignatory.trim().length > 1 && clubSignatory.trim().length > 1 && agreed;
@@ -61,12 +68,28 @@ export function ContractSign({
 
   function sign() {
     if (!ready) return;
-    onSigned({
+    setSigned(true);
+    const record: ContractRecord = {
       dealValue,
       sponsorSignatory: sponsorSignatory.trim(),
       clubSignatory: clubSignatory.trim(),
       signedAt: new Date().toISOString(),
-    });
+    };
+    setTimeout(() => onSigned(record), CONFIRM_MS);
+  }
+
+  if (signed) {
+    return (
+      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center px-5 py-12 text-center sm:py-16">
+        <div className="animate-rise flex flex-col items-center">
+          <CheckCircle2 className="h-14 w-14 text-gain-600" />
+          <p className="eyebrow mt-5 text-gain-700">Agreement signed</p>
+          <h1 className="display mt-2 text-3xl leading-tight text-ink-950 sm:text-4xl">
+            {profile.name} is locked in.
+          </h1>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -81,7 +104,7 @@ export function ContractSign({
           Sign to make it real.
         </h1>
         <p className="mt-3 text-[15px] text-ink-500">
-          A real generated agreement — demo-grade, not legally binding, said on the document itself.
+          A real generated agreement, demo-grade, not legally binding, said on the document itself.
           Prefer your own paperwork? Upload it instead.
         </p>
       </div>
@@ -112,7 +135,7 @@ export function ContractSign({
               className="flex items-center gap-1.5 text-sm font-medium text-ink-500 hover:text-ink-950"
             >
               <X className="h-3.5 w-3.5" />
-              Using "{uploaded.file.name}" — remove
+              Using "{uploaded.file.name}", remove
             </button>
           ) : (
             <button

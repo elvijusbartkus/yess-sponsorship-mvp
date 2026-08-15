@@ -21,7 +21,7 @@ export function Pricing({ onBack }: { onBack: () => void }) {
         </h1>
         {launchPromo.active && (
           <p className="eyebrow mt-4 inline-block rounded-md bg-flare-500 px-2.5 py-1 text-white">
-            Launch offer — clubs get {launchPromo.clubFreeMonths} month free, sponsors get{' '}
+            Launch offer: clubs get {launchPromo.clubFreeMonths} month free, sponsors get{' '}
             {launchPromo.sponsorFreeMonths} months free at {pct(launchPromo.commissionRate)}{' '}
             commission
           </p>
@@ -43,8 +43,8 @@ export function Pricing({ onBack }: { onBack: () => void }) {
             {clubPlan.priceAnnual}/year
           </p>
           <p className="mt-5 border-t border-paper-line pt-5 text-[15px] leading-relaxed text-ink-700">
-            You receive the full agreed sponsorship. Commission is charged on top, to the sponsor —
-            it never comes out of your side.
+            You receive the full agreed sponsorship. Commission is charged on top, to the sponsor.
+            It never comes out of your side.
           </p>
         </section>
 
@@ -79,7 +79,7 @@ export function Pricing({ onBack }: { onBack: () => void }) {
           <span className="ml-2 text-base text-ink-500">flat commission</span>
         </p>
         <p className="mt-3 text-[15px] leading-relaxed text-ink-700">
-          One rate, no size tiers — {pct(commission.standard)} on any deal, charged to the sponsor.
+          One rate, no size tiers: {pct(commission.standard)} on any deal, charged to the sponsor.
           Nothing on a deal that never closes.
           {launchPromo.active && (
             <> During the launch window it's {pct(launchPromo.commissionRate)}.</>

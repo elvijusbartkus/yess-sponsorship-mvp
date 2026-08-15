@@ -51,7 +51,7 @@ export function LiveProfile({
         the full deal.
       </p>
       <p className="mt-1.5 text-sm text-ink-400">
-        Not exclusive — keep any other sponsors or agents you already work with.
+        Not exclusive: keep any other sponsors or agents you already work with.
       </p>
 
       {/* Exactly what a sponsor sees — same card language as their side. */}
@@ -101,12 +101,12 @@ export function LiveProfile({
         <h2 className="eyebrow text-ink-400">Businesses you could reach out to</h2>
         <p className="mt-2 max-w-md text-[15px] leading-relaxed text-ink-500">
           Illustrative sponsor types, scored against your profile with the same
-          matching engine sponsors use — not live leads, a starting list.
+          matching engine sponsors use, not live leads, a starting list.
         </p>
 
         {leadMatches.length === 0 ? (
           <p className="mt-5 text-sm text-ink-400">
-            No strong sponsor type for this profile yet — try widening what you offer.
+            No strong sponsor type for this profile yet. Try widening what you offer.
           </p>
         ) : (
           <div className="mt-5 space-y-3">

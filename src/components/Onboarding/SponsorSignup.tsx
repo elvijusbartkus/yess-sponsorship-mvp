@@ -42,7 +42,7 @@ export function SponsorSignup({
             Find your matches.
           </h1>
           <p className="mt-3 max-w-md text-[15px] leading-relaxed text-ink-500">
-            Three fields. Then we'll ask what you want out of a sponsorship — matching is free.
+            Three fields. Then we'll ask what you want out of a sponsorship: matching is free.
           </p>
 
           <div className="mt-9 space-y-3">

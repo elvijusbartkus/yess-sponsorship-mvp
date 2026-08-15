@@ -89,14 +89,14 @@ function Header({
 }) {
   return (
     <header className="sticky top-0 z-20 border-b border-paper-line bg-paper/85 backdrop-blur-md">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4">
-        <div className="flex items-center gap-3">
-          <button onClick={onHome} className="group flex items-center">
-            <Logo size="sm" />
-          </button>
+      <div className="mx-auto grid max-w-5xl grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 py-3">
+        <div className="flex items-center">
           <RoleBadge role={role} />
         </div>
-        <div className="flex items-center gap-5">
+        <button onClick={onHome} className="group flex items-center justify-self-center">
+          <Logo size="lg" />
+        </button>
+        <div className="flex items-center justify-end gap-5">
           <button
             onClick={onBrowse}
             className="font-display text-sm font-medium text-ink-500 transition-colors hover:text-flare-500"

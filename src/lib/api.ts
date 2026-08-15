@@ -27,7 +27,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   });
   if (!res.ok) {
     const body = await res.text().catch(() => '');
-    throw new Error(`${res.status} ${res.statusText}${body ? ` — ${body.slice(0, 140)}` : ''}`);
+    throw new Error(`${res.status} ${res.statusText}${body ? `: ${body.slice(0, 140)}` : ''}`);
   }
   return (await res.json()) as T;
 }
