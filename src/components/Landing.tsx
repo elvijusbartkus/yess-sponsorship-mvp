@@ -59,13 +59,13 @@ function Step({
   body: string;
 }) {
   return (
-    <div className="flex items-start gap-3.5">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-paper-dim text-ink-950">
-        <Icon className="h-4.5 w-4.5" />
+    <div className="flex items-start gap-4">
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-paper-dim text-ink-950">
+        <Icon className="h-5 w-5" />
       </div>
       <div>
-        <p className="font-display text-[15px] font-medium text-ink-950">{label}</p>
-        <p className="mt-0.5 text-[13px] leading-snug text-ink-500">{body}</p>
+        <p className="font-display text-lg font-medium text-ink-950">{label}</p>
+        <p className="mt-0.5 text-sm leading-snug text-ink-500">{body}</p>
       </div>
     </div>
   );
@@ -108,13 +108,14 @@ export function Landing({
     >
       <div className="animate-rise max-w-3xl">
         <div className="flare-rule h-1.5 w-20" />
-        <h1 className="display mt-5 text-[clamp(2.25rem,5vw,3.75rem)] leading-[0.95] text-ink-950">
-          Money can't find sport.
+        <h1 className="display mt-5 text-[clamp(2.75rem,6.5vw,4.75rem)] leading-[0.95] text-ink-950">
+          There's private money for sport.
           <br />
-          <span className="text-flare-500">We're the market.</span>
+          <span className="text-flare-500">It just never arrives.</span>
         </h1>
         <p className="mt-4 max-w-xl text-lg leading-snug text-ink-500">
-          We match Baltic clubs and athletes with the businesses that want their audience.
+          We match Baltic clubs and athletes with the businesses that want their audience, then
+          run the campaign and prove it happened.
         </p>
       </div>
 
@@ -137,29 +138,7 @@ export function Landing({
         />
       </div>
 
-      {/* HOW IT WORKS — pushed below the fold on purpose: the CTAs above are
-          the main event, this is a step down in visual weight, not competing
-          with them for the first thing a visitor sees. */}
-      <section className="mt-28 grid gap-4 border-t border-paper-line pt-14 sm:grid-cols-2">
-        <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
-          <p className="eyebrow text-ink-400">For sponsors</p>
-          <div className="mt-4 space-y-4">
-            <Step icon={Search} label="Answer a few questions" body="Budget, audience, region." />
-            <Step icon={Handshake} label="Get scored, ranked matches" body="Real clubs, not a directory." />
-            <Step icon={FileCheck2} label="Propose, sign, track it" body="One dashboard, start to finish." />
-          </div>
-        </div>
-        <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
-          <p className="eyebrow text-ink-400">For clubs & athletes</p>
-          <div className="mt-4 space-y-4">
-            <Step icon={Search} label="Build your profile" body="Eight quick questions, no exclusivity." />
-            <Step icon={Handshake} label="Sponsors find you" body="See who'd want you." />
-            <Step icon={FileCheck2} label="Keep the full deal" body="Commission comes from the sponsor." />
-          </div>
-        </div>
-      </section>
-
-      {/* PROBLEM */}
+      {/* PROBLEM — sits right under the main CTAs now. */}
       <section className="mt-16 border-t border-paper-line pt-14">
         <SectionEyebrow>The problem</SectionEyebrow>
         <h2 className="display mt-3 max-w-2xl text-3xl leading-[1.1] text-ink-950 sm:text-4xl">
@@ -230,6 +209,33 @@ export function Landing({
               Estonia first, then Lithuania and Latvia, using Lithuania's 200% tax deduction as the
               wedge for the second run.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS — moved to the bottom and enlarged: a closing walkthrough
+          rather than competing with the CTAs for first-glance attention. */}
+      <section className="mt-16 border-t border-paper-line pt-14">
+        <SectionEyebrow>How it works</SectionEyebrow>
+        <h2 className="display mt-3 max-w-2xl text-3xl leading-[1.1] text-ink-950 sm:text-4xl">
+          Three taps. Eight questions. One market.
+        </h2>
+        <div className="mt-6 grid gap-6 sm:grid-cols-2">
+          <div className="rounded-xl bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-8">
+            <p className="eyebrow text-ink-400">For sponsors</p>
+            <div className="mt-6 space-y-6">
+              <Step icon={Search} label="Answer a few questions" body="Budget, audience, region." />
+              <Step icon={Handshake} label="Get scored, ranked matches" body="Real clubs, not a directory." />
+              <Step icon={FileCheck2} label="Propose, sign, track it" body="One dashboard, start to finish." />
+            </div>
+          </div>
+          <div className="rounded-xl bg-white p-6 ring-1 ring-inset ring-paper-line sm:p-8">
+            <p className="eyebrow text-ink-400">For clubs & athletes</p>
+            <div className="mt-6 space-y-6">
+              <Step icon={Search} label="Build your profile" body="Eight quick questions, no exclusivity." />
+              <Step icon={Handshake} label="Sponsors find you" body="See who'd want you." />
+              <Step icon={FileCheck2} label="Keep the full deal" body="Commission comes from the sponsor." />
+            </div>
           </div>
         </div>
       </section>
