@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Check, Copy, Heart, MessageCircle, RefreshCw, Send } from 'lucide-react';
+import { Check, Copy, Heart, MessageCircle, Phone, RefreshCw, Send } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Button } from '../common/Button';
 import { draftCampaign } from '../../lib/api';
 import { templateCampaignSponsorVoice } from '../../lib/campaignTemplate';
@@ -133,23 +140,70 @@ function StoryFrame({
   );
 }
 
-function ChecklistRow({ label, state }: { label: string; state: 'done' | 'roadmap' }) {
-  const done = state === 'done';
+function ChecklistRow({ label }: { label: string }) {
   return (
-    <li
-      className={`flex items-center justify-between rounded-md border border-paper-line px-4 py-3 ${
-        done ? '' : 'opacity-50'
-      }`}
-    >
-      <span className={`text-[14px] ${done ? 'text-ink-950' : 'text-ink-400'}`}>{label}</span>
-      <span
-        className={`text-[11px] font-medium uppercase tracking-wide ${
-          done ? 'text-gain-600' : 'text-ink-400'
-        }`}
-      >
-        {done ? 'Generated ✓' : 'Roadmap'}
+    <li className="flex items-center justify-between rounded-md border border-paper-line px-4 py-3">
+      <span className="text-[14px] text-ink-950">{label}</span>
+      <span className="text-[11px] font-medium uppercase tracking-wide text-gain-600">
+        Generated ✓
       </span>
     </li>
+  );
+}
+
+/**
+ * The auto-generated content (Layer 1) is free and universal — it's the
+ * anti-leakage mechanism, never gated. Managed delivery (Layer 2) is the
+ * paid, human-bound service line that drives renewals. This dialog is
+ * deliberately an info panel, not a checkout — there's no real payment flow
+ * for a demo, and no invented price: the honest answer is "priced per deal,
+ * talk to us."
+ */
+function ManagedDeliveryDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-sm border-none bg-ink-950 p-6 text-white ring-hairline-dark">
+        <DialogHeader>
+          <p className="eyebrow text-flare-400">Managed delivery</p>
+          <DialogTitle className="display mt-1 text-2xl leading-tight text-white">
+            A rep makes sure it happens.
+          </DialogTitle>
+          <DialogDescription className="mt-1 text-sm text-white/70">
+            The free content is generated instantly. This is the human layer that keeps a
+            sponsorship on track once it's live, on top of the same 2% commission, not instead
+            of it.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="mt-4 space-y-2.5">
+          <div className="rounded-lg bg-white/5 p-3.5">
+            <p className="text-[13px] font-medium text-white">Standard</p>
+            <p className="mt-1 text-[12px] leading-relaxed text-white/70">
+              Monthly check-in, keeps the campaign on track. For most deals.
+            </p>
+          </div>
+          <div className="rounded-lg bg-white/5 p-3.5">
+            <p className="text-[13px] font-medium text-white">Premium</p>
+            <p className="mt-1 text-[12px] leading-relaxed text-white/70">
+              Weekly call with a dedicated rep. Full hands-on delivery and renewal support, for
+              bigger deals.
+            </p>
+          </div>
+        </div>
+
+        <p className="mt-4 text-[12px] text-white/60">
+          Priced per deal. Talk to us before your first renewal.
+        </p>
+
+        <button
+          onClick={() => onOpenChange(false)}
+          className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-flare-500 py-3 text-center font-display text-base font-medium text-white transition-colors hover:bg-flare-400"
+        >
+          <Phone className="h-4 w-4" />
+          Get in touch
+        </button>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -174,6 +228,7 @@ export function CampaignPage({
   const [clubCampaign, setClubCampaign] = useState<Campaign | null>(null);
   const [regenerating, setRegenerating] = useState(false);
   const [voice, setVoice] = useState<Voice>('club');
+  const [managedDialogOpen, setManagedDialogOpen] = useState(false);
 
   const sponsorCampaign = templateCampaignSponsorVoice(sponsorName, profile);
 
@@ -260,13 +315,35 @@ export function CampaignPage({
           </p>
 
           <section className="mt-9 rounded-xl bg-white p-5 ring-1 ring-inset ring-paper-line">
-            <p className="eyebrow text-ink-400">Deliverables</p>
+            <p className="eyebrow text-ink-400">Included, free</p>
             <ul className="mt-3 space-y-2">
-              <ChecklistRow label="Launch post" state="done" />
-              <ChecklistRow label="Story caption" state="done" />
-              <ChecklistRow label="Reach tracking" state="roadmap" />
-              <ChecklistRow label="Renewal report" state="roadmap" />
+              <ChecklistRow label="Launch post" />
+              <ChecklistRow label="Story caption" />
             </ul>
+          </section>
+
+          <section className="mt-4 rounded-xl bg-ink-950 p-5 ring-hairline-dark">
+            <p className="eyebrow text-flare-400">Managed delivery, paid</p>
+            <p className="mt-2 text-[13px] leading-relaxed text-white/80">
+              A rep makes sure the content actually goes out and the deal renews. This is what{' '}
+              {profile.name} can't do themselves.
+            </p>
+            <div className="mt-3.5 space-y-2">
+              <div className="rounded-lg bg-white/5 p-3.5">
+                <p className="text-[13px] font-medium text-white">Standard</p>
+                <p className="mt-0.5 text-[12px] text-white/70">Monthly check-in.</p>
+              </div>
+              <div className="rounded-lg bg-white/5 p-3.5">
+                <p className="text-[13px] font-medium text-white">Premium</p>
+                <p className="mt-0.5 text-[12px] text-white/70">Weekly call, dedicated rep.</p>
+              </div>
+            </div>
+            <button
+              onClick={() => setManagedDialogOpen(true)}
+              className="mt-4 font-display text-sm font-medium text-flare-400 hover:text-flare-300"
+            >
+              Add managed delivery →
+            </button>
           </section>
 
           <div className="mt-8 border-t border-paper-line pt-8">
@@ -276,6 +353,8 @@ export function CampaignPage({
           </div>
         </>
       )}
+
+      <ManagedDeliveryDialog open={managedDialogOpen} onOpenChange={setManagedDialogOpen} />
     </div>
   );
 }
