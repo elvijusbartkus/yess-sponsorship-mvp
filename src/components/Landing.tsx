@@ -1,5 +1,5 @@
 import { ArrowRight } from 'lucide-react';
-import { clubPlan, firstPeriodFree, membershipPlan } from '../data/pricing';
+import { clubPlan, membershipPlan } from '../data/pricing';
 
 function DoorCard({
   eyebrow,
@@ -81,23 +81,23 @@ export function Landing({
 }) {
   return (
     <div
-      className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 py-14 sm:py-16"
+      className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 py-10 sm:py-12"
       style={{ zoom: 1.25 }}
     >
       <div className="animate-rise max-w-3xl">
         <div className="flare-rule h-1.5 w-20" />
-        <h1 className="display mt-5 text-[clamp(2.75rem,6.5vw,4.75rem)] leading-[0.95] text-ink-950">
+        <h1 className="display mt-4 text-[clamp(2.25rem,5.5vw,3.75rem)] leading-[0.95] text-ink-950">
           There's private money for sport.
           <br />
-          <span className="text-flare-500">We're the market between money and sport.</span>
+          <span className="text-flare-500">We're the market between them.</span>
         </h1>
-        <p className="mt-5 max-w-xl text-xl font-medium leading-snug text-ink-700 sm:text-2xl">
+        <p className="mt-4 max-w-xl text-lg font-medium leading-snug text-ink-700 sm:text-xl">
           We match Baltic clubs and athletes with the businesses that want their audience. Then we
           run the campaign and prove it happened.
         </p>
       </div>
 
-      <div className="mt-10 grid gap-4 sm:grid-cols-2">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2">
         <DoorCard
           tone="ink"
           eyebrow="For businesses"
@@ -171,30 +171,26 @@ export function Landing({
         <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
             <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
-              <span className="display text-flare-500">{firstPeriodFree.clubMonths} month</span>{' '}
-              free for clubs, <span className="display text-flare-500">
-                {firstPeriodFree.sponsorMonths} months
-              </span>{' '}
-              free for sponsors. Nothing to lose trying it.
+              <span className="display text-flare-500">Free to try.</span> First period free for
+              everyone.
             </p>
           </div>
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
             <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
-              Every deal gets a <span className="display text-flare-500">generated campaign</span>{' '}
-              and tracked deliverables. Proof to renew on, so sponsors stay.
+              <span className="display text-flare-500">Sponsors stay</span> for the campaign and
+              the proof.
             </p>
           </div>
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
             <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
-              <span className="display text-flare-500">Free to list.</span> Sponsors come to
-              clubs and athletes, who keep the full deal.
+              <span className="display text-flare-500">Clubs join</span> because it's free and
+              sponsors come to them.
             </p>
           </div>
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
             <p className="text-xl leading-snug text-ink-800 sm:text-2xl">
-              One partnership with{' '}
-              <span className="display text-flare-500">the Olympic Committee</span> puts every
-              club on the platform through the Sports Register.
+              <span className="display text-flare-500">One Committee partnership</span> onboards
+              every club.
             </p>
           </div>
         </div>
