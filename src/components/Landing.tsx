@@ -186,7 +186,12 @@ export function Landing({
               <span className="display text-flare-500">
                 {firstPeriodFree.sponsorMonths} months free
               </span>{' '}
-              for sponsors. <span className="display text-flare-500">Always free</span> for clubs.
+              for sponsors. Clubs list and match free, deal tools from{' '}
+              <span className="display text-flare-500">
+                {clubPlan.currency}
+                {clubPlan.priceMonthly}/mo
+              </span>
+              .
             </p>
           </div>
           <div className="rounded-lg bg-white p-5 ring-1 ring-inset ring-paper-line">
